@@ -5,6 +5,9 @@ from vlib import conf
 from vweb.htmlpage import HtmlPage
 
 from header import Header
+from nav import Nav
+from aside import Aside
+from footer import Footer
 
 class BasePage(HtmlPage):
     '''Base Page for all pages on this site
@@ -14,8 +17,12 @@ class BasePage(HtmlPage):
 
     def __init__(self, report_name=None):
         HtmlPage.__init__(self, report_name or 'Base Report')
-        self.header = Header(self)
         self.conf = conf.getInstance()
+
+        self.header = Header(self)
+        self.nav = Nav(self)
+        self.aside = Aside(self)
+        self.footer = Footer(self)
 
         self.style_sheets.extend([
             self.versionize('css/basepage.css'),
@@ -28,7 +35,11 @@ class BasePage(HtmlPage):
     def getHtmlContent(self):
         template = self.getTemplate('basepage.html')
         data = {'header': self.header.getHeader(),
-                'main': self.getPageContent()}
+                'nav': self.nav.getNav(),
+                'aside': self.aside.getAside(),
+                'main': self.getPageContent(),
+                'footer': self.footer.getFooter(),
+                }
         return template.format(**data)
 
     def getTemplate(self, filename):
