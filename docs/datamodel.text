@@ -1,6 +1,11 @@
 # dla Datamodel
 # 9/9/2023
 
+       ┌────────────────┐ ┌────────────────┐ ┌─────────────┐
+       │ artwork_images │ │ artwork_videos │ │    videos   │
+       └────────────────┘ └────────────────┘ └─────────────┘
+	               ^   ^
+		       |   |
 ┌──────────────┐    ┌───────────┐    ┌───────────┐
 │ artwork_type │───>│  artwork  │───>│  edition  │
 └──────────────┘    └───────────┘    └───────────┘
@@ -10,3 +15,83 @@
 ┌────────────┐      ┌──────────────┐
 │  contacts  │─────>│ Transactions │
 └────────────┘      └──────────────┘
+┌────────────┐
+│  audits    │
+└────────────┘
+
+
+artwork_types
+-------------
+id
+code
+name (drawing|painting|sculpture|tee-shirt)
+description
+
+artwork
+-------
+code
+name
+materials
+color
+length
+width
+height
+weight
+description
+notes
+price
+created
+
+editions
+--------
+artwork_id
+length
+width
+height
+weight
+description
+notes
+price
+created
+r_created
+r_updated
+
+artwork_images
+--------------
+artwork_id
+filename
+
+artwork_videos
+--------------
+artwork_id
+filename
+
+video
+--------------
+filename
+
+contacts
+--------
+first_name
+last_name
+relationship
+address1
+city
+state
+zipcode
+country
+
+transactions
+------------
+code
+contact_id
+type (gift, loan, sale, lost)
+transaction_date
+
+
+fields on all tables
+--------------------
+id
+r_created
+r_updated
+
