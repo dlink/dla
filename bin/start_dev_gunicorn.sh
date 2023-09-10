@@ -4,4 +4,7 @@ cd ~/dla
 source .venv/bin/activate
 cd web
 export PYTHONPATH='/home/dlink/dla/lib:/home/dlink/dla/web:/home/dlink/vweb/src:/home/dlink/vlib/src'
-gunicorn --daemon --reload -c dev-gunicorn.conf.py wsgi:app
+
+# app:app = module_name:variable
+# this runs web/apps.py: app().run()
+gunicorn --daemon --reload -c dev-gunicorn.conf.py app:app
