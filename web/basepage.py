@@ -26,6 +26,7 @@ class BasePage(HtmlPage):
 
         self.style_sheets.extend([
             self.versionize('css/basepage.css'),
+            self.versionize('css/nav.css'),
         ])
 
     def versionize(self, file):
