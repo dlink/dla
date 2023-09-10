@@ -1,0 +1,7 @@
+# dla dev config file
+
+system: dev
+base_url: dev-dla.com
+base_dir: /home/dlink/dla
+backup_dir: /data/backups/db
+admin_emails: dvlink@gmail.com
