@@ -1,0 +1,2 @@
+create table contacts (
+);
