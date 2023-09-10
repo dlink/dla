@@ -21,7 +21,7 @@ spew = False
 
 daemon = False
 raw_env = [
-    'VCONF=/home/dlink/dla/config/dev.yaml',
+    'VCONF=/home/dlink/dla/conf/dev.yaml',
 ]
 pidfile = None
 umask = 0
