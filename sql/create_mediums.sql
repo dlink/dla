@@ -1,21 +1,22 @@
-drop table if exists mediums;
-
 create table mediums (
-  id          serial primary key,
-  code        varchar(20) not null,
-  name        varchar(100) not null,
-  r_created   timestamptz default current_timestamp,
-  r_updated   timestamptz,
+  id           integer unsigned not null auto_increment primary key,
+  code         varchar(20)      not null,
+  name         varchar(255)     not null,
+  r_created    datetime         null,
+  r_updated    timestamp        not null
+    default current_timestamp on update current_timestamp,
 
-  unique(code)
-);
-create trigger mediums_updates
-   before insert or update on mediums
-      for each row
-         execute function set_created_and_updated()
+  unique key(code)
+)
+engine InnoDB default charset=utf8;
+;
+
+create trigger mediums_create before insert on mediums
+   for each row set new.r_created = now()
 ;
 insert into mediums (code, name) values ('sculpt', 'Sculpture');
 insert into mediums (code, name) values ('paint', 'Painting');
 insert into mediums (code, name) values ('draw', 'Drawing');
 insert into mediums (code, name) values ('shirt', 'T-Shirt');
-insert into mediums (code, name) values ('shirt', 'T-Shirt');
+
+select * from mediums;
