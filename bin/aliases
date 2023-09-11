@@ -7,3 +7,6 @@ export dl="$d/lib"   ; alias dl='cd $dl'
 export ds="$d/sql"   ; alias ds='cd $ds'
 export dw="$d/web"   ; alias dw='cd $dw'
 export dwi="$dw/images"; alias dwi='cd $dwi'
+
+# database
+alias ddb='psql dla'
