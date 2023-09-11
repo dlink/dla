@@ -7,7 +7,8 @@ create table pieces (
   name        varchar(100) not null,
   description varchar(250),
   material    varchar(100),
-  created     timestamptz not null,
+  created     timestamptz,
+  created_year integer,
   length      integer,
   width       integer,
   height      integer,
@@ -31,4 +32,9 @@ create trigger pieces_set_created_and_updated
          execute function set_created_and_updated()
 ;
 
-insert into pieces (medium_id, code, name, created) values (1, 'test', 'test', '2023-09-01');
+insert into pieces
+   (medium_id, code, name, material, created_year, length, width, height, dim_uom)
+values
+  (1, 'gardian', 'Guardian', 'Welded Aluminum, Powder Coated', '2023', 2, 2, 6, 'ft');
+
+select * from pieces;
