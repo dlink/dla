@@ -12,7 +12,7 @@ from footer import Footer
 class BasePage(HtmlPage):
     '''Base Page for all pages on this site
 
-       Subclass this class and provide the getPage() method
+       Subclass this class and provide the getPageContent() method
     '''
 
     def __init__(self, report_name=None):
@@ -29,10 +29,6 @@ class BasePage(HtmlPage):
             self.versionize('css/nav.css'),
         ])
 
-    def versionize(self, file):
-        timestamp=os.path.getmtime('%s/web/%s' % (self.conf.base_dir, file))
-        return '%s?v=%s' % (file, timestamp)
-
     def getHtmlContent(self):
         template = self.getTemplate('basepage.html')
         data = {'header': self.header.getHeader(),
@@ -46,3 +42,8 @@ class BasePage(HtmlPage):
     def getTemplate(self, filename):
         filepath = f'{self.conf.base_dir}/web/templates/{filename}'
         return open(filepath, 'r').read()
+
+    def versionize(self, file):
+        timestamp=os.path.getmtime('%s/web/%s' % (self.conf.base_dir, file))
+        return '%s?v=%s' % (file, timestamp)
+
