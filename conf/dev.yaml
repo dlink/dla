@@ -5,3 +5,11 @@ base_url: dev-dla.com
 base_dir: /home/dlink/dla
 backup_dir: /data/backups/db
 admin_emails: dvlink@gmail.com
+
+database:
+   description: David Link Art Dev
+   engine: mysql
+   host  : localhost
+   db    : dla
+   user  : dlink
+   passwd: $DDB_PASS
