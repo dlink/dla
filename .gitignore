@@ -1,3 +1,4 @@
+*.sock
 .venv
 __pycache__
-*.sock
+tmp/
