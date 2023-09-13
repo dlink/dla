@@ -3,10 +3,14 @@
 export d="$HOME/dla" ; alias d='cd $d'
 export db="$d/bin"   ; alias db='cd $db'
 export dc="$d/conf"  ; alias dc='cd $dc'
+export dd="$d/docs"  ; alias dd='cd $dd'
 export dl="$d/lib"   ; alias dl='cd $dl'
 export ds="$d/sql"   ; alias ds='cd $ds'
+export dt="$d/tests" ; alias dt='cd $dt'
 export dw="$d/web"   ; alias dw='cd $dw'
+export dwc="$dw/css" ; alias dwc='cd $dwc'
+export dwt="$dw/templates" ; alias dwt='cd $dwt'
 export dwi="$dw/images"; alias dwi='cd $dwi'
 
 # dev_dla database
-alias dddb='mysql --login-path=dev_dla dev_dla'
+alias ddb='mysql --login-path=dla dla'
