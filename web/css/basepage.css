@@ -1,11 +1,4 @@
-.header {
-}
-nav {
-    border: 1px solid green;
-    margin: 10px;
-    padding: 10px;
-}
-.main-container {
+#aside-and-main {
     border: 1px solid black;
     display: flex;
     flex-flow: row wrap;
@@ -13,22 +6,3 @@ nav {
     margin: 10px;
     padding: 10px;
 }
-aside {
-    border: 1px solid red;
-    width: 100px;
-    margin: 10px;
-    padding: 10px;
-}
-main {
-    border: 1px solid blue;
-    width: 600px;
-    padding: 10px;
-    margin: 10px;
-
-}
-footer {
-    border: 1px solid gold;
-    margin: 10px;
-    padding: 10px;
-}
-

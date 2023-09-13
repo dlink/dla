@@ -6,7 +6,6 @@ from basepage import BasePage
 from admin.header import Header
 from admin.nav import Nav
 from admin.aside import Aside
-from footer import Footer
 
 class AdminBasePage(BasePage):
     '''Base Page for all Admin pages on this site
@@ -22,7 +21,6 @@ class AdminBasePage(BasePage):
         self.header = Header(self)
         self.nav = Nav(self)
         self.aside = Aside(self)
-        self.footer = Footer(self)
 
         # self.style_sheets.extend([
         #     self.versionize('admin/css/basepage.css'),
@@ -35,7 +33,6 @@ class AdminBasePage(BasePage):
                 'nav': self.nav.getNav(),
                 'aside': self.aside.getAside(),
                 'main': self.getPageContent(),
-                'footer': self.footer.getFooter(),
                 }
         return template.format(**data)
     

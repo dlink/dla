@@ -7,7 +7,6 @@ from vweb.htmlpage import HtmlPage
 from header import Header
 from nav import Nav
 from aside import Aside
-from footer import Footer
 
 class BasePage(HtmlPage):
     '''Base Page for all pages on this site
@@ -22,11 +21,13 @@ class BasePage(HtmlPage):
         self.header = Header(self)
         self.nav = Nav(self)
         self.aside = Aside(self)
-        self.footer = Footer(self)
 
         self.style_sheets.extend([
             self.versionize('css/basepage.css'),
+            self.versionize('css/header.css'),
             self.versionize('css/nav.css'),
+            self.versionize('css/aside.css'),
+            self.versionize('css/main.css'),
         ])
 
     def getHtmlContent(self):
@@ -35,7 +36,6 @@ class BasePage(HtmlPage):
                 'nav': self.nav.getNav(),
                 'aside': self.aside.getAside(),
                 'main': self.getPageContent(),
-                'footer': self.footer.getFooter(),
                 }
         return template.format(**data)
 
