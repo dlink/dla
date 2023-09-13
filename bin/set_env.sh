@@ -15,7 +15,7 @@ cd $HOME/dla
 source .venv/bin/activate
 
 # dev env
+source $HOME/.dla
+source $HOME/dla/bin/aliases
 export PYTHONPATH=$HOME/dla/lib:$HOME/vlib/src:$HOME/vweb/src
 export VCONF=$HOME/dla/conf/dev.yaml
-
-
