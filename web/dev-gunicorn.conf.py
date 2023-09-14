@@ -7,7 +7,7 @@ backlog = 2048
 
 # Worker processes
 
-workers = 1
+workers = 3
 worker_class = 'sync'
 worker_connections = 1000
 timeout = 30
@@ -22,7 +22,7 @@ spew = False
 daemon = False
 raw_env = [
     'VCONF=/home/dlink/dla/conf/dev.yaml',
-]
+    'PARAMETER_FILES_DIR=/home/dlink/dla/vreports']
 pidfile = None
 umask = 0
 user = 'dlink'
