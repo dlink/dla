@@ -23,6 +23,8 @@ def view(page=None):
              from about imoprt AboutPage
              AboutPage().go()
     '''
+    setEnvVars()
+
     # / => home page
     if not page:
         page = 'home'
@@ -53,6 +55,14 @@ def favicon():
     '''TO DO: Set up favicon'''
     return send_from_directory(app.root_path, 'favicon.ico',
                                mimetype='image/vnd.microsoft.icon')
+
+def setEnvVars():
+    for row in open('/home/dlink/.dla', 'r').readlines():
+        row = row.strip()
+        export, parameters = row.split(' ')
+        key, value = parameters.split('=')
+        value = value.replace("'", '')
+        os.environ[key] = value
 
 def snake2camel(name):
     '''Eq.: convert smale_pieces to smallPieces'''
