@@ -5,7 +5,7 @@ import os
 
 from users import Users
 
-class TestConf(unittest.TestCase):
+class TestUsers(unittest.TestCase):
 
     def test_getCurrentUser(self):
         test_username = os.getenv('USER')
