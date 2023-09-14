@@ -1,14 +1,32 @@
 
+from vweb.htmltable import HtmlTable
+
 from basepage import BasePage
+from pieces import Pieces
 
 class HomePage(BasePage):
 
+    panel_max_cols = 3
+
     def __init__(self):
         BasePage.__init__(self, 'DLA')
+        self.pieces = Pieces()
 
     def getPageContent(self):
-        template = self.getTemplate('home.html')
-        return template
+        table = HtmlTable(class_='pieces-panel')
+        selected_pieces = self.pieces.getAll()
+        row = []
+        done = 0
+        i = 0
+        for piece in selected_pieces:
+            i += 1
+            if i % self.panel_max_cols == 1 and i != 1:
+                table.addRow(row)
+                row = []
+            row.append(f'[{piece.id}:{piece.name}]')
+        if row:
+            table.addRow(row)
+        return table.getTable()
 
 if __name__ == '__main__':
     HomePage().go()
