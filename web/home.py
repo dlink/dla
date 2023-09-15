@@ -1,5 +1,6 @@
 
 from vweb.htmltable import HtmlTable
+from vweb.html import img
 
 from basepage import BasePage
 from pieces import Pieces
@@ -23,7 +24,10 @@ class HomePage(BasePage):
             if i % self.panel_max_cols == 1 and i != 1:
                 table.addRow(row)
                 row = []
-            row.append(f'[{piece.id}:{piece.name}]')
+            pic = img(src=piece.images.urls[0],
+                      width='200px')
+
+            row.append(f'[{piece.id}:{piece.name} {pic}]')
         if row:
             table.addRow(row)
         return table.getTable()
