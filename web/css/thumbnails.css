@@ -1,3 +1,22 @@
+.thumbnail {
+    line-height: 1.1em;
+    text-align: center;
+    width: 230px;
+}
+.thumb-image {
+    height: 260px;
+}
 .thumb-image img {
+    padding: 15px;
     width: 200px;
+}
+.thumb-name {
+    font-weight: bold;
+    padding-bottom: 8px;
+}
+.thumb-desc {
+    font-size: 0.8em;
+}
+.thumb-dim {
+    font-size: 0.8em;
 }

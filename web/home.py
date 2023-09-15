@@ -12,7 +12,10 @@ class HomePage(BasePage):
     def __init__(self):
         BasePage.__init__(self, 'DLA')
         self.pieces = Pieces()
-        self.style_sheets.extend([self.versionize('css/thumbnails.css')])
+        self.style_sheets.extend([
+            self.versionize('css/pieces_panel.css'),
+            self.versionize('css/thumbnails.css')
+        ])
 
     def getPageContent(self):
         table = HtmlTable(class_='pieces-panel')
