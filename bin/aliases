@@ -1,5 +1,6 @@
 # dla alias file
 
+# source tree
 export d="$HOME/dla" ; alias d='cd $d'
 export db="$d/bin"   ; alias db='cd $db'
 export dc="$d/conf"  ; alias dc='cd $dc'
@@ -12,5 +13,9 @@ export dwc="$dw/css" ; alias dwc='cd $dwc'
 export dwt="$dw/templates" ; alias dwt='cd $dwt'
 export dwi="$dw/images"; alias dwi='cd $dwi'
 
+# images
+export ddi="/data/dla/images" ; alias ddi="cd $ddi"
+export ddip="$ddi/pieces"     ; alias ddip="cd $ddip"
+
 # dev_dla database
-alias ddb='mysql --login-path=dla dla'
+alias ddb="mysql --login-path=dla dla"
