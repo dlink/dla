@@ -40,3 +40,12 @@ class Piece(DataRecord):
     @lazyproperty
     def images(self):
         return PieceImages(self)
+
+    @lazyproperty
+    def dimensions(self):
+        dimensions = ''
+        if self.length and self.width and self.height:
+            dimensions = f'{self.length} x {self.width} x {self.height}'
+            if self.dim_uom:
+                dimensions = f'{dimensions} {self.dim_uom}'
+        return dimensions

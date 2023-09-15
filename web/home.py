@@ -1,9 +1,9 @@
 
 from vweb.htmltable import HtmlTable
-from vweb.html import img
 
 from basepage import BasePage
 from pieces import Pieces
+from thumbnails import Thumbnail
 
 class HomePage(BasePage):
 
@@ -12,6 +12,7 @@ class HomePage(BasePage):
     def __init__(self):
         BasePage.__init__(self, 'DLA')
         self.pieces = Pieces()
+        self.style_sheets.extend([self.versionize('css/thumbnails.css')])
 
     def getPageContent(self):
         table = HtmlTable(class_='pieces-panel')
@@ -24,10 +25,7 @@ class HomePage(BasePage):
             if i % self.panel_max_cols == 1 and i != 1:
                 table.addRow(row)
                 row = []
-            pic = img(src=piece.images.urls[0],
-                      width='200px')
-
-            row.append(f'[{piece.id}:{piece.name} {pic}]')
+            row.append(Thumbnail(piece).html)
         if row:
             table.addRow(row)
         return table.getTable()
