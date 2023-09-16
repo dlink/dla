@@ -10,6 +10,7 @@ def std_to_dec(std_number):
 def dec_to_std(dec_number):
     '''Convert Decimal to Us Standard measurement: 1.25 -> 1-14'''
     return str(round(dec_number, 2))\
+        .replace('.00', '')\
         .replace('.25', '-1/4')\
         .replace('.50', '-1/2')\
         .replace('.75', '-3/4')

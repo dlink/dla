@@ -7,10 +7,12 @@ from dimensions import std_to_dec, dec_to_std
 
 class TestUsers(unittest.TestCase):
 
-    numbers = [['5-1/4', Decimal(5.25)],
-               ['5-1/2', Decimal(5.5)],
-               ['5-3/4', Decimal(5.75)],
-               ['5.30', Decimal(5.3)],
+    numbers = [['5'    , Decimal('5.00')],
+               ['5-1/4', Decimal('5.25')],
+               ['5-1/2', Decimal('5.5' )],
+               ['5-1/2', Decimal('5.50')],
+               ['5-3/4', Decimal('5.75')],
+               ['5.30' , Decimal('5.30' )],
                ]
     def test_std_to_dec(self):
         for std, dec in self.numbers:
