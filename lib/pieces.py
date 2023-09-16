@@ -1,9 +1,10 @@
+#!/bin/env python
 
 from vlib import db
 from vlib.datatable import DataTable
 from vlib.datarecord import DataRecord
 from vlib.odict import odict
-from vlib.utils import lazyproperty
+from vlib.utils import lazyproperty, validate_num_args
 
 from piece_images import PieceImages
 
@@ -49,3 +50,35 @@ class Piece(DataRecord):
             if self.dim_uom:
                 dimensions = f'{dimensions} {self.dim_uom}'
         return dimensions
+
+class PiecesCLIError(Exception): pass
+
+class PiecesCLI(object):
+    '''Command line interface to the Product Class
+       Used for discovery
+    '''
+
+    def run(self):
+        '''Set up Command Line (CLI) commands and options
+           for Pieces Module
+        '''
+        from cli import CLI
+        commands = ['images <id|code>']
+        self.cli = CLI(self.process, commands)
+        self.cli.process()
+
+    def process(self, *args):
+        '''Process all Incoming Requests
+        '''
+        args = list(args)
+        cmd = args.pop(0)
+
+        if cmd == 'images':
+            validate_num_args('images', 1, args)
+            filter = args.pop(0)
+            return Piece(filter).images.filepaths
+        else:
+            raise PiecesCLIError('Unrecognized command: %s' % cmd)
+
+if __name__ == '__main__':
+    PiecesCLI().run()
