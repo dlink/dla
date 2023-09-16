@@ -11,9 +11,12 @@ class Thumbnail():
     @lazyproperty
     def html(self):
         template = self.getTemplate('thumbnail.html')
-        piece = self.piece 
+        piece = self.piece
+        image_url = ''
+        if piece.images.urls:
+            image_url = image_url = piece.images.urls[0]
         return template.format(
-            image_url=piece.images.urls[0],
+            image_url=image_url,
             name=piece.name,
             year=piece.created_year,
             materials=piece.material,
