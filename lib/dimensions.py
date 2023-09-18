@@ -1,16 +1,98 @@
+import re
 from decimal import Decimal
 
-def std_to_dec(std_number):
-    '''Convert US Standard measurement to Decimal: 1-1/4 -> 1.25'''
-    return round(Decimal(std_number\
-                         .replace('-1/4', '.25') \
-                         .replace('-1/2', '.50') \
-                         .replace('-3/4', '.75')), 2)
+'''Functions for displaying and storing dimension figures
+   all dimensions are stored in the database as Decimals in inches
+   Three units of measure (uom) are supported for converting
+   from and two display format: in, ft, and mix
+'''
+class DimensionsError(Exception): pass
 
-def dec_to_std(dec_number):
-    '''Convert Decimal to Us Standard measurement: 1.25 -> 1-14'''
-    return str(round(dec_number, 2))\
-        .replace('.00', '')\
-        .replace('.25', '-1/4')\
-        .replace('.50', '-1/2')\
-        .replace('.75', '-3/4')
+def display_dimensions(dec_length, dec_width, dec_height, uom):
+    '''Given decimal values in inches for l, w, h and a uom
+       return a human readable dimension string in one of these
+       formats based on uom:
+         in:  6 x 6-1/2 x 13 in
+         ft:  2 x 2 x 2 ft      (whole numbers only)
+         mix: 6'2" x 3'1" x 1'9"
+    '''
+    str = \
+        f"{dec_to_std(dec_length, uom)} x " \
+        f"{dec_to_std(dec_width , uom)} x " \
+        f"{dec_to_std(dec_height, uom)}"
+    if uom in ('in', 'ft'):
+        str = f'{str} {uom}.'
+    return str
+
+def storage_dimensions(std_number, uom):
+    '''Given a standard number as string and a uom
+       Return a list of l, w, and h as decimals suitable for storing
+       in the database.
+    '''
+    std_number2 = std_number.replace(f'{uom}.', '')
+    std_l, std_w, std_h = std_number2.split(' x ')
+    return [std_to_dec(std_l, uom),
+            std_to_dec(std_w, uom),
+            std_to_dec(std_h, uom)]
+
+def std_to_dec(std_number, uom='in'):
+    '''Convert US Standard measurement and a uom return it as a Decimal
+       value in inches. Three cases:
+          1. in:  6-1/4 -> 6.25
+          2. ft:  6     -> 72
+          3. mix: 6' 0" -> 72
+             mix: 6' 2" -> 72.1667
+    '''
+    if uom == 'in':
+        return round(Decimal(std_number\
+                             .replace('-1/4', '.25') \
+                             .replace('-1/2', '.50') \
+                             .replace('-3/4', '.75')), 2)
+    elif uom == 'ft':
+        return round(Decimal(std_number)*12,4)
+
+    elif uom == 'mix':
+        # match: n'[m"]
+        pattern = r'(\d+)\'(?:\s*(\d+)\s*"?)?'
+        match = re.search(pattern, std_number)
+        if match:
+            feet = int(match.group(1)) * 12
+            inches = 0
+            if match.group(2):
+                inches = int(match.group(2))
+            return round(Decimal(feet + inches/12), 4)
+        else:
+            raise DimensionsError(
+                f"Unrecognized stardard measurement: '{std_number}'")
+    else:
+        raise DimensionsError(
+            f"Unrecognized uom: dec_to_std('{std_number}', '{uom}')")
+
+def dec_to_std(dec_number, uom='in'):
+    '''Convert Decimal to US Standard measurement, given uom
+       Three cases
+         1. 1.25 in   -> 1-1/4 in.
+         2. 6 ft      -> 6 ft.
+         3. 6.1667 ft -> 6' 2"
+    '''
+    if uom == 'in':
+        return str(round(dec_number, 2))\
+            .replace('.00', '')\
+            .replace('.25', '-1/4')\
+            .replace('.50', '-1/2')\
+            .replace('.75', '-3/4')
+
+    elif uom == 'ft':
+        return str(dec_number // 12)
+
+    elif uom == 'mix':
+        dec_int= int(dec_number)
+        inches = round((dec_number-dec_int) * 12, 0)
+        feet = dec_int//12
+        if inches:
+            return f'{feet}\'{inches}"'
+        else:
+            return f'{feet}\''
+    else:
+        raise DimensionsError(
+            f"Unrecognized uom: dec_to_std('{round(dec_number, 4)}', '{uom}')")
