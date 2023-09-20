@@ -7,7 +7,7 @@ from vlib.odict import odict
 from vlib.utils import lazyproperty, validate_num_args
 
 from piece_images import PieceImages
-from dimensions import dec_to_std
+from dimensions import display_dimensions
 
 class Pieces(DataTable):
 
@@ -47,11 +47,7 @@ class Piece(DataRecord):
     def dimensions(self):
         dimensions = ''
         if self.length and self.width and self.height:
-            dimensions = \
-                f'{dec_to_std(self.length)} x {dec_to_std(self.width)} x ' \
-                f'{dec_to_std(self.height)}'
-            if self.dim_uom:
-                dimensions = f'{dimensions} {self.dim_uom}'
+            dimensions = display_dimensions(self.length,self.width,self.height)
         return dimensions
 
 class PiecesCLIError(Exception): pass
