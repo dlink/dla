@@ -26,6 +26,16 @@ class Image():
         self.action_statuses.append(f'{outfilepath} created.')
 
     @lazyproperty
+    def file_size(self):
+        if os.path.exists(self.filepath):
+            file_size_bytes = os.path.getsize(self.filepath)
+            file_size_kb = file_size_bytes // 1024  # Convert to kilobytes
+            #file_size_mb = file_size_kb // 1024     # Convert to megabytes
+            return file_size_kb
+        else:
+            print("File does not exist.")
+
+    @lazyproperty
     def fileparts(self):
         '''Return
               directory  : /data/dla/images/pieces/break_free
@@ -42,7 +52,10 @@ class Image():
     def stat(self):
         im = Pil.open(self.filepath)
         Image(self.filepath)
-        return f'{self.filepath}: {im.size}, {im.format}, {im.mode}'
+        print('\n'.join(dir(self.__dict__)))
+        return \
+            f'{self.filepath}: {self.file_size}kb, {im.size}, '\
+            f'{im.format}, {im.mode}'
 
 class ImagesCLIError(Exception): pass
 
