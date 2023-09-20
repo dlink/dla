@@ -8,7 +8,7 @@ from decimal import Decimal
 '''
 class DimensionsError(Exception): pass
 
-def display_dimensions(dec_length, dec_width, dec_height, uom):
+def display_dimensions(dec_length, dec_width, dec_height, uom=None):
     '''Given decimal values in inches for l, w, h and a uom
        return a human readable dimension string in one of these
        formats based on uom:
@@ -16,6 +16,20 @@ def display_dimensions(dec_length, dec_width, dec_height, uom):
          ft:  2 x 2 x 2 ft      (whole numbers only)
          mix: 6'2" x 3'1" x 1'9"
     '''
+    # if no uom passed in, determine best format
+    max_d = 0
+    only_ints = True
+    for d in dec_length, dec_width, dec_height:
+        max_d = max(max_d, d)
+        if d % 1 != 0:
+            only_ints = False
+    if max_d <= 24:
+        uom = 'in'
+    elif only_ints:
+        uom = 'ft'
+    else:
+        uom = 'mix'
+
     str = \
         f"{dec_to_std(dec_length, uom)} x " \
         f"{dec_to_std(dec_width , uom)} x " \
@@ -96,3 +110,5 @@ def dec_to_std(dec_number, uom='in'):
     else:
         raise DimensionsError(
             f"Unrecognized uom: dec_to_std('{round(dec_number, 4)}', '{uom}')")
+
+#print(storage_dimensions('6\'2" x 3\'1" x 1\'9"', 'mix'))
