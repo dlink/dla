@@ -5,6 +5,9 @@ from PIL import Image as Pil
 
 from vlib.utils import lazyproperty, validate_num_args
 
+class Images():
+    HIRES = 1200
+
 class ImageError(Exception): pass
 
 class Image():
@@ -15,12 +18,17 @@ class Image():
             self.fileparts
         self.action_statuses = []
 
-    def resize(self, width=None, height=None):
+    @lazyproperty
+    def img(self):
+        return Pil.open(self.filepath)
+
+    def resize(self, width=None, height=None, outputfile=None, inplace=False):
         if not width and not height:
             raise ImageError('resize: must specify either width or height.')
+        if not inplace and not outputfile:
+            raise ImageError('Must specify outputfile or pass inplace=True')
 
-        img = Pil.open(self.filepath)
-        old_width, old_height = img.size
+        old_width, old_height = self.img.size
         if width and not height:
             width = int(width)
             ratio = float(width / old_width)
@@ -32,20 +40,22 @@ class Image():
         else:
             width = int(width)
             height = int(height)
-        resized_img = img.resize((width, height))
+        resized_img = self.img.resize((width, height))
 
-        # make backup of file
-        done = bk = 0
-        while not done:
-            bk += 1
-            dir = self.dir + '/' if self.dir else ''
-            bk_filepath = f'{self.dir}{self.filename_wo}_bk{bk}{self.ext}'
-            if not os.path.exists(bk_filepath):
-                done = 1
-        img.save(bk_filepath)
+        if inplace:
+            # make backup of file
+            done = bk = 0
+            while not done:
+                bk += 1
+                dir = self.dir + '/' if self.dir else ''
+                bk_filepath = f'{self.dir}{self.filename_wo}_bk{bk}{self.ext}'
+                if not os.path.exists(bk_filepath):
+                    done = 1
+            self.img.save(bk_filepath)
+            outputfile = self.filepath
 
         # write file
-        resized_img.save(self.filepath)
+        resized_img.save(outputfile)
 
     def to_png(self):
         '''Create a png file'''
@@ -82,13 +92,21 @@ class Image():
         filename = filename_wo + extension
         return directory, filename, filename_wo, extension
 
-    @lazyproperty
+    @property
     def stat(self):
-        im = Pil.open(self.filepath)
-        Image(self.filepath)
+        #im = Pil.open(self.filepath)
         return \
-            f'{self.filepath}: {self.file_size}kb, {im.size}, '\
-            f'{im.format}, {im.mode}'
+            f'{self.filepath}: {self.file_size}kb, {self.img.size}, '\
+            f'{self.img.format}, {self.img.mode}'
+    @property
+    def size(self):
+        return self.img.size
+    @property
+    def width(self):
+        return self.img.size[0]
+    @property
+    def height(self):
+        return self.img.size[1]
 
 class ImagesCLIError(Exception): pass
 
@@ -103,13 +121,14 @@ class ImagesCLI(object):
         '''
         from cli import CLI
         commands = [
-            'resize <filepath> <width> <height>',
-            'resize_by_width <filepath> <width>',
-            'resize_by_height <filepath> <height>',
+            'resize <filepath> <width> <height> [<output_file>]',
+            'resize_by_width <filepath> <width> [<output_file>]',
+            'resize_by_height <filepath> <height> [<output_file>]',
             'stat <filepath>',
             'to_png <filepath>',
         ]
-        self.cli = CLI(self.process, commands)
+        options = {'i': 'edit inplace'}
+        self.cli = CLI(self.process, commands, options)
         self.cli.process()
 
     def process(self, *args):
@@ -119,19 +138,39 @@ class ImagesCLI(object):
         cmd = args.pop(0)
 
         if cmd == 'resize':
-            validate_num_args('resize', 3, args)
+            num_args = 3
+            if self.cli.hasoption.get('i'):
+                num_args = 2
+            validate_num_args('resize', num_args, args)
             filepath = args.pop(0)
             width = args.pop(0)
             height = args.pop(0)
-            return Image(filepath).resize(width, height)
+            if self.cli.hasoption.get('i'):
+                outputfile = None
+                inplace = 1
+            else:
+                outputfile = args.pop(0)
+                inplace = 0
+            return Image(filepath).resize(width, height, outputfile, inplace)
         if cmd in ('resize_by_width', 'resize_by_height'):
-            validate_num_args('resize', 2, args)
+            num_args = 2
+            if self.cli.hasoption.get('i'):
+                num_args = 1
+            validate_num_args('resize', num_args, args)
             filepath = args.pop(0)
             pixels = args.pop(0)
-            if 'width' in cmd:
-                return Image(filepath).resize(width=pixels)
+            if self.cli.hasoption.get('i'):
+                outputfile = None
+                inplace = 1
             else:
-                return Image(filepath).resize(height=pixels)
+                outputfile = args.pop(0)
+                inplace = 0
+            if 'width' in cmd:
+                return Image(filepath).resize(
+                    width=pixels, outputfile=outputfile, inplace=inplace)
+            else:
+                return Image(filepath).resize(
+                    height=pixels, outputfile=outputfile, inplace=inplace)
 
         elif cmd == 'stat':
             validate_num_args('stat', 1, args)
