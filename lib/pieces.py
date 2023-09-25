@@ -39,6 +39,16 @@ class Piece(DataRecord):
             id=f'code="{code}"'
         DataRecord.__init__(self, self.db, 'pieces', id)
 
+    def initImageDirs(self):
+        return self.images.initImageDirs()
+
+    def loadImage(self, img_filepath):
+        # check stats on input - make sure it is high res
+        # copy image into directory structure
+        # redesign resize command to take src and dst
+        # run resize command into each subdir display, thumb, tiny
+        pass
+
     @lazyproperty
     def images(self):
         return PieceImages(self)
@@ -62,7 +72,11 @@ class PiecesCLI(object):
            for Pieces Module
         '''
         from cli import CLI
-        commands = ['images <id|code>']
+        commands = [
+            'init_image_dirs <id|code',
+            'images <id|code>',
+            'load_image <id|code> <img_filepath>'
+        ]
         self.cli = CLI(self.process, commands)
         self.cli.process()
 
@@ -72,7 +86,18 @@ class PiecesCLI(object):
         args = list(args)
         cmd = args.pop(0)
 
-        if cmd == 'images':
+        if cmd == 'init_image_dirs':
+            validate_num_args('init_image_dirs', 1, args)
+            filter = args.pop(0)
+            return Piece(filter).initImageDirs()
+
+        elif cmd == 'load_image':
+            validate_num_args('load_image', 2, args)
+            filter = args.pop(0)
+            img_filepath = args.pop(0)
+            return Piece(filter).loadImage(im_filepath)
+
+        elif cmd == 'images':
             validate_num_args('images', 1, args)
             filter = args.pop(0)
             return Piece(filter).images.filepaths
