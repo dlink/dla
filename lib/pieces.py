@@ -8,6 +8,7 @@ from vlib.utils import lazyproperty, validate_num_args
 
 from piece_images import PieceImages
 from dimensions import display_dimensions
+import env
 
 class Pieces(DataTable):
 
@@ -38,6 +39,7 @@ class Piece(DataRecord):
             code = id
             id=f'code="{code}"'
         DataRecord.__init__(self, self.db, 'pieces', id)
+        self.verbose = verbose
 
     def initImageDirs(self):
         return self.images.initImageDirs()
@@ -63,6 +65,9 @@ class PiecesCLI(object):
        Used for discovery
     '''
 
+    def __init__(self):
+        self.env = env.getInstance()
+
     def run(self):
         '''Set up Command Line (CLI) commands and options
            for Pieces Module
@@ -81,6 +86,9 @@ class PiecesCLI(object):
         '''
         args = list(args)
         cmd = args.pop(0)
+
+        if self.cli.hasoption.get('v'):
+            self.env.verbose = 1
 
         if cmd == 'init_image_dirs':
             validate_num_args('init_image_dirs', 1, args)

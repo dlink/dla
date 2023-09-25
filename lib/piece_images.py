@@ -1,4 +1,5 @@
 
+import os
 import shutil
 
 from vlib import db
@@ -9,6 +10,9 @@ from vlib.utils import lazyproperty
 
 from images import Images, Image
 from utils import mkdir_p
+import env
+
+class PieceImagesError(Exception): pass
 
 class PieceImages():
 
@@ -22,6 +26,8 @@ class PieceImages():
         self.url_basepath = f'images/pieces/{self.piece.code}'
         self.getImages()
         self.warnings = []
+        self.env = env.getInstance()
+        self.verbose = self.env.verbose
 
     def initImageDirs(self):
         mkdir_p(f'{self.file_basedir}/display')
@@ -40,12 +46,16 @@ class PieceImages():
 
         # copy image into directory structure
         shutil.copy(img_filepath, self.file_basedir)
+        if self.verbose:
+            print(f'{self.file_basedir} added.')
 
         # resize image for each size type:
         for size in Images.SIZES.keys():
             width = Images.SIZES[size]
             outputfile = f'{self.file_basedir}/{size}/{img.filename}'
             img.resize(width=width, outputfile=outputfile)
+            if self.verbose:
+                print(f'{outputfile} created')
 
         self.printWarnings()
 
