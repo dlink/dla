@@ -43,11 +43,7 @@ class Piece(DataRecord):
         return self.images.initImageDirs()
 
     def loadImage(self, img_filepath):
-        # check stats on input - make sure it is high res
-        # copy image into directory structure
-        # redesign resize command to take src and dst
-        # run resize command into each subdir display, thumb, tiny
-        pass
+        return self.images.loadImage(img_filepath)
 
     @lazyproperty
     def images(self):
@@ -95,7 +91,7 @@ class PiecesCLI(object):
             validate_num_args('load_image', 2, args)
             filter = args.pop(0)
             img_filepath = args.pop(0)
-            return Piece(filter).loadImage(im_filepath)
+            return Piece(filter).loadImage(img_filepath)
 
         elif cmd == 'images':
             validate_num_args('images', 1, args)

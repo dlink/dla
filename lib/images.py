@@ -7,6 +7,10 @@ from vlib.utils import lazyproperty, validate_num_args
 
 class Images():
     HIRES = 1200
+    SIZES = {'tiny': 150,
+             'thumb': 200,
+             'display': 800,
+             }
 
 class ImageError(Exception): pass
 

@@ -1,10 +1,13 @@
 
+import shutil
+
 from vlib import db
 from vlib import conf
 from vlib.datatable import DataTable
 from vlib.odict import odict
 from vlib.utils import lazyproperty
 
+from images import Images, Image
 from utils import mkdir_p
 
 class PieceImages():
@@ -14,15 +17,37 @@ class PieceImages():
         self.db = db.getInstance()
         self.conf = conf.getInstance()
         self.pieceImagesDt = DataTable(self.db, 'piece_images')
-        self.image_basedir = \
+        self.file_basedir = \
             f'{self.conf.data_dir}/images/pieces/{self.piece.code}'
         self.url_basepath = f'images/pieces/{self.piece.code}'
         self.getImages()
+        self.warnings = []
 
     def initImageDirs(self):
-        mkdir_p(f'{self.image_basedir}/display')
-        mkdir_p(f'{self.image_basedir}/thumb')
-        mkdir_p(f'{self.image_basedir}/tiny')
+        mkdir_p(f'{self.file_basedir}/display')
+        mkdir_p(f'{self.file_basedir}/thumb')
+        mkdir_p(f'{self.file_basedir}/tiny')
+
+    def loadImage(self, img_filepath):
+        self.warnings = []
+
+        # instanciate Image Obj
+        img = Image(img_filepath)
+
+        # check stats on input - make sure it is high res
+        if img.width < Images.HIRES or img.height < Images.HIRES:
+            self.warnings.append(f'Image is not hi-res: {img.size}')
+
+        # copy image into directory structure
+        shutil.copy(img_filepath, self.file_basedir)
+
+        # resize image for each size type:
+        for size in Images.SIZES.keys():
+            width = Images.SIZES[size]
+            outputfile = f'{self.file_basedir}/{size}/{img.filename}'
+            img.resize(width=width, outputfile=outputfile)
+
+        self.printWarnings()
 
     def getImages(self):
         '''Return a list of piece_image odicts
@@ -33,7 +58,7 @@ class PieceImages():
         self.data = []
         for pi in self.pieceImagesDt.getTable():
             pi = odict(pi)
-            pi.filepath = f'{self.image_basedir}/{pi.filename}'
+            pi.filepath = f'{self.file_basedir}/{pi.filename}'
 
             pi.url = f'{self.url_basepath}/display/{pi.filename}'
             pi.tiny_url = f'{self.url_basepath}/tiny/{pi.filename}'
@@ -41,17 +66,21 @@ class PieceImages():
 
             self.data.append(pi)
 
-    @lazyproperty
+    def printWarnings(self):
+        for warning in self.warnings:
+            print(f'WARNING: {warning}')
+
+    @property
     def filepaths(self):
         return [pi.filepath for pi in self.data]
 
-    @lazyproperty
+    @property
     def urls(self):
         return [pi.url for pi in self.data]
-    @lazyproperty
+    @property
     def tiny_urls(self):
         return [pi.tiny_url for pi in self.data]
-    @lazyproperty
+    @property
     def thumb_urls(self):
         return [pi.thumb_url for pi in self.data]
 
