@@ -1,6 +1,6 @@
 from vlib import conf
 from vlib.utils import lazyproperty
-from vweb.html import img
+from vweb.html import a, img
 
 class Thumbnail():
 
@@ -14,9 +14,12 @@ class Thumbnail():
         piece = self.piece
         image_url = ''
         if piece.images.urls:
-            image_url = image_url = piece.images.urls[0]
+            image_url = piece.images.urls[0]
+            image_tag = img(src=image_url)
+            href=f'/piece?id={piece.id}'
+            image_link = a(image_tag, href=href)
         return template.format(
-            image_url=image_url,
+            image=image_link,
             name=piece.name,
             year=piece.created_year,
             materials=piece.material,

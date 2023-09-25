@@ -39,7 +39,6 @@ class Piece(DataRecord):
             code = id
             id=f'code="{code}"'
         DataRecord.__init__(self, self.db, 'pieces', id)
-        self.verbose = verbose
 
     def initImageDirs(self):
         return self.images.initImageDirs()
