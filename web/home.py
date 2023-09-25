@@ -7,7 +7,7 @@ from thumbnails import Thumbnail
 
 class HomePage(BasePage):
 
-    panel_max_cols = 3
+    panel_max_cols = 4
 
     def __init__(self):
         BasePage.__init__(self, 'DLA')
