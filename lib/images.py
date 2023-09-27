@@ -100,7 +100,7 @@ class Image():
     def stat(self):
         #im = Pil.open(self.filepath)
         dpi = list(self.img.info['dpi'])
-        dpi_str = f'({int(dpi[0])},{int(dpi[1])}) dpi'
+        dpi_str = f'({dpi[0]:.0f},{dpi[1]:.0f}) dpi'
         return \
             f'{self.filepath}: {self.file_size}kb, {self.img.size}, '\
             f'{dpi_str}, ' \
