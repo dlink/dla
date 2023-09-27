@@ -99,8 +99,11 @@ class Image():
     @property
     def stat(self):
         #im = Pil.open(self.filepath)
+        dpi = list(self.img.info['dpi'])
+        dpi_str = f'({int(dpi[0])},{int(dpi[1])}) dpi'
         return \
             f'{self.filepath}: {self.file_size}kb, {self.img.size}, '\
+            f'{dpi_str}, ' \
             f'{self.img.format}, {self.img.mode}'
     @property
     def size(self):
