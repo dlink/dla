@@ -34,7 +34,7 @@ class PieceImages():
         mkdir_p(f'{self.file_basedir}/thumb')
         mkdir_p(f'{self.file_basedir}/tiny')
 
-    def loadImage(self, img_filepath):
+    def addImage(self, img_filepath):
         self.warnings = []
 
         # instanciate Image Obj

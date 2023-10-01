@@ -24,6 +24,12 @@ class Pieces(DataTable):
             all.append(Piece(rec['id']))
         return all
 
+    def list(self):
+        header = ['id', 'name', 'created_year']
+        rows = []
+        for piece in self.getAll():
+            rows.append([piece.id, piece.name, piece.created_year])
+        return [[f for f in r] for r in rows]
 
 class Piece(DataRecord):
 
@@ -43,8 +49,8 @@ class Piece(DataRecord):
     def initImageDirs(self):
         return self.images.initImageDirs()
 
-    def loadImage(self, img_filepath):
-        return self.images.loadImage(img_filepath)
+    def addImage(self, img_filepath):
+        return self.images.addImage(img_filepath)
 
     @lazyproperty
     def images(self):
@@ -73,9 +79,12 @@ class PiecesCLI(object):
         '''
         from cli import CLI
         commands = [
+            'add <name>',
+            'add_edition <id|code> <csv_filepath>',
+            'add_image <id|code> <img_filepath>',
+            'list',
             'init_image_dirs <id|code',
             'images <id|code>',
-            'load_image <id|code> <img_filepath>'
         ]
         self.cli = CLI(self.process, commands)
         self.cli.process()
@@ -89,16 +98,19 @@ class PiecesCLI(object):
         if self.cli.hasoption.get('v'):
             self.env.verbose = 1
 
-        if cmd == 'init_image_dirs':
+        if cmd == 'list':
+            return Pieces().list()
+
+        elif cmd == 'init_image_dirs':
             validate_num_args('init_image_dirs', 1, args)
             filter = args.pop(0)
             return Piece(filter).initImageDirs()
 
-        elif cmd == 'load_image':
+        elif cmd == 'add_image':
             validate_num_args('load_image', 2, args)
             filter = args.pop(0)
             img_filepath = args.pop(0)
-            return Piece(filter).loadImage(img_filepath)
+            return Piece(filter).addImage(img_filepath)
 
         elif cmd == 'images':
             validate_num_args('images', 1, args)
