@@ -66,15 +66,6 @@ def setEnvVars():
 
 def snake2camel(name):
     '''Eq.: convert smale_pieces to smallPieces'''
-
-    # general case:
     parts = name.split('_')
     camel = ''.join(x.title() for x in parts)
-
-    # spec case for BC and GA modules.
-    if camel[0:2] == 'Bc':
-        camel = 'BC' + camel[2:]
-    elif camel[0:2] == 'Ga':
-        camel = 'GA' + camel[2:]
-
     return camel
