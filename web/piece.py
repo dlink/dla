@@ -36,12 +36,14 @@ class PiecePage(BasePage):
         if not self.piece:
             return p('No art piece selected.  Use piece_id=nn')
 
-        return \
+        return div(
             self.getPicMenu() + \
             self.getMainPic() + \
-            self.getPieceDescription()
+            self.getPieceDescription(),
+            id='pic-container')
 
     def getPicMenu(self):
+        return ''
         o = ''
         if len(self.piece.images.tiny_urls) > 1:
             for image_url in self.piece.images.tiny_urls:

@@ -1,5 +1,17 @@
+#pic-container {
+    /* display: grid; */
+    /* place-items: center; */
+    max-width: 600px;
+    margin: auto;
+}
+#main-pic img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
 #piece-description-container {
-    width: 800px;
+    max0width: 600px;
+    padding: 10px;
 }
 .piece-name {
     font-weight: bold;

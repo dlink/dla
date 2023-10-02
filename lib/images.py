@@ -9,7 +9,7 @@ class Images():
     HIRES = 1200
     SIZES = {'tiny': 100,
              'thumb': 200,
-             'display': 800,
+             'display': 600,
              }
 
 class ImageError(Exception): pass
