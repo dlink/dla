@@ -1,0 +1,14 @@
+/* .gallery { */
+/*     padding: 2rem; */
+/* } */
+
+.gallery > .gallery__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-rows: repeat(6, 320px);
+  /* grid-gap: 1rem; */
+  grid-auto-flow: dense;
+}
+.gallery > .gallery__list li {
+  list-style: none;
+}    

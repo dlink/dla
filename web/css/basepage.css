@@ -3,10 +3,10 @@ body {
 }
 #aside-and-main {
     border: 1px solid black;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-    margin: auto;
-    width: 1100px;
-    padding: 10px;
+    /* display: flex; */
+    /* flex-flow: row wrap; */
+    /* justify-content: flex-start; */
+    /* margin: auto; */
+    /* width: 1100px; */
+    /* padding: 10px; */
 }

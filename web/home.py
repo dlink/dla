@@ -1,5 +1,6 @@
 
 from vweb.htmltable import HtmlTable
+from vweb.html import div, li, ul
 
 from basepage import BasePage
 from pieces import Pieces
@@ -13,25 +14,16 @@ class HomePage(BasePage):
         BasePage.__init__(self, 'DLA')
         self.pieces = Pieces()
         self.style_sheets.extend([
-            self.versionize('css/pieces_panel.css'),
+            self.versionize('css/gallery.css'),
             self.versionize('css/thumbnails.css')
         ])
 
     def getPageContent(self):
-        table = HtmlTable(class_='pieces-panel')
-        selected_pieces = self.pieces.getAll()
-        row = []
-        done = 0
-        i = 0
-        for piece in selected_pieces:
-            i += 1
-            if i % self.panel_max_cols == 1 and i != 1:
-                table.addRow(row)
-                row = []
-            row.append(Thumbnail(piece).html)
-        if row:
-            table.addRow(row)
-        return table.getTable()
+        lis = ''
+        for piece in self.pieces.getAll():
+            lis += li(Thumbnail(piece).html)
+
+        return div(ul(lis, class_='gallery__list'), class_='gallery')
 
 if __name__ == '__main__':
     HomePage().go()
