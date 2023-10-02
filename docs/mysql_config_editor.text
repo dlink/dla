@@ -1,0 +1,28 @@
+The [[Mysql_config_editor]] is used to encrypt database passwords in a
+config file, to be used with the mysql command on the command line.
+
+The old way of using mysql with the -p or --password option now gives
+this warning ...
+
+    mysql: [Warning] Using a password on the command line interface
+    can be insecure.
+
+== Set Password ==
+
+    mysql_config_editor set --login-path=central --user=central
+    --host=1c33...rackspaceclouddb.com --password
+
+This command updates ~/.mylogin.cnf:
+
+== Show Config ==
+
+
+    mysql_config_editor print --all
+    
+    [central]
+    user = central
+    password = *****
+    host = 1c3311767e89165e54a88ad6280f2cb1184d0dea.rackspaceclouddb.com
+
+== Use It ==
+    mysql --login-path=central central
