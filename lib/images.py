@@ -7,7 +7,7 @@ from vlib.utils import lazyproperty, validate_num_args
 
 class Images():
     HIRES = 1200
-    SIZES = {'tiny': 150,
+    SIZES = {'tiny': 100,
              'thumb': 200,
              'display': 800,
              }
@@ -99,8 +99,10 @@ class Image():
     @property
     def stat(self):
         #im = Pil.open(self.filepath)
-        dpi = list(self.img.info['dpi'])
-        dpi_str = f'({dpi[0]:.0f},{dpi[1]:.0f}) dpi'
+        dpi_str = ''
+        if 'dpi' in self.img.info:
+            dpi = list(self.img.info['dpi'])
+            dpi_str = f'({dpi[0]:.0f},{dpi[1]:.0f}) dpi'
         return \
             f'{self.filepath}: {self.file_size}kb, {self.img.size}, '\
             f'{dpi_str}, ' \
