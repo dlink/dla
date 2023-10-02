@@ -1,5 +1,7 @@
 #!/bin/env python
 
+from mistune import markdown
+
 from vlib import db
 from vlib.datatable import DataTable
 from vlib.datarecord import DataRecord
@@ -45,6 +47,8 @@ class Piece(DataRecord):
             code = id
             id=f'code="{code}"'
         DataRecord.__init__(self, self.db, 'pieces', id)
+        self.data.dimensions = self.dimensions
+        self.data.description_html = markdown(self.description)
 
     def initImageDirs(self):
         return self.images.initImageDirs()

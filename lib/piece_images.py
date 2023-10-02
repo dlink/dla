@@ -85,12 +85,12 @@ class PieceImages():
         return [pi.filepath for pi in self.data]
 
     @property
-    def urls(self):
+    def display_urls(self):
         return [pi.url for pi in self.data]
-    @property
-    def tiny_urls(self):
-        return [pi.tiny_url for pi in self.data]
     @property
     def thumb_urls(self):
         return [pi.thumb_url for pi in self.data]
+    @property
+    def tiny_urls(self):
+        return [pi.tiny_url for pi in self.data]
 

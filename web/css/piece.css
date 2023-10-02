@@ -1,0 +1,9 @@
+#piece-description-container {
+    width: 800px;
+}
+.piece-name {
+    font-weight: bold;
+}
+.piece-dimensions {
+    font-style: italic;
+}

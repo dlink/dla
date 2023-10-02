@@ -13,8 +13,8 @@ class Thumbnail():
         template = self.getTemplate('thumbnail.html')
         piece = self.piece
         image_url = ''
-        if piece.images.urls:
-            image_url = piece.images.urls[0]
+        if piece.images.thumb_urls:
+            image_url = piece.images.thumb_urls[0]
             image_tag = img(src=image_url)
             href=f'/piece?id={piece.id}'
             image_link = a(image_tag, href=href)
