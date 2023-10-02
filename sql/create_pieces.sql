@@ -3,7 +3,6 @@ create table pieces (
   medium_id    integer unsigned not null,
   code         varchar(20) not null,
   name         varchar(100) not null,
-  description  varchar(250),
   material     varchar(100),
   created      datetime,
   created_year integer unsigned,
@@ -13,6 +12,9 @@ create table pieces (
   dim_uom      varchar(5),
   weight       decimal(6,2),
   weight_uom   varchar(5),
+  location     varchar(250),
+  short_description varchatr(250),
+  description  text,
   notes        varchar(250),
 
   r_created    datetime     null,
