@@ -43,9 +43,10 @@ class PiecePage(BasePage):
 
     def getPicMenu(self):
         o = ''
-        for image_url in self.piece.images.tiny_urls:
-            pic = img(src=f'{image_url}')
-            o += span(pic)
+        if len(self.piece.images.tiny_urls) > 1:
+            for image_url in self.piece.images.tiny_urls:
+                pic = img(src=f'{image_url}')
+                o += span(pic)
         return div(o, id='piece-pic-menu')
 
     def getMainPic(self):
