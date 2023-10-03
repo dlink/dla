@@ -57,8 +57,11 @@ class PiecePage(BasePage):
         lis = ''
         if len(self.piece.images.tiny_urls) > 1:
             for i, image_url in enumerate(self.piece.images.tiny_urls):
+                class_ = 'pic-menu-item'
+                if i == self.pic_num:
+                    class_ += ' pic-menu-selected'
                 pic = img(src=f'{image_url}', id=f'pic-num-{i}',
-                          class_='pic-menu-item')
+                          class_=class_)
                 lis += li(pic)
         return div(ul(lis, class_='piece-menu__list'), class_='piece-menu')
 

@@ -45,4 +45,10 @@
 .piece-menu > .piece-menu__list li {
     list-style: none;
 }    
-
+.piece-menu .pic-menu-item {
+    padding: 3px;
+}
+.piece-menu .pic-menu-selected {
+    padding: 2px;
+    border: 1px solid black;
+}
