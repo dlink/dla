@@ -43,8 +43,8 @@ class PiecePage(BasePage):
 
         return div(
             # self.formFields() + \
-            self.getPicMenu() + \
             self.getMainPic() + \
+            self.getPicMenu() + \
             self.getPieceDescription(),
             id='pic-container')
 
