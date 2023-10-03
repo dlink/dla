@@ -42,16 +42,16 @@ class PiecePage(BasePage):
             return p('No art piece selected.  Use piece_id=nn')
 
         return div(
-            self.formFields() + \
+            # self.formFields() + \
             self.getPicMenu() + \
             self.getMainPic() + \
             self.getPieceDescription(),
             id='pic-container')
 
-    def formFields(self):
-        pic_id = input(name='id', value=self.id, type='hidden')
-        pic_num = input(name='pic_num', value=self.pic_num, type='hidden')
-        return pic_id + pic_num
+    # def formFields(self):
+    #     pic_id = input(name='id', value=self.id, type='hidden')
+    #     pic_num = input(name='pic_num', value=self.pic_num, type='hidden')
+    #     return pic_id + pic_num
             
     def getPicMenu(self):
         lis = ''
@@ -66,8 +66,13 @@ class PiecePage(BasePage):
         return div(ul(lis, class_='piece-menu__list'), class_='piece-menu')
 
     def getMainPic(self):
-        o = img(src=self.piece.images.display_urls[self.pic_num])
-        return div(o, id='main-pic')
+        o = ''
+        for i, url in enumerate(self.piece.images.display_urls):
+            class_ = 'main-pic'
+            if i == 0:
+                class_ += ' selected'
+            o += img(src=url, class_=class_)
+        return div(o, id='main-pic-container')
 
     def getPieceDescription(self):
         template = self.getTemplate('piece_description.html')

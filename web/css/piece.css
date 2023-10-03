@@ -4,11 +4,16 @@
     max-width: 600px;
     margin: auto;
 }
-#main-pic img {
+img.main-pic {
+    display: none;
     max-width: 100%;
     max-height: 680px;
     padding: 10px;
 }
+img.main-pic.selected {
+    display: block;
+}
+
 #piece-description-container {
     max0width: 600px;
     padding: 10px;
