@@ -2,7 +2,7 @@
 from vlib.datarecord import DataRecordNotFound
 
 from vweb.htmltable import HtmlTable
-from vweb.html import div, img, p, span
+from vweb.html import div, img, input, li, p, span, ul
 
 from basepage import BasePage
 from pieces import Piece
@@ -14,10 +14,13 @@ class PiecePage(BasePage):
         BasePage.__init__(self, 'Piece Page')
         self.piece = None
         self.piece_not_found = 0
+        self.javascript_src.extend(['js/piece.js'])
         self.style_sheets.extend([
             self.versionize('css/main.css'),
             self.versionize('css/piece.css'),
+            self.versionize('css/gallery.css'),
         ])
+        self.pic_num = 0
 
     def process(self):
         BasePage.process(self)
@@ -29,6 +32,8 @@ class PiecePage(BasePage):
                 self.piece = Piece(id)
             except DataRecordNotFound as e:
                 self.piece_not_found = 1
+        # get pic_num
+        self.pic_num = int(self.form.get('pic_num', 0))
 
     def getPageContent(self):
         if self.piece_not_found:
@@ -37,22 +42,28 @@ class PiecePage(BasePage):
             return p('No art piece selected.  Use piece_id=nn')
 
         return div(
+            self.formFields() + \
             self.getPicMenu() + \
             self.getMainPic() + \
             self.getPieceDescription(),
             id='pic-container')
 
+    def formFields(self):
+        pic_id = input(name='id', value=self.id, type='hidden')
+        pic_num = input(name='pic_num', value=self.pic_num, type='hidden')
+        return pic_id + pic_num
+            
     def getPicMenu(self):
-        return ''
-        o = ''
+        lis = ''
         if len(self.piece.images.tiny_urls) > 1:
-            for image_url in self.piece.images.tiny_urls:
-                pic = img(src=f'{image_url}')
-                o += span(pic)
-        return div(o, id='piece-pic-menu')
+            for i, image_url in enumerate(self.piece.images.tiny_urls):
+                pic = img(src=f'{image_url}', id=f'pic-num-{i}',
+                          class_='pic-menu-item')
+                lis += li(pic)
+        return div(ul(lis, class_='piece-menu__list'), class_='piece-menu')
 
     def getMainPic(self):
-        o = img(src=self.piece.images.display_urls[0])
+        o = img(src=self.piece.images.display_urls[self.pic_num])
         return div(o, id='main-pic')
 
     def getPieceDescription(self):

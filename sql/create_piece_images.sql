@@ -3,6 +3,7 @@ create table piece_images (
    id          integer unsigned not null auto_increment primary key,
    piece_id    integer unsigned not null,
    filename    varchar(255)     not null,
+   sort_order  integer unsigned not null default 1,
    active      boolean          not null default 1,
    
    r_created   datetime         null,

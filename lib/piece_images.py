@@ -65,6 +65,7 @@ class PieceImages():
            Add filepath, and url
         '''
         self.pieceImagesDt.setFilters({'piece_id': self.piece.id})
+        self.pieceImagesDt.setOrderBy('sort_order')
         self.data = []
         for pi in self.pieceImagesDt.getTable():
             pi = odict(pi)
