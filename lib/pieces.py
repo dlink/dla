@@ -1,14 +1,14 @@
 #!/bin/env python
 
-from mistune import markdown
-
 from vlib import db
 from vlib.datatable import DataTable
 from vlib.datarecord import DataRecord
 from vlib.odict import odict
 from vlib.utils import lazyproperty, validate_num_args
 
+from piece_descriptions import PieceDescription
 from piece_images import PieceImages
+
 from dimensions import display_dimensions
 import env
 
@@ -48,7 +48,7 @@ class Piece(DataRecord):
             id=f'code="{code}"'
         DataRecord.__init__(self, self.db, 'pieces', id)
         self.data.dimensions = self.dimensions
-        self.data.description_html = markdown(self.description)
+        self.data.description_html = self.description_html
 
     def initImageDirs(self):
         return self.images.initImageDirs()
@@ -66,6 +66,10 @@ class Piece(DataRecord):
         if self.length and self.width and self.height:
             dimensions = display_dimensions(self.length,self.width,self.height)
         return dimensions
+
+    @lazyproperty
+    def description_html(self):
+        return PieceDescription(self).description_html
 
 class PiecesCLIError(Exception): pass
 

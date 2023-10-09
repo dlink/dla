@@ -14,8 +14,6 @@ create table pieces (
   weight_uom   varchar(5),
   location     varchar(250),
   short_description varchatr(250),
-  description  text,
-  notes        varchar(250),
 
   r_created    datetime     null,
   r_updated    timestamp    not null
@@ -29,13 +27,3 @@ engine InnoDB default charset=utf8;
 create trigger pieces_create before insert on pieces
    for each row set new.r_created = now()
 ;
-
-insert into pieces
-   (medium_id, code, name, material, created_year, length, width,
-   height, dim_uom)
-values
-  (1, 'gardian', 'Guardian', 'Welded Aluminum, Powder Coated',
-  '2023', 2, 2, 6, 'ft')
-;
-
-select * from pieces;
