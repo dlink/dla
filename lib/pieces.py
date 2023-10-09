@@ -6,6 +6,7 @@ from vlib.datarecord import DataRecord
 from vlib.odict import odict
 from vlib.utils import lazyproperty, validate_num_args
 
+from piece_statuses import PieceStatuses
 from piece_descriptions import PieceDescription
 from piece_images import PieceImages
 
@@ -27,10 +28,11 @@ class Pieces(DataTable):
         return all
 
     def list(self):
-        header = ['id', 'name', 'created_year']
+        header = ['id', 'name', 'created_year', 'status']
         rows = []
         for piece in self.getAll():
-            rows.append([piece.id, piece.name, piece.created_year])
+            rows.append([piece.id, piece.name, piece.created_year,
+                         piece.status])
         return [[f for f in r] for r in rows]
 
 class Piece(DataRecord):
@@ -47,6 +49,7 @@ class Piece(DataRecord):
             code = id
             id=f'code="{code}"'
         DataRecord.__init__(self, self.db, 'pieces', id)
+        self.data.status = self.status
         self.data.dimensions = self.dimensions
         self.data.description_html = self.description_html
 
@@ -55,6 +58,10 @@ class Piece(DataRecord):
 
     def addImage(self, img_filepath):
         return self.images.addImage(img_filepath)
+
+    @lazyproperty
+    def status(self):
+        return PieceStatuses().getName(self.status_id)
 
     @lazyproperty
     def images(self):
