@@ -4,11 +4,13 @@ from vlib import db
 from vlib.datatable import DataTable
 from vlib.datarecord import DataRecord
 from vlib.odict import odict
-from vlib.utils import lazyproperty, validate_num_args
+from vlib.utils import format_date, lazyproperty, validate_num_args
 
 from piece_statuses import PieceStatuses
 from piece_descriptions import PieceDescription
 from piece_images import PieceImages
+from contacts import Contact
+from transactions import Transactions
 
 from dimensions import display_dimensions
 import env
@@ -28,11 +30,11 @@ class Pieces(DataTable):
         return all
 
     def list(self):
-        header = ['id', 'name', 'created_year', 'status']
+        header = ['id', 'name', 'created_year', 'status_description']
         rows = []
         for piece in self.getAll():
             rows.append([piece.id, piece.name, piece.created_year,
-                         piece.status])
+                         piece.status_description])
         return [[f for f in r] for r in rows]
 
 class Piece(DataRecord):
@@ -52,6 +54,7 @@ class Piece(DataRecord):
         self.data.status = self.status
         self.data.dimensions = self.dimensions
         self.data.description_html = self.description_html
+        self.data.status_description = self.status_description
 
     def initImageDirs(self):
         return self.images.initImageDirs()
@@ -77,6 +80,30 @@ class Piece(DataRecord):
     @lazyproperty
     def description_html(self):
         return PieceDescription(self).description_html
+
+    @lazyproperty
+    def owner(self):
+        return Contact(self.owner_id) if self.owner_id else None
+
+    @lazyproperty
+    def trans_date(self):
+        created = Transactions().getFinalTransactionDate(self.id)
+        return format_date(created) if created else ''
+
+    @lazyproperty
+    def status_description(self):
+        if not self.owner_id:
+            return self.status
+        else:
+            data = {
+                'status': self.status,
+                'trans_date': self.trans_date,
+                'owner_name': self.owner.fullname,
+                'city': self.owner.city,
+                'state': self.owner.state,
+                }
+            return '{status} {trans_date}: {owner_name}, {city}, {state}'.\
+                format(**data)
 
 class PiecesCLIError(Exception): pass
 
