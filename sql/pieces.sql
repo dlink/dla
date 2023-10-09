@@ -22,8 +22,8 @@ create table pieces (
     default current_timestamp on update current_timestamp,
  
   unique key (code),
-  constraint status_id foreign key (status_id) references piece_statuses (id),
-  constraint owner_id foreign key (owner_id) references collectors (id)
+  constraint p_status_id foreign key (status_id) references piece_statuses(id),
+  constraint p_owner_id foreign key (owner_id) references contacts(id)
 )
 engine InnoDB default charset=utf8;
 ;
