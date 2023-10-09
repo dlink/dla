@@ -1,17 +1,18 @@
 create table contacts (
-   id          integer unsigned not null auto_increment primary key,
-   first_name  varchar(255),
-   middle_name varchar(255),
-   last_name   varchar(255),
-   fullname    varchar(255),
-   email       varchar(255),
-   address1    varchar(190),
-   address2    varchar(50),
-   city        varchar(35),
-   state       varchar(35),
-   zipcode     varchar(15),
-   country     varchar(15),
-   authorized  boolean not null default 0,  -- authorized to use their name
+   id           integer unsigned not null auto_increment primary key,
+   first_name   varchar(255),
+   middle_name  varchar(255),
+   last_name    varchar(255),
+   fullname     varchar(255),
+   company_name varchar(255),
+   email        varchar(255),
+   address1     varchar(190),
+   address2     varchar(50),
+   city         varchar(35),
+   state        varchar(35),
+   zipcode      varchar(15),
+   country      varchar(15),
+   authorized   boolean not null default 0,  -- authorized to use their name
 
    r_created   datetime,
    r_updated   timestamp not null
