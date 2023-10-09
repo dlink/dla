@@ -1,0 +1,5 @@
+id,code,name,description,active
+1,gifted,Gifted,,1
+2,down_payment,Down Payment,,1
+3,expenses,Expenses,,1
+4,final_payment,Final Payment,,1
