@@ -6,8 +6,8 @@ create table piece_statuses (
    description   varchar(255)     ,
    active        boolean          not null,
    
-   created       datetime         not null,
-   updated       timestamp        not null 
+   r_created       datetime         not null,
+   r_updated       timestamp        not null
         default current_timestamp on update current_timestamp,
 
    unique key(code),
@@ -18,5 +18,5 @@ create table piece_statuses (
 
 create trigger piece_statuses_create before insert
    on piece_statuses
-   for each row set new.created = now()
+   for each row set new.r_created = now()
 ;
