@@ -8,7 +8,7 @@ create table piece_descriptions (
   r_updated    timestamp    not null
     default current_timestamp on update current_timestamp,
 
-  unique key (piece_id)
+  constraint d_piece_id foreign key (piece_id) references pieces (id)
 )
 engine InnoDB default charset=utf8;
 ;
