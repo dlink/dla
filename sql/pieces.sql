@@ -4,6 +4,7 @@ create table pieces (
   code         varchar(20) not null,
   name         varchar(100) not null,
   status_id    integer unsigned not null default 0,
+  owner_id     integer unsigned,
   material     varchar(100),
   created      datetime,
   created_year integer unsigned,
@@ -21,7 +22,8 @@ create table pieces (
     default current_timestamp on update current_timestamp,
  
   unique key (code),
-  constraint status_id foreign key (status_id) references piece_statuses (id)
+  constraint status_id foreign key (status_id) references piece_statuses (id),
+  constraint owner_id foreign key (owner_id) references collectors (id)
 )
 engine InnoDB default charset=utf8;
 ;
