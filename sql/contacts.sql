@@ -3,6 +3,7 @@ create table contacts (
    first_name  varchar(255),
    middle_name varchar(255),
    last_name   varchar(255),
+   fullname    varchar(255),
    email       varchar(255),
    address1    varchar(190),
    address2    varchar(50),
@@ -22,4 +23,22 @@ create table contacts (
 
 create trigger contacts_create before insert on contacts
    for each row set new.r_created = now()
+;
+
+create trigger contacts_insert_fullname before insert on contacts
+   for each row
+      set new.fullname =
+         concat_ws(' ',
+	    new.first_name,
+            nullif(new.middle_name, ''),
+            new.last_name);
+;
+
+create trigger contacts_update_fullname before update on contacts
+   for each row
+      set new.fullname =
+         concat_ws(' ',
+	    new.first_name,
+            nullif(new.middle_name, ''),
+            new.last_name);
 ;
