@@ -11,6 +11,7 @@ create table contacts (
    state       varchar(35),
    zipcode     varchar(15),
    country     varchar(15),
+   authorized  boolean not null default 0,  -- authorized to use their name
 
    r_created   datetime,
    r_updated   timestamp not null
