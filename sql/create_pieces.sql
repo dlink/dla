@@ -3,6 +3,7 @@ create table pieces (
   medium_id    integer unsigned not null,
   code         varchar(20) not null,
   name         varchar(100) not null,
+  status_id    integer unsigned not null default 0,
   material     varchar(100),
   created      datetime,
   created_year integer unsigned,
@@ -19,7 +20,8 @@ create table pieces (
   r_updated    timestamp    not null
     default current_timestamp on update current_timestamp,
  
-  unique key (code)
+  unique key (code),
+  constraint status_id foreign key (status_id) references piece_statuses (id)
 )
 engine InnoDB default charset=utf8;
 ;
