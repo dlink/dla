@@ -30,12 +30,15 @@ class PieceImages():
         self.verbose = self.env.verbose
 
     def initImageDirs(self):
+        mkdir_p(f'{self.file_basedir}/orig')
         mkdir_p(f'{self.file_basedir}/display')
         mkdir_p(f'{self.file_basedir}/thumb')
         mkdir_p(f'{self.file_basedir}/tiny')
 
     def addImage(self, img_filepath):
         self.warnings = []
+
+        self.initImageDirs()
 
         # instanciate Image Obj
         img = Image(img_filepath)
@@ -45,15 +48,15 @@ class PieceImages():
             self.warnings.append(f'Image is not hi-res: {img.size}')
 
         # copy image into directory structure
-        shutil.copy(img_filepath, self.file_basedir)
+        shutil.copy(img_filepath, f'{self.file_basedir}/orig/')
         if self.verbose:
-            print(f'{self.file_basedir} added.')
+            print(f'{self.file_basedir}/orig/{img.filename} added.')
 
         # resize image for each size type:
         for size in Images.SIZES.keys():
             width = Images.SIZES[size]
             outputfile = f'{self.file_basedir}/{size}/{img.filename}'
-            img.resize(width=width, outputfile=outputfile)
+            img.resize_pad(width=width, outputfile=outputfile)
             if self.verbose:
                 print(f'{outputfile} created')
 
