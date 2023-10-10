@@ -6,12 +6,13 @@ create table contacts (
    fullname     varchar(255),
    company_name varchar(255),
    email        varchar(255),
+   website      varchar(255),
    address1     varchar(190),
    address2     varchar(50),
    city         varchar(35),
    state        varchar(35),
    zipcode      varchar(15),
-   country      varchar(15),
+   country      varchar(15) default 'USA',
    authorized   boolean not null default 0,  -- authorized to use their name
 
    r_created   datetime,
