@@ -30,6 +30,7 @@ class PieceImages():
         self.verbose = self.env.verbose
 
     def initImageDirs(self):
+        mkdir_p(self.file_basedir)
         mkdir_p(f'{self.file_basedir}/orig')
         mkdir_p(f'{self.file_basedir}/display')
         mkdir_p(f'{self.file_basedir}/thumb')
@@ -61,6 +62,12 @@ class PieceImages():
                 print(f'{outputfile} created')
 
         self.printWarnings()
+
+        # update database
+        data = {'piece_id': self.piece.id,
+                'filename': img.filename,
+                'active': 1}
+        self.pieceImagesDt.insertRow(data)
 
     def getImages(self):
         '''Return a list of piece_image odicts
