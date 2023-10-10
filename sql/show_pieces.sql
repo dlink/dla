@@ -1,27 +1,19 @@
+create table show_pieces (
+  id           integer unsigned not null auto_increment primary key,
+  show_id      integer unsigned not null,
+  piece_id     integer unsigned not null,
 
-select
-   p.id,
-   p.created_year as created,
-   m.name as medium,
-   p.name as name,
-   p.material,
-   if(p.length,
-      concat(
-         concat_ws('x', round(p.length,0),
-	                round(p.width,0),
-			round(p.height,0)
-		  ),
-	 ' in.'
-      ), '') as dim,
-   s.name as status,
-   o.fullname as owner,
-   concat_ws(', ', o.city, o.state) as location
+  r_created    datetime     null,
+  r_updated    timestamp    not null
+    default current_timestamp on update current_timestamp,
 
-from
-   pieces p
-   join mediums m on p.medium_id = m.id
-   join piece_statuses s on p.status_id = s.id
-   left join contacts o on p.owner_id = o.id
+  unique key (show_id, piece_id),
+  constraint sp_show_id foreign key (show_id) references shows(id),
+  constraint sp_piece_id foreign key (piece_id) references pieces(id)
+)
+engine InnoDB default charset=utf8;
+;
 
-order by
-   p.created_year desc
+create trigger show_pieces_create before insert on show_pieces
+   for each row set new.r_created = now()
+;
