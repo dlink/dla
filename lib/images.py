@@ -11,7 +11,7 @@ class Images():
     HIRES = 1200
     SIZES = {'tiny': 50,
              'thumb': 200,
-             'display': 600,
+             'display': 500,
              }
 
 class ImageError(Exception): pass
@@ -72,11 +72,11 @@ class Image():
         padded_img = Pil.new('RGB', (width, height), 'white')
 
         owidth, oheight = self.img.size
-        oaspect_ratio = owidth / oheight
-        if oaspect_ratio < taspect_ratio:
-            width = int(height * oaspect_ratio)
+        oaspect_ratio = oheight / owidth
+        if oaspect_ratio > taspect_ratio:
+            width = int(height / oaspect_ratio)
         else:
-            height = int(width / oaspect_ratio)
+            height = int(width * oaspect_ratio)
         resized_img = self.img.resize((width, height),
                                       Pil.Resampling.LANCZOS)
         paste_pos = ((padded_img.width - resized_img.width) // 2,
