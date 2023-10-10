@@ -77,7 +77,14 @@ class PieceImages():
             pi.url = f'{self.url_basepath}/display/{pi.filename}'
             pi.tiny_url = f'{self.url_basepath}/tiny/{pi.filename}'
             pi.thumb_url = f'{self.url_basepath}/thumb/{pi.filename}'
+            self.data.append(pi)
 
+        if not self.data:
+            pi = odict()
+            url_basepath = 'images/pieces/missing_image'
+            pi.url = f'{url_basepath}/display/missing_image.png'
+            pi.tiny_url = f'{url_basepath}/tiny/missing_image.png'
+            pi.thumb_url = f'{url_basepath}/thumb/missing_image.png'
             self.data.append(pi)
 
     def printWarnings(self):
