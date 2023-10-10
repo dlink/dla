@@ -9,6 +9,7 @@ from vlib.utils import format_date, lazyproperty, validate_num_args
 from piece_statuses import PieceStatuses
 from piece_descriptions import PieceDescription
 from piece_images import PieceImages
+from piece_shows import PieceShows
 from contacts import Contact
 from transactions import Transactions
 
@@ -105,6 +106,10 @@ class Piece(DataRecord):
             return '{status} {trans_date}: {owner_name}, {city}, {state}'.\
                 format(**data)
 
+    @lazyproperty
+    def shows(self):
+        return PieceShows(self.id).shows
+
 class PiecesCLIError(Exception): pass
 
 class PiecesCLI(object):
@@ -127,6 +132,7 @@ class PiecesCLI(object):
             'list',
             'init_image_dirs <id|code',
             'images <id|code>',
+            'shows <id|code>',
         ]
         self.cli = CLI(self.process, commands)
         self.cli.process()
@@ -158,6 +164,12 @@ class PiecesCLI(object):
             validate_num_args('images', 1, args)
             filter = args.pop(0)
             return Piece(filter).images.filepaths
+
+        elif cmd == 'shows':
+            validate_num_args('shows', 1, args)
+            filter = args.pop(0)
+            return [s.info for s in Piece(filter).shows]
+
         else:
             raise PiecesCLIError('Unrecognized command: %s' % cmd)
 

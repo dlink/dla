@@ -24,6 +24,12 @@ img.main-pic.selected {
 .piece-dimensions {
     font-style: italic;
 }
+.show-name {
+    font-weight: bold;
+}
+.show-gallery {
+    font-style: italic;
+}
 #piece-pic-menu img {
     width: 50px;
 }

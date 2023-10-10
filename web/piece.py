@@ -76,7 +76,25 @@ class PiecePage(BasePage):
 
     def getPieceDescription(self):
         template = self.getTemplate('piece_description.html')
-        return template.format(**self.piece.data)
+        data = self.piece.data
+        data.shows_info = self.getShowsInfo()
+        return template.format(**data)
+
+    def getShowsInfo(self):
+        html = ''
+        template = self.getTemplate('show_item.html')
+        for show in self.piece.shows:
+            data = {'name': show.name,
+                    'gallery': show.contact.company_name,
+                    'website': show.contact.website,
+                    'city': show.contact.city,
+                    'state': show.contact.state,
+                    'start_date': show.start_date,
+                    'end_date': show.end_date}
+            html += template.format(**data)
+        if html:
+            html = '<p>In Shows:</p>' + html
+        return html
 
 if __name__ == '__main__':
     PiecePage().go()
