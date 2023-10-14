@@ -31,3 +31,14 @@ def favicon():
     '''TO DO: Set up favicon'''
     return send_from_directory(app.root_path, 'favicon.ico',
                                mimetype='image/vnd.microsoft.icon')
+
+# def page(id=None):
+#     if request.url_rule.rule == '/':
+#         page = 'gallery'
+#         id = 1
+#     else:
+#         page = request.url_rule.rule.split('/')[1]
+#     module = __import__(page, globals(), locals())
+#     class_name = '%sPage' % snake2camel(page)
+#     page_output = eval(f'getattr(module, "{class_name}")({id}).go()')
+#     return page_output
