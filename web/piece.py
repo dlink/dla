@@ -26,7 +26,7 @@ class PiecePage(BasePage):
         BasePage.process(self)
 
         # get piece
-        self.id = id = self.form.get('id', '')
+        self.id = id = self.form.get('id', '1')
         if id:
             try:
                 self.piece = Piece(id)
@@ -46,7 +46,7 @@ class PiecePage(BasePage):
             self.getMainPic() + \
             self.getPicMenu() + \
             self.getPieceDescription(),
-            id='pic-container')
+            id='main-container')
 
     # def formFields(self):
     #     pic_id = input(name='id', value=self.id, type='hidden')
@@ -84,7 +84,8 @@ class PiecePage(BasePage):
         html = ''
         template = self.getTemplate('show_item.html')
         for show in self.piece.shows:
-            data = {'name': show.name,
+            data = {'show_id': show.id,
+                    'name': show.name,
                     'gallery': show.contact.company_name,
                     'website': show.contact.website,
                     'city': show.contact.city,

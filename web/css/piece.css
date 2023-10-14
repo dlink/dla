@@ -1,9 +1,9 @@
-#pic-container {
-    /* display: grid; */
-    /* place-items: center; */
-    max-width: 600px;
-    margin: auto;
-}
+/* #pic-container { */
+/*     /\* display: grid; *\/ */
+/*     /\* place-items: center; *\/ */
+/*     max-width: 600px; */
+/*     margin: auto; */
+/* } */
 img.main-pic {
     display: none;
     max-width: 100%;
