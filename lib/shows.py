@@ -1,15 +1,17 @@
 from vlib import db
 from vlib.datarecord import DataRecord
-from vlib.utils import lazyproperty
+from vlib.utils import is_int, lazyproperty
 
 from contacts import Contact
-#from show_pieces import ShowPieces
 
 class Show(DataRecord):
     '''Provide over art shows pieces have been in'''
 
     def __init__(self, id):
         self.db = db.getInstance()
+        if not is_int(id) and '=' not in id:
+            code = id
+            id = f"code='{code}'"
         DataRecord.__init__(self, self.db, 'shows', id)
 
     @lazyproperty

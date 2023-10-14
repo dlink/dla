@@ -53,7 +53,7 @@ class ShowPage(BasePage):
     def getShowsInfo(self):
         html = ''
         template = self.getTemplate('show_item.html')
-        data = {'show_id': self.show.id,
+        data = {'show_code': self.show.code,
                 'name': self.show.name,
                 'gallery': self.show.contact.company_name,
                 'website': self.show.contact.website,

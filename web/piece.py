@@ -74,7 +74,7 @@ class PiecePage(BasePage):
         html = ''
         template = self.getTemplate('show_item.html')
         for show in self.piece.shows:
-            data = {'show_id': show.id,
+            data = {'show_code': show.code,
                     'name': show.name,
                     'gallery': show.contact.company_name,
                     'website': show.contact.website,
