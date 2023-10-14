@@ -1,6 +1,7 @@
 
 from vweb.htmltable import HtmlTable
-from vweb.html import div, li, ul
+from vweb.html import div, li, p, ul
+from vlib.utils import is_int
 
 from basepage import BasePage
 from pieces import Pieces
@@ -20,11 +21,23 @@ class GalleryPage(BasePage):
         ])
 
     def getPageContent(self):
+        # medium.id or medium.code:
+        if not is_int(self.id):
+            medium = self.id
+            pieces = self.pieces.getByMediumCode(medium)
+        else:
+            pieces = self.pieces.get({'medium_id': self.id})
+
+        # get thumbnails
         lis = ''
-        for piece in self.pieces.get({'medium_id': self.id}):
+        for piece in pieces:
             lis += li(Thumbnail(piece).html)
 
-        return div(ul(lis, class_='gallery__list'), class_='gallery')
+        if not lis:
+            output = p(f'No pieces found for gallery "{self.id}".')
+        else:
+            output = ul(lis, class_='gallery__list')
+        return div(output, class_='gallery')
 
 if __name__ == '__main__':
     HomePage().go()

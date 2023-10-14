@@ -9,19 +9,19 @@ from flask import Flask, request, Response, send_from_directory
 app = Flask(__name__)
 
 @app.route('/')
-@app.route('/gallery/<int:id>')
+@app.route('/gallery/<id>')
 def gallery(id=None):
     if not id:
         id = 1
     from gallery import GalleryPage
     return GalleryPage(id).go()
 
-@app.route('/piece/<int:id>')
+@app.route('/piece/<id>')
 def piece(id):
     from piece import PiecePage
     return PiecePage(id).go()
 
-@app.route('/show/<int:id>')
+@app.route('/show/<id>')
 def show(id):
     from show import ShowPage
     return ShowPage(id).go()

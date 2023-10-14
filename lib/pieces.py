@@ -2,14 +2,15 @@
 
 from vlib import db
 from vlib.datatable import DataTable
-from vlib.datarecord import DataRecord
+from vlib.datarecord import DataRecord, DataRecordNotFound
 from vlib.odict import odict
-from vlib.utils import format_date, lazyproperty, validate_num_args
+from vlib.utils import format_date, is_int, lazyproperty, validate_num_args
 
 from piece_statuses import PieceStatuses
 from piece_descriptions import PieceDescription
 from piece_images import PieceImages
 from piece_shows import PieceShows
+from mediums import Medium
 from contacts import Contact
 from transactions import Transactions
 
@@ -31,12 +32,19 @@ class Pieces(DataTable):
             all.append(Piece(rec['id']))
         return all
 
+    def getByMediumCode(self, medium_code):
+        try:
+            medium = Medium(medium_code)
+        except DataRecordNotFound as e:
+            return []
+        return self.get({'medium_id': medium.id})
+
     def list(self):
         header = ['id', 'name', 'created_year', 'status_description']
         rows = []
-        for piece in self.getAll():
-            rows.append([piece.id, piece.name, piece.created_year,
-                         piece.status_description])
+        for piece in self.get():
+            rows.append([piece.id, piece.name, piece.medium.name,
+                         piece.created_year, piece.status_description])
         return [[f for f in r] for r in rows]
 
 class Piece(DataRecord):
@@ -48,8 +56,7 @@ class Piece(DataRecord):
                          <field>="<value>" pair
         '''
         self.db = db.getInstance()
-        # code passed in?
-        if not isinstance(id, (int)) and not id.isnumeric() and '=' not in id:
+        if not is_int(id) and '=' not in id:
             code = id
             id=f'code="{code}"'
         DataRecord.__init__(self, self.db, 'pieces', id)
@@ -71,6 +78,10 @@ class Piece(DataRecord):
     @lazyproperty
     def images(self):
         return PieceImages(self)
+
+    @lazyproperty
+    def medium(self):
+        return Medium(self.medium_id)
 
     @lazyproperty
     def dimensions(self):

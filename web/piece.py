@@ -22,37 +22,27 @@ class PiecePage(BasePage):
             self.versionize('css/gallery.css'),
         ])
         self.pic_num = 0
-
-    def process(self):
-        BasePage.process(self)
-
-        # get piece
-        #self.id = id = self.form.get('id', '1')
         try:
             self.piece = Piece(self.id)
         except DataRecordNotFound as e:
             self.piece_not_found = 1
+
+    def process(self):
+        BasePage.process(self)
+
         # get pic_num
         self.pic_num = int(self.form.get('pic_num', 0))
 
     def getPageContent(self):
         if self.piece_not_found:
             return p(f'Piece "{self.id}" not found.')
-        if not self.piece:
-            return p('No art piece selected.  Use piece_id=nn')
 
-        return div(
-            # self.formFields() + \
+        output = \
             self.getMainPic() + \
             self.getPicMenu() + \
-            self.getPieceDescription(),
-            id='main-container')
+            self.getPieceDescription()
+        return div(output, id='main-container')
 
-    # def formFields(self):
-    #     pic_id = input(name='id', value=self.id, type='hidden')
-    #     pic_num = input(name='pic_num', value=self.pic_num, type='hidden')
-    #     return pic_id + pic_num
-            
     def getPicMenu(self):
         lis = ''
         if len(self.piece.images.tiny_urls) > 1:
