@@ -68,6 +68,7 @@ class PieceImages():
                 'filename': img.filename,
                 'active': 1}
         self.pieceImagesDt.insertRow(data)
+        print(f'{img.filename} added.')
 
     def getImages(self):
         '''Return a list of piece_image odicts
