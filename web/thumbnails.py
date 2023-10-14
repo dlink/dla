@@ -14,8 +14,8 @@ class Thumbnail():
         piece = self.piece
         image_url = ''
         image_url = piece.images.thumb_urls[0]
-        image_tag = img(src=image_url)
-        href=f'/piece?id={piece.id}'
+        image_tag = img(src=f'/{image_url}')
+        href=f'/piece/{piece.id}'
         image_link = a(image_tag, href=href)
         return template.format(
             image=image_link,

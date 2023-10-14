@@ -22,11 +22,12 @@ class Pieces(DataTable):
         self.db = db.getInstance()
         DataTable.__init__(self, self.db, 'pieces')
 
-    def getAll(self):
+    def get(self, filters={}):
         '''Return list of Piece object'''
-        sql = 'select id from pieces order by id'
+        self.setFilters(filters)
+        #sql = 'select id from pieces order by id'
         all = []
-        for rec in self.db.query(sql):
+        for rec in self.getTable():
             all.append(Piece(rec['id']))
         return all
 

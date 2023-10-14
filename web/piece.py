@@ -10,8 +10,9 @@ from thumbnails import Thumbnail
 
 class PiecePage(BasePage):
 
-    def __init__(self):
+    def __init__(self, id):
         BasePage.__init__(self, 'Piece Page')
+        self.id = id
         self.piece = None
         self.piece_not_found = 0
         self.javascript_src.extend(['js/piece.js'])
@@ -26,12 +27,11 @@ class PiecePage(BasePage):
         BasePage.process(self)
 
         # get piece
-        self.id = id = self.form.get('id', '1')
-        if id:
-            try:
-                self.piece = Piece(id)
-            except DataRecordNotFound as e:
-                self.piece_not_found = 1
+        #self.id = id = self.form.get('id', '1')
+        try:
+            self.piece = Piece(self.id)
+        except DataRecordNotFound as e:
+            self.piece_not_found = 1
         # get pic_num
         self.pic_num = int(self.form.get('pic_num', 0))
 
@@ -60,7 +60,7 @@ class PiecePage(BasePage):
                 class_ = 'pic-menu-item'
                 if i == self.pic_num:
                     class_ += ' pic-menu-selected'
-                pic = img(src=f'{image_url}', id=f'pic-num-{i}',
+                pic = img(src=f'/{image_url}', id=f'pic-num-{i}',
                           class_=class_)
                 lis += li(pic)
         return div(ul(lis, class_='piece-menu__list'), class_='piece-menu')
@@ -71,7 +71,7 @@ class PiecePage(BasePage):
             class_ = 'main-pic'
             if i == 0:
                 class_ += ' selected'
-            o += img(src=url, class_=class_)
+            o += img(src=f'/{url}', class_=class_)
         return div(o, id='main-pic-container')
 
     def getPieceDescription(self):

@@ -12,8 +12,9 @@ from shows import Show
 
 class ShowPage(BasePage):
 
-    def __init__(self):
+    def __init__(self, id):
         BasePage.__init__(self, 'Show Page')
+        self.id = id
         self.show = None
         self.show_not_found = 0
         self.style_sheets.extend([
@@ -26,12 +27,10 @@ class ShowPage(BasePage):
         BasePage.process(self)
 
         # get piece
-        self.id = id = self.form.get('id', '')
-        if id:
-            try:
-                self.show = Show(id)
-            except DataRecordNotFound as e:
-                self.show_not_found = 1
+        try:
+            self.show = Show(self.id)
+        except DataRecordNotFound as e:
+            self.show_not_found = 1
 
     def getPageContent(self):
         if self.show_not_found:

@@ -8,64 +8,50 @@ from flask import Flask, request, Response, send_from_directory
 
 app = Flask(__name__)
 
-@app.route('/')
-@app.route('/<page>', methods=['GET', 'POST'])
-def view(page=None):
-    '''General page view
+@app.route('/', defaults={'id': 1})
+@app.route('/gallery/<int:id>')
+def gallery(id):
+    from gallery import GalleryPage
+    return GalleryPage(id).go()
 
-       Each URL <page> maps to a web.<page> python module, and then
-       the <page>Page class is instanciated and then
-       its go() method is then called.
+@app.route('/piece/<int:id>')
+def piece(id):
+    from piece import PiecePage
+    return PiecePage(id).go()
 
-       eq.:
-          /about causes this to happens:
+@app.route('/show/<int:id>')
+def show(id):
+    from show import ShowPage
+    return ShowPage(id).go()
 
-             from about imoprt AboutPage
-             AboutPage().go()
-    '''
-    setEnvVars()
+# @app.route('/')
+# @app.route('/<page>', methods=['GET', 'POST'])
+# def view(page=None):
+#     '''General page view
 
-    # / => home page
-    if not page:
-        page = 'home'
+#        Each URL <page> maps to a web.<page> python module, and then
+#        the <page>Page class is instanciated and then
+#        its go() method is then called.
 
-    # dynamically load and call the page
-    module = __import__(page, globals(), locals())
-    class_name = '%sPage' % snake2camel(page)
-    page_output = eval('getattr(module, "%s")().go()' % class_name)
-    return responseType(page_output, page)
+#        eq.:
+#           /about causes this to happens:
 
-def responseType(page_output, page_name):
-    '''Generic handling for returning Response objects
-       Returns HTML or csv files depending on DOCTYPE
-    '''
-    # html
-    if page_output.startswith('<!DOCTYPE html'):
-        return page_output
+#              from about imoprt AboutPage
+#              AboutPage().go()
+#     '''
+#     #setEnvVars()
 
-    # csv (\uFEFF is for excel utf8)
-    return Response(
-        u'\uFEFF' + page_output,
-        mimetype="text/csv",
-        headers={"Content-disposition":
-                 "attachment; filename=%s.csv" % page_name})
+#     # / => home page
+#     if not page:
+#         page = 'home'
+
+#     # dynamically load and call the page
+#     module = __import__(page, globals(), locals())
+#     class_name = '%sPage' % snake2camel(page)
+#     return eval('getattr(module, "%s")().go()' % class_name)
 
 @app.route('/favicon.ico')
 def favicon():
     '''TO DO: Set up favicon'''
     return send_from_directory(app.root_path, 'favicon.ico',
                                mimetype='image/vnd.microsoft.icon')
-
-def setEnvVars():
-    for row in open('/home/dlink/.dla', 'r').readlines():
-        row = row.strip()
-        export, parameters = row.split(' ')
-        key, value = parameters.split('=')
-        value = value.replace("'", '')
-        os.environ[key] = value
-
-def snake2camel(name):
-    '''Eq.: convert smale_pieces to smallPieces'''
-    parts = name.split('_')
-    camel = ''.join(x.title() for x in parts)
-    return camel

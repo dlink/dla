@@ -6,12 +6,13 @@ from basepage import BasePage
 from pieces import Pieces
 from thumbnails import Thumbnail
 
-class HomePage(BasePage):
+class GalleryPage(BasePage):
 
     panel_max_cols = 4
 
-    def __init__(self):
-        BasePage.__init__(self, 'DLA')
+    def __init__(self, id):
+        BasePage.__init__(self, 'DLA Gallery')
+        self.id = id
         self.pieces = Pieces()
         self.style_sheets.extend([
             self.versionize('css/gallery.css'),
@@ -20,7 +21,7 @@ class HomePage(BasePage):
 
     def getPageContent(self):
         lis = ''
-        for piece in self.pieces.getAll():
+        for piece in self.pieces.get({'medium_id': self.id}):
             lis += li(Thumbnail(piece).html)
 
         return div(ul(lis, class_='gallery__list'), class_='gallery')

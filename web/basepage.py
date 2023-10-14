@@ -45,5 +45,4 @@ class BasePage(HtmlPage):
 
     def versionize(self, file):
         timestamp=os.path.getmtime('%s/web/%s' % (self.conf.base_dir, file))
-        return '%s?v=%s' % (file, timestamp)
-
+        return '/%s?v=%s' % (file, timestamp)
