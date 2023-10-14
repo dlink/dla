@@ -1,7 +1,7 @@
 create table pieces (
   id           integer unsigned not null auto_increment primary key,  
   medium_id    integer unsigned not null,
-  code         varchar(20) not null,
+  code         varchar(100) not null,
   name         varchar(100) not null,
   status_id    integer unsigned not null default 0,
   owner_id     integer unsigned,
