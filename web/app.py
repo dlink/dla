@@ -8,9 +8,11 @@ from flask import Flask, request, Response, send_from_directory
 
 app = Flask(__name__)
 
-@app.route('/', defaults={'id': 1})
+@app.route('/')
 @app.route('/gallery/<int:id>')
-def gallery(id):
+def gallery(id=None):
+    if not id:
+        id = 1
     from gallery import GalleryPage
     return GalleryPage(id).go()
 
@@ -23,32 +25,6 @@ def piece(id):
 def show(id):
     from show import ShowPage
     return ShowPage(id).go()
-
-# @app.route('/')
-# @app.route('/<page>', methods=['GET', 'POST'])
-# def view(page=None):
-#     '''General page view
-
-#        Each URL <page> maps to a web.<page> python module, and then
-#        the <page>Page class is instanciated and then
-#        its go() method is then called.
-
-#        eq.:
-#           /about causes this to happens:
-
-#              from about imoprt AboutPage
-#              AboutPage().go()
-#     '''
-#     #setEnvVars()
-
-#     # / => home page
-#     if not page:
-#         page = 'home'
-
-#     # dynamically load and call the page
-#     module = __import__(page, globals(), locals())
-#     class_name = '%sPage' % snake2camel(page)
-#     return eval('getattr(module, "%s")().go()' % class_name)
 
 @app.route('/favicon.ico')
 def favicon():
