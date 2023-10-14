@@ -1,0 +1,20 @@
+.show-header p {
+    font-size: 1.2em;
+}
+.show-item {
+    padding: 10px 0 20px;
+}
+.show-name {
+    font-size: 1.8em;
+}
+.show-gallery {
+    font-size: 1.4em;
+}
+.show-description {
+    line-height: 1.5em;
+}
+.pieces-header {
+    font-weight: bold;
+    font-size: 1.4pm;
+    padding: 20px 0;
+}
