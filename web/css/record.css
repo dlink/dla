@@ -1,0 +1,28 @@
+#page-container {
+    margin: 20px;
+}
+
+/* table.record-table td { */
+/*     border-spacing: 10px; */
+/* } */
+
+table.record-table td {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+}
+table.record-table td.row-header {
+    font-weight: bold;
+    border: 0;
+}
+table.record-table td.uneditable {
+    background-color: #e9e4e4;
+    border: 0;
+}
+table.record-table input {
+    border: none;
+}
+table.record-table input:focus {
+    outline: none;
+}
+    

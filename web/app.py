@@ -26,6 +26,11 @@ def show(id):
     from show import ShowPage
     return ShowPage(id).go()
 
+@app.route('/record/<table_name>/<id>')
+def record(table_name, id):
+    from record import Record
+    return Record(table_name, id).go()
+
 @app.route('/favicon.ico')
 def favicon():
     '''TO DO: Set up favicon'''
