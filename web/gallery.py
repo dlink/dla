@@ -21,7 +21,6 @@ class GalleryPage(BasePage):
         ])
 
     def getPageContent(self):
-        # medium.id or medium.code:
         if not is_int(self.id):
             medium = self.id
             pieces = self.pieces.getByMediumCode(medium)
