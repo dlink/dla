@@ -26,7 +26,6 @@ class Pieces(DataTable):
     def get(self, filters={}):
         '''Return list of Piece object'''
         self.setFilters(filters)
-        #sql = 'select id from pieces order by id'
         all = []
         for rec in self.getTable():
             all.append(Piece(rec['id']))
@@ -138,11 +137,8 @@ class PiecesCLI(object):
         '''
         from cli import CLI
         commands = [
-            'add <name>',
-            'add_edition <id|code> <csv_filepath>',
             'add_image <id|code> <img_filepath>',
             'list',
-            'init_image_dirs <id|code',
             'images <id|code>',
             'shows <id|code>',
         ]
@@ -158,19 +154,15 @@ class PiecesCLI(object):
         if self.cli.hasoption.get('v'):
             self.env.verbose = 1
 
-        if cmd == 'list':
-            return Pieces().list()
 
-        elif cmd == 'init_image_dirs':
-            validate_num_args('init_image_dirs', 1, args)
-            filter = args.pop(0)
-            return Piece(filter).initImageDirs()
-
-        elif cmd == 'add_image':
+        if cmd == 'add_image':
             validate_num_args('load_image', 2, args)
             filter = args.pop(0)
             img_filepath = args.pop(0)
             return Piece(filter).addImage(img_filepath)
+
+        elif cmd == 'list':
+            return Pieces().list()
 
         elif cmd == 'images':
             validate_num_args('images', 1, args)
