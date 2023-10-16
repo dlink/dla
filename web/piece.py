@@ -86,6 +86,3 @@ class PiecePage(BasePage):
         if html:
             html = '<p>In Shows:</p>' + html
         return html
-
-if __name__ == '__main__':
-    PiecePage().go()
