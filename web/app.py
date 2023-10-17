@@ -42,6 +42,12 @@ def favicon():
     return send_from_directory(app.root_path, 'favicon.ico',
                                mimetype='image/vnd.microsoft.icon')
 
+from flask import render_template
+@app.route('/hero_test')
+def test_hero():
+    from hero_test import HeroTest
+    return HeroTest().go()
+
 # def page(id=None):
 #     if request.url_rule.rule == '/':
 #         page = 'gallery'

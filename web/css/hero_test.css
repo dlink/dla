@@ -1,0 +1,27 @@
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+.hero-slider {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.slide {
+  display: none;
+}
+
+.slide img {
+  width: 100%;
+  height: auto;
+}
+
+/* Optional: Style for mobile view */
+@media (max-width: 767px) {
+  .slide img {
+    object-fit: cover;
+    height: 100vh;
+  }
+}
