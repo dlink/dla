@@ -15,7 +15,7 @@ class PiecePage(BasePage):
         self.id = id
         self.piece = None
         self.piece_not_found = 0
-        self.javascript_src.extend(['js/piece.js'])
+        self.javascript_src.extend(['/js/piece.js'])
         self.style_sheets.extend([
             self.versionize('css/main.css'),
             self.versionize('css/piece.css'),
