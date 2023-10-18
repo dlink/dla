@@ -30,6 +30,20 @@ class Image():
     def img(self):
         return Pil.open(self.filepath)
 
+    def cropHeight(self, aspect_ratio_str, outputfile, inplace):
+        aspect_width, aspect_height = self.parseAspectRatio(aspect_ratio_str)
+        aspect_ratio = aspect_width / aspect_height
+        cur_width, cur_height = self.img.size
+        cur_aspect_ratio = cur_width / cur_height
+        new_height = cur_width / aspect_ratio
+        y_offset = (cur_height - new_height) / 2
+        crop_box = (0, y_offset, cur_width, cur_height - y_offset)
+        cropped_img = self.img.crop(crop_box)
+        if inplace:
+            self.makeBackup()
+            outputfile = self.filepath
+        cropped_img.save(outputfile)
+
     def resize(self, width=None, height=None, outputfile=None, inplace=False):
         if not width and not height:
             raise ImageError('resize: must specify either width or height.')
@@ -114,6 +128,18 @@ class Image():
             outputfile = self.filepath
         rotated_img.save(outputfile)
 
+    def parseAspectRatio(self, aspect_ratio):
+        parts = aspect_ratio.split(':')
+        if len(parts) != 2:
+            raise ImageError(f"Unable to parse aspect_ratio '{aspect_ratio}' "\
+                             f"expecting '<width>:<height>'")
+        try:
+            width, height = [int(p) for p in parts]
+        except ValueError:
+            raise ImageError(f"Unable to parse aspect_ratio '{aspect_ratio}' "\
+                             f"width and height must be integers")
+        return width, height
+
     def makeBackup(self):
         done = bk = 0
         while not done:
@@ -165,6 +191,7 @@ class Image():
         dpi_str = ''
         if 'dpi' in self.img.info:
             dpi = list(self.img.info['dpi'])
+            #dpi_str = f'({dpi[0]},{dpi[1]}) dpi'
             dpi_str = f'({dpi[0]:.0f},{dpi[1]:.0f}) dpi'
         return \
             f'{self.filepath}: {self.file_size}kb, {self.img.size}, '\
@@ -196,6 +223,7 @@ class ImagesCLI(object):
         '''
         from cli import CLI
         commands = [
+            'crop_height <aspect_ratio(w:h)> <filename> [<output_file>]',
             'resize <filepath> <width> <height> [<output_file>]',
             'resize_by_width <filepath> <width> [<output_file>]',
             'resize_by_height <filepath> <height> [<output_file>]',
@@ -217,7 +245,16 @@ class ImagesCLI(object):
         if self.cli.hasoption.get('v'):
             self.env.verbose = 1
 
-        if cmd == 'resize':
+        inplace = self.cli.hasoption.get('i')
+
+        if cmd == 'crop_height':
+            validate_num_args('crop_height', ctx_num_args(3,inplace), args)
+            aspect_ratio = args.pop(0)
+            filepath = args.pop(0)
+            outputfile = ctx_outputfile(args, inplace)
+            return Image(filepath).cropHeight(aspect_ratio, outputfile,inplace)
+
+        elif cmd == 'resize':
             num_args = 3
             if self.cli.hasoption.get('i'):
                 num_args = 2
@@ -292,6 +329,17 @@ class ImagesCLI(object):
             print(im.action_statuses[-1])
         else:
             raise ImagesCLIError('Unrecognized command: %s' % cmd)
+
+def ctx_num_args(orig_num_args, inplace):
+    if inplace:
+        return orig_num_args - 1
+    return orig_num_args
+
+def ctx_outputfile(args, inplace):
+    if inplace:
+        return None
+    else:
+        return args.pop(0)
 
 if __name__ == '__main__':
     ImagesCLI().run()
