@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const dotsContainer = document.querySelector('.slider-dots');
   const arrows = document.querySelector('.slider-arrows');
   let currentSlide = 0;
+  let intervalId;
 
   // Show the first slide initially
   slides[currentSlide].style.display = 'block';
@@ -28,33 +29,36 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Set an interval to switch slides (adjust the duration as needed)
-  const intervalId = setInterval(nextSlide, 5000);
+  intervalId = setInterval(nextSlide, 5000);
 
   // Show a specific slide
   function showSlide(index) {
-    clearInterval(intervalId); // Stop the automatic slide change
+    clearInterval(intervalId);
     slides[currentSlide].style.display = 'none';
     currentSlide = index;
     slides[currentSlide].style.display = 'block';
     updateDots();
-    // Restart the interval
     intervalId = setInterval(nextSlide, 5000);
   }
 
   // Move to the next slide
   function nextSlide() {
+    clearInterval(intervalId);
     slides[currentSlide].style.display = 'none';
     currentSlide = (currentSlide + 1) % slides.length;
     slides[currentSlide].style.display = 'block';
     updateDots();
+    intervalId = setInterval(nextSlide, 5000);
   }
 
   // Move to the previous slide
   function prevSlide() {
+    clearInterval(intervalId);
     slides[currentSlide].style.display = 'none';
     currentSlide = (currentSlide - 1 + slides.length) % slides.length;
     slides[currentSlide].style.display = 'block';
     updateDots();
+    intervalId = setInterval(nextSlide, 5000);
   }
 
   // Attach arrow click events

@@ -18,7 +18,7 @@ class HeroTest(HtmlPage):
            self.versionize('css/hero_test.css'),
        ])
        self.javascript_src.extend([
-           '/js/hero_test.js'
+           self.versionize('js/hero_test.js')
        ])
 
 
