@@ -19,10 +19,6 @@ body, html {
 }
 
 .slider-controls {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   align-items: center;
 }
@@ -53,9 +49,9 @@ body, html {
 }
 
 /* Optional: Style for mobile view */
-@media (max-width: 767px) {
-  .slide img {
-    object-fit: cover;
-    height: 100vh;
-  }
-}
+/* @media (max-width: 767px) { */
+/*   .slide img { */
+/*     object-fit: cover; */
+/*     height: 100vh; */
+/*   } */
+/* } */
