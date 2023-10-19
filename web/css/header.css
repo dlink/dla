@@ -39,13 +39,17 @@ nav {
 }
 
 .nav-list li {
-  margin-right: 20px;
+  margin-right: 0px;
 }
 
 .nav-list a {
   text-decoration: none;
+    padding: 3px 12px;
 }
-
+.nav-list a:hover {
+    background-color: #f8f3f3;
+    border-radius: 10px;
+}
 .menu-icon {
   display: none; /* Hide the menu icon by default on desktop */
   cursor: pointer;
@@ -78,6 +82,11 @@ nav {
   .nav-list li {
     margin-right: 0;
     margin-bottom: 10px;
+  }
+
+  .nav-list a:hover {
+    background-color: lightgrey;
+    border-radius: 10px;
   }
 
   .menu-icon {
