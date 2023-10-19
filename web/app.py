@@ -26,6 +26,16 @@ def show(id):
     from show import ShowPage
     return ShowPage(id).go()
 
+@app.route('/about')
+def about():
+    from about import AboutPage
+    return AboutPage().go()
+
+@app.route('/contact')
+def contact():
+    from contact import ContactPage
+    return ContactPage().go()
+
 @app.route('/favicon.ico')
 def favicon():
     '''TO DO: Set up favicon'''
