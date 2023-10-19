@@ -51,16 +51,15 @@ nav {
     border-radius: 10px;
 }
 .menu-icon {
-  display: none; /* Hide the menu icon by default on desktop */
+  display: none;
   cursor: pointer;
   font-size: 3em;
   color: #348caa;
 }
 
-/* Optional: Style for mobile view */
 @media (max-width: 767px) {
   .nav-list {
-    display: none; /* Hide the nav list on mobile */
+    display: none;
     flex-direction: column;
     position: absolute;
     top: 60px;
@@ -68,7 +67,6 @@ nav {
     width: 40%;
     background-color: #f4f1f1;
     padding: 50px;
-    /* border: 1px solid black; */
     font-size: 2em;
     height: 400px;
     line-height: 1.5;
@@ -76,7 +74,7 @@ nav {
   }
 
   .nav-list.show {
-    display: flex; /* Show the nav list when the show class is added */
+    display: flex;
   }
 
   .nav-list li {
@@ -90,6 +88,6 @@ nav {
   }
 
   .menu-icon {
-    display: block; /* Show the menu icon on mobile */
+    display: block;
   }
 }
