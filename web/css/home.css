@@ -1,0 +1,62 @@
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+.hero-slider {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.slide {
+    display: none;
+}
+
+.slide img {
+    width: 100%;
+    height: auto;
+}
+
+.slider-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slider-dots {
+    display: flex;
+    margin-right: 10px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background-color: #aaa;
+    border-radius: 50%;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.slider-arrows {
+    display: flex;
+    cursor: pointer;
+}
+
+.arrow {
+    font-size: 20px;
+    margin-right: 5px;
+    color: #aaa;
+}
+.play-btn {
+    font-size: 20px;
+    color: #aaa;
+}
+
+/* Optional: Style for mobile view */
+/* @media (max-width: 767px) { */
+/*   .slide img { */
+/*     object-fit: cover; */
+/*     height: 100vh; */
+/*   } */
+/* } */

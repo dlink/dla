@@ -9,6 +9,10 @@ from flask import Flask, request, Response, send_from_directory
 app = Flask(__name__)
 
 @app.route('/')
+def home():
+    from home import HomePage
+    return HomePage().go()
+
 @app.route('/gallery/<id>')
 def gallery(id=None):
     if not id:
