@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // set slide interval update dots
     function startSlideShow() {
 	if(play) {
-	    intervalId = setInterval(nextSlide, 3000);
+	    intervalId = setInterval(nextSlide, 5000);
 	    updateDots();
 	}
     }
@@ -72,10 +72,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function togglePlay() {
 	play = !play;
 	if(play) {
-	    play_btn.innerHTML = '×'
+	    play_btn.innerHTML = '×';
 	    nextSlide();
 	} else {
-	    play_btn.innerHTML = '▸'
+	    play_btn.innerHTML = '▸';
 	    clearInterval(intervalId);
 	}
     }
