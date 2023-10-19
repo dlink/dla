@@ -3,7 +3,7 @@ from vlib.datarecord import DataRecordNotFound
 
 #from vweb.htmltable import HtmlTable
 #from vweb.html import div, img, input, li, p, span, ul
-from vlib.utils import format_date
+from vlib.utils import format_date, is_int
 from vweb.html import div, li, p, ul
 
 from basepage import BasePage
@@ -13,12 +13,16 @@ from shows import Show
 class ShowPage(BasePage):
 
     def __init__(self, id):
-        BasePage.__init__(self, 'Show Page')
+        title = 'David Link '
+        if is_int(id):
+            title += f'Show {id}'
+        else:
+            title += f'Show: {id.title()}'
+        BasePage.__init__(self, title)
         self.id = id
         self.show = None
         self.show_not_found = 0
         self.style_sheets.extend([
-             self.versionize('css/main.css'),
              self.versionize('css/show.css'),
              self.versionize('css/gallery.css'),
          ])

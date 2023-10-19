@@ -1,5 +1,6 @@
 
 from vlib.datarecord import DataRecordNotFound
+from vlib.utils import is_int
 
 from vweb.htmltable import HtmlTable
 from vweb.html import div, img, input, li, p, span, ul
@@ -11,13 +12,17 @@ from thumbnails import Thumbnail
 class PiecePage(BasePage):
 
     def __init__(self, id):
-        BasePage.__init__(self, 'Piece Page')
+        title = 'David Link '
+        if is_int(id):
+            title += f'Piece {id}'
+        else:
+            title += id.title()
+        BasePage.__init__(self, title)
         self.id = id
         self.piece = None
         self.piece_not_found = 0
         self.javascript_src.extend(['/js/piece.js'])
         self.style_sheets.extend([
-            self.versionize('css/main.css'),
             self.versionize('css/piece.css'),
             self.versionize('css/gallery.css'),
         ])

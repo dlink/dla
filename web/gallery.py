@@ -12,7 +12,12 @@ class GalleryPage(BasePage):
     panel_max_cols = 4
 
     def __init__(self, id):
-        BasePage.__init__(self, 'DLA Gallery')
+        title = 'David Link '
+        if is_int(id):
+            title += f'Gallery {id}'
+        else:
+            title += id.title()
+        BasePage.__init__(self, title)
         self.id = id
         self.pieces = Pieces()
         self.style_sheets.extend([
