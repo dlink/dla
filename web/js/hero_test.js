@@ -2,7 +2,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const slides = document.querySelectorAll('.slide');
     const dotsContainer = document.querySelector('.slider-dots');
     const arrows = document.querySelector('.slider-arrows');
+    const play_btn = document.querySelector('.play-btn');
     let currentSlide = 0;
+    let play = 1;
     let intervalId;
 
     // Show the first slide initially
@@ -28,8 +30,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
     }
 
-    // Set an interval to switch slides (adjust the duration as needed)
-    intervalId = setInterval(nextSlide, 5000);
+    // Start slide show
+    startSlideShow();
 
     // Show a specific slide
     function showSlide(index) {
@@ -37,8 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	slides[currentSlide].style.display = 'none';
 	currentSlide = index;
 	slides[currentSlide].style.display = 'block';
-	updateDots();
-	intervalId = setInterval(nextSlide, 5000);
+	togglePlay();
     }
 
     // Move to the next slide
@@ -47,8 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	slides[currentSlide].style.display = 'none';
 	currentSlide = (currentSlide + 1) % slides.length;
 	slides[currentSlide].style.display = 'block';
-	updateDots();
-	intervalId = setInterval(nextSlide, 5000);
+	startSlideShow();
     }
 
     // Move to the previous slide
@@ -57,11 +57,31 @@ document.addEventListener('DOMContentLoaded', function () {
 	slides[currentSlide].style.display = 'none';
 	currentSlide = (currentSlide - 1 + slides.length) % slides.length;
 	slides[currentSlide].style.display = 'block';
-	updateDots();
-	intervalId = setInterval(nextSlide, 5000);
+	startSlideShow();
     }
 
-    // Attach arrow click events
+    // set slide interval update dots
+    function startSlideShow() {
+	if(play) {
+	    intervalId = setInterval(nextSlide, 3000);
+	    updateDots();
+	}
+    }
+
+    // turn on/off slide show
+    function togglePlay() {
+	play = !play;
+	if(play) {
+	    play_btn.innerHTML = '×'
+	    nextSlide();
+	} else {
+	    play_btn.innerHTML = '▸'
+	    clearInterval(intervalId);
+	}
+    }
+
+    // Attach arrow and play click events
     arrows.querySelector('.left').addEventListener('click', prevSlide);
     arrows.querySelector('.right').addEventListener('click', nextSlide);
+    play_btn.addEventListener('click', togglePlay);
 });

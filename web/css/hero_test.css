@@ -47,6 +47,10 @@ body, html {
   margin: 0 10px;
   color: #aaa;
 }
+.play-btn {
+  font-size: 24px;
+  color: #aaa;
+}
 
 /* Optional: Style for mobile view */
 /* @media (max-width: 767px) { */
