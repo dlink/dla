@@ -44,12 +44,12 @@ body, html {
 }
 
 .arrow {
-    font-size: 20px;
-    margin-right: 5px;
+    font-size: 30px;
+    margin-right: 12px;
     color: #aaa;
 }
 .play-btn {
-    font-size: 20px;
+    font-size: 30px;
     color: #aaa;
 }
 
