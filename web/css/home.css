@@ -60,3 +60,15 @@ body, html {
 /*     height: 100vh; */
 /*   } */
 /* } */
+
+@media (max-width: 767px) {
+    .arrow {
+	font-size: 36px;
+	margin-right: 16px;
+	color: #aaa;
+    }
+    .play-btn {
+	font-size: 36px;
+	color: #aaa;
+    }
+}
