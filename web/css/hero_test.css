@@ -20,6 +20,7 @@ body, html {
 
 .slider-controls {
     display: flex;
+    justify-content: center;
     align-items: center;
 }
 
