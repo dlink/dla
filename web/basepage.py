@@ -19,8 +19,6 @@ class BasePage(HtmlPage):
         self.style_sheets.extend([
             self.versionize('css/basepage.css'),
             self.versionize('css/header.css'),
-            self.versionize('css/aside.css'),
-            self.versionize('css/main.css'),
         ])
         self.javascript_src.extend(['/js/header.js'])
 

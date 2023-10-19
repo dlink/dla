@@ -5,7 +5,7 @@
 
 .gallery > .gallery__list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-template-rows: repeat(6, 342px);
     grid-auto-flow: dense;
     padding: 0;
@@ -16,4 +16,11 @@
 }
 .gallery > .gallery__list li {
     list-style: none;
-}    
+}
+
+@media (max-width: 767px) {
+    .gallery > .gallery__list {
+	grid-template-rows: repeat(6, 310px);
+    }
+
+}

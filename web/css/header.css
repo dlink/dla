@@ -5,8 +5,16 @@ body {
 }
 
 header {
+    border-bottom: 1px solid #348caa;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    background-color: #f9f5eb; /* Light beige */
+    width: 100%;
 }
-
+header h1 {
+    font-size: 20px;
+}
 .header-container {
   display: flex;
   justify-content: space-between;
@@ -53,7 +61,7 @@ nav {
 .menu-icon {
   display: none;
   cursor: pointer;
-  font-size: 3em;
+  font-size: 1.8em;
   color: #348caa;
 }
 
