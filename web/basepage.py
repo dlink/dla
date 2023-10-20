@@ -19,6 +19,7 @@ class BasePage(HtmlPage):
         self.style_sheets.extend([
             self.versionize('css/basepage.css'),
             self.versionize('css/header.css'),
+            self.versionize('css/footer.css'),
         ])
         self.javascript_src.extend(['/js/header.js'])
 
@@ -27,6 +28,7 @@ class BasePage(HtmlPage):
         data = {'header': self.getTemplate('header.html'),
                 'aside': self.aside.getAside(),
                 'main': self.getPageContent(),
+                'footer': self.getTemplate('footer.html'),
                 }
         return template.format(**data)
 

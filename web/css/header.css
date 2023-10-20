@@ -66,7 +66,7 @@ nav {
 }
 
 @media (max-width: 767px) {
-  .nav-list {
+  header .nav-list {
     display: none;
     flex-direction: column;
     position: absolute;
@@ -81,21 +81,21 @@ nav {
 
   }
 
-  .nav-list.show {
+  header .nav-list.show {
     display: flex;
   }
 
-  .nav-list li {
+  header .nav-list li {
     margin-right: 0;
     margin-bottom: 10px;
   }
 
-  .nav-list a:hover {
+  header .nav-list a:hover {
     background-color: lightgrey;
     border-radius: 10px;
   }
 
-  .menu-icon {
+  header .menu-icon {
     display: block;
   }
 }
