@@ -26,5 +26,5 @@ class Thumbnail():
             status='')
     
     def getTemplate(self, filename):
-        filepath = f'{self.conf.base_dir}/web/templates/{filename}'
+        filepath = f'{self.conf.base_dir}/web/html/{filename}'
         return open(filepath, 'r').read()

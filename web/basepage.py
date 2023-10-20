@@ -31,7 +31,7 @@ class BasePage(HtmlPage):
         return template.format(**data)
 
     def getTemplate(self, filename):
-        filepath = f'{self.conf.base_dir}/web/templates/{filename}'
+        filepath = f'{self.conf.base_dir}/web/html/{filename}'
         return open(filepath, 'r').read()
 
     def versionize(self, file):
