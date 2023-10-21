@@ -70,6 +70,9 @@ class Piece(DataRecord):
     def addImage(self, img_filepath):
         return self.images.addImage(img_filepath)
 
+    def updateImages(self):
+        return self.images.updateImages()
+
     @lazyproperty
     def status(self):
         return PieceStatuses().getName(self.status_id)
@@ -141,6 +144,7 @@ class PiecesCLI(object):
         from cli import CLI
         commands = [
             'add_image <id|code> <img_filepath>',
+            'update_images <id|code>',
             'list',
             'images <id|code>',
             'shows <id|code>',
@@ -159,10 +163,15 @@ class PiecesCLI(object):
 
 
         if cmd == 'add_image':
-            validate_num_args('load_image', 2, args)
+            validate_num_args('add_image', 2, args)
             filter = args.pop(0)
             img_filepath = args.pop(0)
             return Piece(filter).addImage(img_filepath)
+
+        elif cmd == 'update_images':
+            validate_num_args('update_images', 1, args)
+            filter = args.pop(0)
+            return Piece(filter).updateImages()
 
         elif cmd == 'list':
             return Pieces().list()

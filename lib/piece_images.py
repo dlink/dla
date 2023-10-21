@@ -12,6 +12,8 @@ from images import Images, Image
 from utils import mkdir_p
 import env
 
+PAGE_COLOR = 'light_ivory'
+
 class PieceImagesError(Exception): pass
 
 class PieceImages():
@@ -37,9 +39,30 @@ class PieceImages():
         mkdir_p(f'{self.file_basedir}/tiny')
 
     def addImage(self, img_filepath):
-        self.warnings = []
+        img = Image(img_filepath)
 
+        # copy image into directory structure
         self.initImageDirs()
+        shutil.copy(img_filepath, f'{self.file_basedir}/orig/')
+        if self.verbose:
+            print(f'{self.file_basedir}/orig/{img.filename} added.')
+
+        # create small images
+        self.createSmallImages(img_filepath)
+
+        # update database
+        data = {'piece_id': self.piece.id,
+                'filename': img.filename,
+                'active': 1}
+        self.pieceImagesDt.insertRow(data)
+        print(f'{img.filename} added.')
+
+    def updateImages(self):
+        for image in self.data:
+            self.createSmallImages(image.filepath)
+
+    def createSmallImages(self, img_filepath):
+        self.warnings = []
 
         # instanciate Image Obj
         img = Image(img_filepath)
@@ -48,27 +71,16 @@ class PieceImages():
         if img.width < Images.HIRES or img.height < Images.HIRES:
             self.warnings.append(f'Image is not hi-res: {img.size}')
 
-        # copy image into directory structure
-        shutil.copy(img_filepath, f'{self.file_basedir}/orig/')
-        if self.verbose:
-            print(f'{self.file_basedir}/orig/{img.filename} added.')
-
         # resize image for each size type:
         for size in Images.SIZES.keys():
             width = Images.SIZES[size]
             outputfile = f'{self.file_basedir}/{size}/{img.filename}'
-            img.resize_pad(width=width, outputfile=outputfile)
+            img.resize_pad(width=width, outputfile=outputfile,
+                           color=PAGE_COLOR)
             if self.verbose:
                 print(f'{outputfile} created')
 
         self.printWarnings()
-
-        # update database
-        data = {'piece_id': self.piece.id,
-                'filename': img.filename,
-                'active': 1}
-        self.pieceImagesDt.insertRow(data)
-        print(f'{img.filename} added.')
 
     def getImages(self):
         '''Return a list of piece_image odicts
@@ -80,8 +92,7 @@ class PieceImages():
         self.data = []
         for pi in self.pieceImagesDt.getTable():
             pi = odict(pi)
-            pi.filepath = f'{self.file_basedir}/{pi.filename}'
-
+            pi.filepath = f'{self.file_basedir}/orig/{pi.filename}'
             pi.url = f'{self.url_basepath}/display/{pi.filename}'
             pi.tiny_url = f'{self.url_basepath}/tiny/{pi.filename}'
             pi.thumb_url = f'{self.url_basepath}/thumb/{pi.filename}'
