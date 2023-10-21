@@ -14,3 +14,7 @@ database:
    db    : dla
    user  : dlink
    passwd: $DDB_PASS
+
+logging:
+   filename: /var/log/dla/dev_dla.log
+   level: DEBUG

@@ -1,6 +1,8 @@
 import os
+from flask import request
 
 from vlib import conf
+from vlib import logger
 
 from vweb.htmlpage import HtmlPage
 
@@ -12,9 +14,10 @@ class BasePage(HtmlPage):
        Subclass this class and provide the getPageContent() method
     '''
 
-    def __init__(self, report_name=None):
-        HtmlPage.__init__(self, report_name or 'Base Report')
+    def __init__(self, title=None):
+        HtmlPage.__init__(self, title or 'Base Report')
         self.conf = conf.getInstance()
+        self.logger = logger.getLogger(__class__.__name__)
         self.aside = Aside(self)
         self.style_sheets.extend([
             self.versionize('css/basepage.css'),
@@ -22,6 +25,11 @@ class BasePage(HtmlPage):
             self.versionize('css/footer.css'),
         ])
         self.javascript_src.extend(['/js/header.js'])
+        self.logPageLoad(title)
+
+    def logPageLoad(self, title):
+        user_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+        self.logger.info(f'{user_ip}: {request.path}')
 
     def getHtmlContent(self):
         template = self.getTemplate('basepage.html')
