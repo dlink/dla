@@ -6,8 +6,8 @@ create table piece_statuses (
    description   varchar(255)     ,
    active        boolean          not null,
    
-   r_created       datetime         not null,
-   r_updated       timestamp        not null
+   r_created       datetime       null,
+   r_updated       timestamp      null
         default current_timestamp on update current_timestamp,
 
    unique key(code),
