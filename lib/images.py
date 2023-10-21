@@ -123,6 +123,7 @@ class Image():
 
         # write file
         padded_img.save(outputfile)
+        print(f'{outputfile} created.')
 
     def rotate(self, outputfile=None, inplace=False):
         if not inplace and not outputfile:
