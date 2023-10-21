@@ -81,6 +81,7 @@ class PiecePage(BasePage):
     def getPieceDescription(self):
         template = self.getTemplate('piece_description.html')
         data = self.piece.data
+        data.short_description = data.short_description or ''
         data.shows_info = self.getShowsInfo()
         return template.format(**data)
 
