@@ -7,6 +7,10 @@ from vlib.utils import lazyproperty, validate_num_args
 
 import env
 
+COLORS = {
+    'light_ivory': '#f5f5f0',
+    'white': '#fff'
+}
 class Images():
     HIRES = 1200
     SIZES = {'tiny': 50,
@@ -71,19 +75,21 @@ class Image():
         # write file
         resized_img.save(outputfile)
 
-    def resize_pad(self, width, outputfile=None, inplace=False):
+    def resize_pad(self, width, outputfile=None, inplace=False,
+                   color=None):
         '''Resize an image to to have a 4:3 aspect ratio with given width
-           Pad image with white space if necessary.
+           Pad image with 'color' space if necessary.
         '''
         if not inplace and not outputfile:
             raise ImageError('Must specify outputfile or pass inplace=True')
 
+        color = color or 'white'
         taspect_ratio = 4 /3
 
         width = input_width = int(width)
         height = calc_height = int(width * taspect_ratio)
 
-        padded_img = Pil.new('RGB', (width, height), 'white')
+        padded_img = Pil.new('RGB', (width, height), COLORS[color])
 
         owidth, oheight = self.img.size
         oaspect_ratio = oheight / owidth
@@ -232,7 +238,8 @@ class ImagesCLI(object):
             'stat <filepath>',
             'to_png <filepath>',
         ]
-        options = {'i': 'edit inplace'}
+        options = {'c+': 'color',
+                   'i': 'edit inplace'}
         self.cli = CLI(self.process, commands, options)
         self.cli.process()
 
@@ -303,8 +310,9 @@ class ImagesCLI(object):
             else:
                 outputfile = args.pop(0)
                 inplace = 0
+            color = self.cli.hasoption.get('c')
             return Image(filepath).resize_pad(width, outputfile=outputfile,
-                                              inplace=inplace)
+                                              inplace=inplace, color=color)
 
         elif cmd == 'rotate':
             validate_num_args('rotate', 1, args)
