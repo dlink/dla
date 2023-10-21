@@ -105,7 +105,7 @@ class Piece(DataRecord):
     @lazyproperty
     def status_description(self):
         if not self.owner_id:
-            return self.status
+            status = self.status
         else:
             data = {
                 'status': self.status,
@@ -114,8 +114,11 @@ class Piece(DataRecord):
                 'city': self.owner.city,
                 'state': self.owner.state,
                 }
-            return '{status} {trans_date}: {owner_name}, {city}, {state}'.\
+            status= '{status} {trans_date}: {owner_name}, {city}, {state}'.\
                 format(**data)
+        if self.status not in ('Available', 'In Show'):
+            status += ' (Can be remade)'
+        return status
 
     @lazyproperty
     def shows(self):
