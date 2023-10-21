@@ -2,5 +2,6 @@ id,code,name,description,active
 0,available,Available,,1
 1,sold,Sold,,1
 2,gifted,Gifted,,1
-3,in_show,In Show,,1
-4,lost,Lost,,1
+3,donated,Donated,,1
+4,in_show,In Show,,1
+5,lost,Lost,,1
