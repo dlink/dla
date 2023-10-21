@@ -3,6 +3,10 @@ body, html {
     padding: 0;
 }
 
+.nav-home {
+    display: None;
+}
+
 .hero-slider {
     width: 100%;
     overflow: hidden;

@@ -1,9 +1,10 @@
+from flask import request
 
 from vlib.datarecord import DataRecordNotFound
 from vlib.utils import is_int
 
 from vweb.htmltable import HtmlTable
-from vweb.html import div, img, input, li, p, span, ul
+from vweb.html import a, div, img, input, li, p, span, ul
 
 from basepage import BasePage
 from pieces import Piece
@@ -24,7 +25,6 @@ class PiecePage(BasePage):
         self.javascript_src.extend(['/js/piece.js'])
         self.style_sheets.extend([
             self.versionize('css/piece.css'),
-            self.versionize('css/gallery.css'),
         ])
         self.pic_num = 0
         try:
@@ -43,10 +43,19 @@ class PiecePage(BasePage):
             return p(f'Piece "{self.id}" not found.')
 
         output = \
+            self.getBreadCrumbs() + \
             self.getMainPic() + \
             self.getPicMenu() + \
             self.getPieceDescription()
         return div(output, id='main-container')
+
+    def getBreadCrumbs(self):
+        referrer = request.referrer
+        if '/gallery' in str(referrer):
+            href = referrer[referrer.find('/gallery'):]
+            return p(a('< back', href=href), # ◀
+                     class_='bread-crumbs')
+        return ''
 
     def getPicMenu(self):
         lis = ''
