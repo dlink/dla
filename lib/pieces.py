@@ -26,6 +26,7 @@ class Pieces(DataTable):
     def get(self, filters={}):
         '''Return list of Piece object'''
         self.setFilters(filters)
+        self.setOrderBy(['created_year desc', 'id desc'])
         all = []
         for rec in self.getTable():
             all.append(Piece(rec['id']))
@@ -51,13 +52,18 @@ class Piece(DataRecord):
     def __init__(self, id):
         '''Preside over a piece database record
            Id can be the pieces.id,
-                         pieces.code or
+                         pieces.code, (edition=1 implied)
+                         pieces.code '-' pieces.edition
                          <field>="<value>" pair
         '''
         self.db = db.getInstance()
         if not is_int(id) and '=' not in id:
             code = id
-            id=f'code="{code}"'
+            edition = 1
+            if '-' in code:
+                code, edition = code.split('-')[0:2 ]
+            id=f"code='{code}' and edition = {edition}"
+
         DataRecord.__init__(self, self.db, 'pieces', id)
         self.data.status = self.status
         self.data.dimensions = self.dimensions

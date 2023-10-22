@@ -40,7 +40,8 @@ class PiecePage(BasePage):
 
     def getPageContent(self):
         if self.piece_not_found:
-            return p(f'Piece "{self.id}" not found.')
+            return div(p(f'Piece "{self.id}" not found.'),
+                       class_='error-msg')
 
         output = \
             self.getBreadCrumbs() + \

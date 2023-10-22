@@ -16,6 +16,9 @@ class Thumbnail():
         image_url = piece.images.thumb_urls[0]
         image_tag = img(src=f'/{image_url}')
         href=f'/piece/{piece.code}'
+        if piece.edition != 1:
+            href += f'-{piece.edition}'
+
         image_link = a(image_tag, href=href)
         return template.format(
             image=image_link,
@@ -24,7 +27,7 @@ class Thumbnail():
             materials=piece.material,
             dimensions=piece.dimensions,
             status='')
-    
+
     def getTemplate(self, filename):
         filepath = f'{self.conf.base_dir}/web/html/{filename}'
         return open(filepath, 'r').read()

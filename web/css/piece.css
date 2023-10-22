@@ -52,9 +52,16 @@ img.main-pic.selected {
     padding: 2px;
     border: 1px solid black;
 }
+
+.error-msg {
+    padding: 50px;
+    color: #b48585; /* brown */
+    font-size: 1.3em;
+}
 @media (max-width: 767px) {
     img.main-pic {
 	width: 300px;
 	margin: auto;
     }
 }
+.

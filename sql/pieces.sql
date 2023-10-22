@@ -3,6 +3,7 @@ create table pieces (
   medium_id    integer unsigned not null,
   code         varchar(100) not null,
   name         varchar(100) not null,
+  edition      integer unsigned not null default 1,
   status_id    integer unsigned not null default 0,
   owner_id     integer unsigned,
   material     varchar(100),
@@ -15,13 +16,13 @@ create table pieces (
   weight       decimal(6,2),
   weight_uom   varchar(5),
   location     varchar(250),
-  short_description varchatr(250),
+  short_description varchar(250),
 
   r_created    datetime     null,
   r_updated    timestamp    not null
     default current_timestamp on update current_timestamp,
  
-  unique key (code),
+  unique key (code, edition),
   constraint p_status_id foreign key (status_id) references piece_statuses(id),
   constraint p_owner_id foreign key (owner_id) references contacts(id)
 )
