@@ -21,6 +21,9 @@ img.main-pic.selected {
 .piece-name {
     font-weight: bold;
 }
+.piece-edition-info {
+    font-size: 0.8em;
+}
 .piece-dimensions {
     font-style: italic;
 }

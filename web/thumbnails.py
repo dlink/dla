@@ -23,6 +23,7 @@ class Thumbnail():
         return template.format(
             image=image_link,
             name=piece.name,
+            edition=f'-{piece.edition}' if piece.edition > 1 else '',
             year=piece.created_year,
             materials=piece.material,
             dimensions=piece.dimensions,

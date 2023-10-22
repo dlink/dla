@@ -3,5 +3,5 @@ import os
 def mkdir_p(dirname):
     if os.path.exists(dirname):
         return 0
-    os.mkdir(dirname)
+    os.makedirs(dirname)
     return 1

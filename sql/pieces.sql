@@ -4,6 +4,7 @@ create table pieces (
   code         varchar(100) not null,
   name         varchar(100) not null,
   edition      integer unsigned not null default 1,
+  sort_order   integer unsigned not null default 1,
   status_id    integer unsigned not null default 0,
   owner_id     integer unsigned,
   material     varchar(100),

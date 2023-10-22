@@ -10,9 +10,9 @@
     grid-auto-flow: dense;
     padding: 0;
     column-gap: 5px;
-    /* justify-items: center; */
-    /* align-items: center */
     justify-content: stretch;
+    max-width: 800px;
+    margin: auto;
 }
 .gallery > .gallery__list li {
     list-style: none;

@@ -26,7 +26,7 @@ class Pieces(DataTable):
     def get(self, filters={}):
         '''Return list of Piece object'''
         self.setFilters(filters)
-        self.setOrderBy(['created_year desc', 'id desc'])
+        self.setOrderBy(['created_year desc', 'sort_order', 'id desc'])
         all = []
         for rec in self.getTable():
             all.append(Piece(rec['id']))
@@ -69,6 +69,7 @@ class Piece(DataRecord):
         self.data.dimensions = self.dimensions
         self.data.description_html = self.description_html
         self.data.status_description = self.status_description
+        self.data.edition_info = self.edition_info
 
     def initImageDirs(self):
         return self.images.initImageDirs()
@@ -97,6 +98,12 @@ class Piece(DataRecord):
         if self.length and self.width and self.height:
             dimensions = display_dimensions(self.length,self.width,self.height)
         return dimensions
+
+    @lazyproperty
+    def edition_info(self):
+        if self.edition > 1:
+            return f'(Edition {self.edition})'
+        return ''
 
     @lazyproperty
     def description_html(self):
@@ -149,11 +156,12 @@ class PiecesCLI(object):
         '''
         from cli import CLI
         commands = [
-            'add_image <id|code> <img_filepath>',
-            'update_images <id|code>',
+            'add_image <id|code[-edition]> <img_filepath>',
+            'update_images <id|code[-edition]>',
             'list',
-            'images <id|code>',
-            'shows <id|code>',
+            'images <id|code[-edition]>',
+            'show <id|code[-edition]>',
+            'shows <id|code[-edition]>',
         ]
         self.cli = CLI(self.process, commands)
         self.cli.process()
@@ -187,10 +195,10 @@ class PiecesCLI(object):
             filter = args.pop(0)
             return Piece(filter).images.filepaths
 
-        elif cmd == 'shows':
+        elif cmd == 'show':
             validate_num_args('shows', 1, args)
             filter = args.pop(0)
-            return [s.info for s in Piece(filter).shows]
+            return Piece(filter).data
 
         else:
             raise PiecesCLIError('Unrecognized command: %s' % cmd)
