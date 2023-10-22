@@ -4,7 +4,6 @@
 export d="$HOME/dla" ; alias d='cd $d'
 export db="$d/bin"   ; alias db='cd $db'
 export dc="$d/conf"  ; alias dc='cd $dc'
-export dd="$d/docs"  ; alias dd='cd $dd'
 export dl="$d/lib"   ; alias dl='cd $dl'
 export ds="$d/sql"   ; alias ds='cd $ds'
 export dt="$d/tests" ; alias dt='cd $dt'
@@ -14,9 +13,15 @@ export dwh="$dw/html" ; alias dwh='cd $dwh'
 export dwi="$dw/images"; alias dwi='cd $dwi'
 export dwj="$dw/js"  ; alias dwj='cd $dwj'
 
-# images
-export ddi="/data/dla/images" ; alias ddi="cd $ddi"
-export ddip="$ddi/pieces"     ; alias ddip="cd $ddip"
+# data dir
+export dd="/data/dla"     ; alias dd="cd $dd"
+export ddi="$dd/images"   ; alias ddi="cd $ddi"
+export ddip="$ddi/pieces" ; alias ddip="cd $ddip"
+
+# logs
+
+export vld="/var/log/dla" ; alias vld="cd $vld"
+export vldd="$vld/dev_dla.log"
 
 # dev_dla database
 alias ddb="mysql --login-path=dla dla"
