@@ -9,7 +9,7 @@
     grid-template-rows: repeat(6, 342px);
     grid-auto-flow: dense;
     padding: 0;
-    column-gap: 0;
+    column-gap: 5px;
     /* justify-items: center; */
     /* align-items: center */
     justify-content: stretch;

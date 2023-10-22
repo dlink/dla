@@ -1,8 +1,23 @@
 from vlib import db
+from vlib.datatable import DataTable
 from vlib.datarecord import DataRecord
 from vlib.utils import is_int, lazyproperty
 
 from contacts import Contact
+
+class Shows(DataTable):
+
+    def __init__(self):
+        self.db = db.getInstance()
+        DataTable.__init__(self, self.db, 'shows')
+
+    def getAll(self):
+        self.setFilters()
+        o = []
+        for rec in self.getTable():
+            o.append(Show(rec['id']))
+        return o
+
 
 class Show(DataRecord):
     '''Provide over art shows pieces have been in'''

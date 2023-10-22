@@ -25,6 +25,11 @@ def piece(id):
     from piece import PiecePage
     return PiecePage(id).go()
 
+@app.route('/shows')
+def shows():
+    from shows_page import ShowsPage
+    return ShowsPage().go()
+
 @app.route('/show/<id>')
 def show(id):
     from show import ShowPage
