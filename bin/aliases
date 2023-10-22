@@ -10,9 +10,9 @@ export ds="$d/sql"   ; alias ds='cd $ds'
 export dt="$d/tests" ; alias dt='cd $dt'
 export dw="$d/web"   ; alias dw='cd $dw'
 export dwc="$dw/css" ; alias dwc='cd $dwc'
+export dwh="$dw/html" ; alias dwh='cd $dwh'
 export dwi="$dw/images"; alias dwi='cd $dwi'
 export dwj="$dw/js"  ; alias dwj='cd $dwj'
-export dwt="$dw/templates" ; alias dwt='cd $dwt'
 
 # images
 export ddi="/data/dla/images" ; alias ddi="cd $ddi"
