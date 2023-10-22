@@ -1,14 +1,11 @@
 
 from vlib.datarecord import DataRecordNotFound
 
-#from vweb.htmltable import HtmlTable
-#from vweb.html import div, img, input, li, p, span, ul
 from vlib.utils import format_date, is_int
 from vweb.html import div, li, p, ul
 
 from basepage import BasePage
 from shows import Show
-#from thumbnails import Thumbnail
 
 class ShowPage(BasePage):
 
@@ -24,7 +21,6 @@ class ShowPage(BasePage):
         self.show_not_found = 0
         self.style_sheets.extend([
              self.versionize('css/show.css'),
-             self.versionize('css/gallery.css'),
          ])
 
     def process(self):
@@ -98,6 +94,3 @@ def text2html(text):
     if not text:
         return ''
     return text.replace('\n', '<br/>')
-
-if __name__ == '__main__':
-    ShowPage().go()
