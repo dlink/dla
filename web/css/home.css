@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Sans+MS&display=swap');
+
 body, html {
     margin: 0;
     padding: 0;
@@ -74,5 +76,85 @@ body, html {
     .play-btn {
 	font-size: 36px;
 	color: #aaa;
+    }
+}
+
+/* Triads */
+
+.triad-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+.image-box {
+  position: relative;
+  width: calc(33.33% - 20px); /* Adjust the width and margin as needed */
+  margin-bottom: 20px; /* Adjust the margin as needed */
+
+}
+
+.image-box img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 2.5em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.image-box:hover {
+    filter: drop-shadow(0px 0px 10px grey);
+}
+
+@media (max-width: 767px) {
+    .overlay-text {
+	font-size: 1.2em;
+    }
+}
+
+/* Artist info */
+.artist-info {
+    max-width: 900px;
+    line-height: 1.8em;
+    font-size: 1.2em;
+    margin: auto;
+}
+@media (max-width: 767px) {
+    .artist-info {
+	padding: 10px 20px;
+    }
+}
+
+/* statement */
+
+.statement {
+    max-width: 800px;
+    padding: 20px 50px;
+    margin: 40px auto 100px;
+    font-family: 'Comic Sans MS', cursive;
+    font-style: italic;
+    line-height: 1.5em;
+    font-size: 1.2em;
+    background-color: lightyellow;
+}
+.signature {
+    padding-left: 20px;
+}
+@media (max-width: 767px) {
+    .statement {
+	margin: 0px auto 100px;
+	/* 	padding: 10px 30px; */
     }
 }
