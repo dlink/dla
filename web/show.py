@@ -2,10 +2,12 @@
 from vlib.datarecord import DataRecordNotFound
 
 from vlib.utils import format_date, is_int
-from vweb.html import div, li, p, ul
+from vweb.html import a, div, li, p, ul
 
 from basepage import BasePage
 from shows import Show
+from pieces import Piece
+from thumbnails import Thumbnail
 
 class ShowPage(BasePage):
 
@@ -21,6 +23,8 @@ class ShowPage(BasePage):
         self.show_not_found = 0
         self.style_sheets.extend([
              self.versionize('css/show.css'),
+             self.versionize('css/gallery.css'),
+             self.versionize('css/thumbnails.css'),
          ])
 
     def process(self):
@@ -48,7 +52,7 @@ class ShowPage(BasePage):
             id='main-container')
 
     def getHeader(self):
-        return div(p('Art Show'), class_='show-header')
+        return div(p(a('All Shows', href='/shows')), class_='show-header')
 
     def getShowsInfo(self):
         html = ''
@@ -57,8 +61,8 @@ class ShowPage(BasePage):
                 'name': self.show.name,
                 'gallery': self.show.contact.company_name,
                 'website': self.show.contact.website,
-                'city': self.show.contact.city,
-                'state': self.show.contact.state,
+                'city': self.show.contact.city or '',
+                'state': self.show.contact.state or '',
                 'start_date': format_date(self.show.start_date),
                 'end_date': format_date(self.show.end_date)}
         html += template.format(**data)
@@ -71,9 +75,6 @@ class ShowPage(BasePage):
         )
 
     def getPieces(self):
-        from pieces import Piece
-        from thumbnails import Thumbnail
-        
         pieces = []
         for piece_id in self.show.piece_ids:
             pieces.append(Piece(piece_id))

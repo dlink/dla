@@ -56,6 +56,9 @@ img.main-pic.selected {
     border: 1px solid black;
 }
 
+.piece-id {
+    font-size: 0.5em;
+}
 .error-msg {
     padding: 50px;
     color: #b48585; /* brown */

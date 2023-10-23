@@ -57,8 +57,10 @@ class PieceImages():
         data = {'piece_id': self.piece.id,
                 'filename': img.filename,
                 'active': 1}
-        self.pieceImagesDt.insertRow(data)
-        print(f'{img.filename} added.')
+        self.pieceImagesDt.setFilters(data)
+        if not self.pieceImagesDt.getTable():
+            self.pieceImagesDt.insertRow(data)
+            print(f'{img.filename} added.')
 
     def updateImages(self):
         for image in self.data:

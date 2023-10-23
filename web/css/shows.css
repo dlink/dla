@@ -1,3 +1,5 @@
 #main {
-  padding: 100px;
+    max-width: 900px;
+    margin: auto;
+    line-height: 1.8em;
 }

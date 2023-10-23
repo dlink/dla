@@ -13,6 +13,7 @@ class Shows(DataTable):
 
     def getAll(self):
         self.setFilters()
+        self.setOrderBy('start_date desc')
         o = []
         for rec in self.getTable():
             o.append(Show(rec['id']))
