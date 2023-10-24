@@ -25,7 +25,7 @@ class Thumbnail():
             name=piece.name,
             edition=f'-{piece.edition}' if piece.edition > 1 else '',
             year=piece.created_year,
-            materials=piece.material,
+            materials=piece.material or '',
             dimensions=piece.dimensions,
             status='')
 
