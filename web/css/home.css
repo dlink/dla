@@ -1,10 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Comic+Sans+MS&display=swap');
 
-body, html {
-    margin: 0;
-    padding: 0;
-}
-
 .nav-home {
     display: None;
 }
