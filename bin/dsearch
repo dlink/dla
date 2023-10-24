@@ -1,1 +1,1 @@
-grep --color=auto --exclude-dir={.venv,__pycache__,.git} -r "$*"
+grep --color=auto --exclude-dir={.venv,__pycache__,.git,tmp} -r "$*"
