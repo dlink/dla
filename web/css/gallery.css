@@ -6,7 +6,6 @@
 .gallery > .gallery__list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    grid-template-rows: repeat(6, 342px);
     grid-auto-flow: dense;
     padding: 0;
     column-gap: 5px;
@@ -14,13 +13,12 @@
     max-width: 800px;
     margin: auto;
 }
+.gallery > .gallery__list.small {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}
 .gallery > .gallery__list li {
     list-style: none;
 }
-
-@media (max-width: 767px) {
-    .gallery > .gallery__list {
-	grid-template-rows: repeat(6, 280px);
-    }
-
+.gallery > .gallery__list.small li {
+    border: 1px solid black;
 }

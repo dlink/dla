@@ -25,6 +25,8 @@ class PiecePage(BasePage):
         self.javascript_src.extend(['/js/piece.js'])
         self.style_sheets.extend([
             self.versionize('css/piece.css'),
+            self.versionize('css/gallery.css'),
+            self.versionize('css/thumbnails.css'),
         ])
         self.pic_num = 0
         try:
@@ -47,6 +49,8 @@ class PiecePage(BasePage):
             self.getBreadCrumbs() + \
             self.getMainPic() + \
             self.getPicMenu() + \
+            self.getPieceInfo() + \
+            self.getVersions() + \
             self.getPieceDescription()
         return div(output, id='main-container')
 
@@ -78,6 +82,23 @@ class PiecePage(BasePage):
                 class_ += ' selected'
             o += img(src=f'/{url}', class_=class_)
         return div(o, id='main-pic-container')
+
+    def getVersions(self):
+        lis = ''
+        for v in self.piece.versions:
+            lis += li(Thumbnail(v).html)
+        if lis:
+            gallery = div(ul(lis, class_='gallery__list small'),
+                          class_='gallery')
+            return div(p('Other Versions:') +
+                       gallery,
+                       id='other-versions')
+        return ''
+    
+    def getPieceInfo(self):
+        template = self.getTemplate('piece_info.html')
+        data = self.piece.data
+        return template.format(**data)
 
     def getPieceDescription(self):
         template = self.getTemplate('piece_description.html')

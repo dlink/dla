@@ -140,6 +140,15 @@ class Piece(DataRecord):
     def shows(self):
         return PieceShows(self.id).shows
 
+    @lazyproperty
+    def versions(self):
+        self.setFilters(f'code="{self.code}"')
+        versions = []
+        for rec in self.getTable():
+            if rec['edition'] != self.edition:
+                versions.append(Piece(rec['id']))
+        return versions
+
 class PiecesCLIError(Exception): pass
 
 class PiecesCLI(object):

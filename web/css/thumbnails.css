@@ -4,10 +4,10 @@
 }
 .thumb-image {
 }
-.thumb-image img {
+.gallery > .gallery__list.small .thumb-image img {
+    width: 100px;
 }
 .thumb-name {
-    /* font-weight: bold; */
     padding: 8px 0 5px;
 }
 .thumb-desc {

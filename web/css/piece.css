@@ -1,5 +1,5 @@
 #main-container {
-    max-width: 600px;
+    max-width: 500px;
     margin: auto;
 }
 img.main-pic {
@@ -7,6 +7,7 @@ img.main-pic {
     max-width: 100%;
     max-height: 680px;
     padding: 10px;
+    margin: auto;
 }
 img.main-pic.selected {
     display: block;
@@ -14,9 +15,8 @@ img.main-pic.selected {
 .bread-crumbs {
     padding: 0 10px;
 }
-#piece-description-container {
-    max-width: 600px;
-    padding: 10px;
+#piece-info-container{
+    padding: 0 10px;
 }
 .piece-name {
     font-weight: bold;
@@ -26,6 +26,15 @@ img.main-pic.selected {
 }
 .piece-dimensions {
     font-style: italic;
+}
+#other-versions {
+    padding: 0 10px;
+}
+#other-versions p {
+    font-weight: bold;
+}
+#piece-description-container {
+    padding: 10px;
 }
 .show-name {
     font-weight: bold;
