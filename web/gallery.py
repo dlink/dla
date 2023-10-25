@@ -35,6 +35,8 @@ class GalleryPage(BasePage):
         # get thumbnails
         lis = ''
         for piece in pieces:
+            if not piece.show_in_gallery:
+                continue
             lis += li(Thumbnail(piece).html)
 
         if not lis:
