@@ -18,7 +18,8 @@
 }
 .gallery > .gallery__list li {
     list-style: none;
+    padding-bottom: 5px;
 }
 .gallery > .gallery__list.small li {
-    border: 1px solid black;
+    border: 2px solid lightgrey;
 }
