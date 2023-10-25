@@ -15,14 +15,18 @@ def display_dimensions(dec_length, dec_width, dec_height, uom=None):
          in:  6 x 6-1/2 x 13 in
          ft:  2 x 2 x 2 ft      (whole numbers only)
          mix: 6'2" x 3'1" x 1'9"
+
+       for 2-D works length is None
+         in: 13 x 13 in
     '''
     # if no uom passed in, determine best format
     max_d = 0
     only_ints = True
     for d in dec_length, dec_width, dec_height:
-        max_d = max(max_d, d)
-        if d % 1 != 0:
-            only_ints = False
+        if(d):
+            max_d = max(max_d, d)
+            if d % 1 != 0:
+                only_ints = False
     if max_d <= 24:
         uom = 'in'
     elif only_ints:
@@ -30,8 +34,11 @@ def display_dimensions(dec_length, dec_width, dec_height, uom=None):
     else:
         uom = 'mix'
 
-    str = \
-        f"{dec_to_std(dec_length, uom)} x " \
+    str = ''
+    if dec_length:
+        str += \
+            f"{dec_to_std(dec_length, uom)} x "
+    str += \
         f"{dec_to_std(dec_width , uom)} x " \
         f"{dec_to_std(dec_height, uom)}"
     if uom in ('in', 'ft'):
@@ -112,3 +119,4 @@ def dec_to_std(dec_number, uom='in'):
             f"Unrecognized uom: dec_to_std('{round(dec_number, 4)}', '{uom}')")
 
 #print(storage_dimensions('6\'2" x 3\'1" x 1\'9"', 'mix'))
+#print(display_dimensions(None,13,10))
