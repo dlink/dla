@@ -145,24 +145,44 @@ class Piece(DataRecord):
 
     @lazyproperty
     def versions(self):
-        # get version based on same code but different edition
-        self.setFilters(f'code="{self.code}"')
+        return self._getVersions()
+
+    def _getVersions(self, visited=None):
+        if visited is None:
+            visited = set()
         _versions = []
+
+        # Check if the piece has already been visited
+        if self.id in visited:
+            return []
+
+        # Mark the current piece as visited
+        visited.add(self.id)
+
+        # get editions based on the same code but different edition
+        self.setFilters(f'code="{self.code}"')
         for rec in self.getTable():
             if rec['edition'] != self.edition:
-                _versions.append(Piece(rec['id']))
+                other_edition = Piece(rec['id'])
+                if other_edition.id not in visited:
+                    _versions.append(other_edition)
+                _versions.extend(other_edition._getVersions(visited))
 
-        # get orig_piece if exist and its version
+        # get orig_piece if it exists and its versions
         if self.orig_piece:
-            _versions.append(self.orig_piece)
-            _versions.extend(self.orig_piece.versions)
+            if self.orig_piece.id not in visited:
+                _versions.append(self.orig_piece)
+            _versions.extend(self.orig_piece._getVersions(visited))
 
-        # if orig_piece get copy
+        # if orig_piece, get copies
         self.setFilters(f'orig_piece_id={self.id}')
         for rec in self.getTable():
-            _versions.append(Piece(rec['id']))
+            copy_piece = Piece(rec['id'])
+            if copy_piece.id not in visited:
+                _versions.append(copy_piece)
+            _versions.extend(copy_piece._getVersions(visited))
 
-        # remove this piece (This happens during 'if orig_piece get copy'
+        # remove this piece
         _versions = [v for v in _versions if v.id != self.id]
 
         return _versions
