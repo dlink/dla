@@ -71,6 +71,9 @@ class Piece(DataRecord):
         self.data.status_description = self.status_description
         self.data.edition_info = self.edition_info
 
+    def __repr__(self):
+        return f'Piece:({self.name}-{self.edition})'
+
     def initImageDirs(self):
         return self.images.initImageDirs()
 
@@ -142,12 +145,31 @@ class Piece(DataRecord):
 
     @lazyproperty
     def versions(self):
+        # get version based on same code but different edition
         self.setFilters(f'code="{self.code}"')
-        versions = []
+        _versions = []
         for rec in self.getTable():
             if rec['edition'] != self.edition:
-                versions.append(Piece(rec['id']))
-        return versions
+                _versions.append(Piece(rec['id']))
+
+        # get orig_piece if exist and its version
+        if self.orig_piece:
+            _versions.append(self.orig_piece)
+            _versions.extend(self.orig_piece.versions)
+
+        # TO DO: THIS IS causing dups
+        # get pieces for which this is the original
+        # self.setFilters(f'orig_piece_id={self.id}')
+        # for rec in self.getTable():
+        #     _versions.append(Piece(rec['id']))
+
+        return _versions
+
+    @lazyproperty
+    def orig_piece(self):
+        if self.orig_piece_id:
+            return Piece(self.orig_piece_id)
+        return None
 
 class PiecesCLIError(Exception): pass
 
@@ -214,3 +236,6 @@ class PiecesCLI(object):
 
 if __name__ == '__main__':
     PiecesCLI().run()
+    # p = Piece(74)
+    # for v in p.versions:
+    #     print(f'{v.name}-{v.edition}')
