@@ -157,11 +157,13 @@ class Piece(DataRecord):
             _versions.append(self.orig_piece)
             _versions.extend(self.orig_piece.versions)
 
-        # TO DO: THIS IS causing dups
-        # get pieces for which this is the original
-        # self.setFilters(f'orig_piece_id={self.id}')
-        # for rec in self.getTable():
-        #     _versions.append(Piece(rec['id']))
+        # if orig_piece get copy
+        self.setFilters(f'orig_piece_id={self.id}')
+        for rec in self.getTable():
+            _versions.append(Piece(rec['id']))
+
+        # remove this piece (This happens during 'if orig_piece get copy'
+        _versions = [v for v in _versions if v.id != self.id]
 
         return _versions
 
