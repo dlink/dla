@@ -12,3 +12,10 @@ class Medium(DataRecord):
             code = id
             id=f'code="{code}"'
         DataRecord.__init__(self, self.db, 'mediums', id)
+
+    @property
+    def sort_order(self):
+        if self.code == 'painting':
+            return ['sort_order']
+        else:
+            return None

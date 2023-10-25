@@ -23,28 +23,33 @@ class Pieces(DataTable):
         self.db = db.getInstance()
         DataTable.__init__(self, self.db, 'pieces')
 
-    def get(self, filters={}):
+    def get(self, filters={}, sort_order=None):
         '''Return list of Piece object'''
+
         self.setFilters(filters)
-        self.setOrderBy(['created_year desc', 'sort_order', 'id desc'])
+        if not sort_order:
+            sort_order = ['created_year desc', 'sort_order', 'id desc']
+        self.setOrderBy(sort_order)
         all = []
         for rec in self.getTable():
             all.append(Piece(rec['id']))
         return all
 
-    def getByMediumCode(self, medium_code):
+    def getByMediumCode(self, medium_code, sort_order=None):
         try:
             medium = Medium(medium_code)
         except DataRecordNotFound as e:
             return []
-        return self.get({'medium_id': medium.id})
+        return self.get({'medium_id': medium.id}, sort_order)
 
     def list(self):
-        header = ['id', 'name', 'created_year', 'status_description']
+        header = ['id', 'name', 'medium', 'year', 'status_description']
+        print(','.join(header))
         rows = []
         for piece in self.get():
-            rows.append([piece.id, piece.name, piece.medium.name,
-                         piece.created_year, piece.status_description])
+            rows.append([piece.id, f'{piece.name}-{piece.version}',
+                         piece.medium.name, piece.created_year,
+                         piece.status_description])
         return [[f for f in r] for r in rows]
 
 class Piece(DataRecord):
@@ -98,7 +103,7 @@ class Piece(DataRecord):
     @lazyproperty
     def dimensions(self):
         dimensions = ''
-        if self.length and self.width and self.height:
+        if self.width  and self.height:
             dimensions = display_dimensions(self.length,self.width,self.height)
         return dimensions
 

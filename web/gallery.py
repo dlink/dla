@@ -4,6 +4,7 @@ from vweb.html import div, li, p, ul
 from vlib.utils import is_int
 
 from basepage import BasePage
+from mediums import Medium
 from pieces import Pieces
 from thumbnails import Thumbnail
 
@@ -26,11 +27,10 @@ class GalleryPage(BasePage):
         ])
 
     def getPageContent(self):
-        if not is_int(self.id):
-            medium = self.id
-            pieces = self.pieces.getByMediumCode(medium)
-        else:
-            pieces = self.pieces.get({'medium_id': self.id})
+
+        medium = Medium(self.id)
+        pieces = self.pieces.get({'medium_id': medium.id},
+                                 medium.sort_order)
 
         # get thumbnails
         lis = ''
