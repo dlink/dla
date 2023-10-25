@@ -171,6 +171,14 @@ class Piece(DataRecord):
             return Piece(self.orig_piece_id)
         return None
 
+    def show(self):
+        from copy import copy
+        data2 = copy(self.data)
+        del data2.description_html
+        data2.versions = self.versions
+        data2.orig_piece = self.orig_piece
+        return data2
+
 class PiecesCLIError(Exception): pass
 
 class PiecesCLI(object):
@@ -229,7 +237,7 @@ class PiecesCLI(object):
         elif cmd == 'show':
             validate_num_args('shows', 1, args)
             filter = args.pop(0)
-            return Piece(filter).data
+            return Piece(filter).show()
 
         else:
             raise PiecesCLIError('Unrecognized command: %s' % cmd)
