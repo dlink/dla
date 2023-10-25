@@ -4,7 +4,7 @@ select
    tt.name as type,
    coalesce(c.company_name, c.fullname) as contact,
    coalesce(o.company_name, o.fullname) as owner,
-   concat_ws('-', p.name, p.edition) as piece,
+   concat_ws('-', p.name, p.version) as piece,
    coalesce(t.sale_price, '') as sale_price,
    coalesce(t.credit, '') as credit,
    coalesce(t.debit, '') as debit

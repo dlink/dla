@@ -16,14 +16,14 @@ class Thumbnail():
         image_url = piece.images.thumb_urls[0]
         image_tag = img(src=f'/{image_url}')
         href=f'/piece/{piece.code}'
-        if piece.edition != 1:
-            href += f'-{piece.edition}'
+        if piece.version != 1:
+            href += f'-{piece.version}'
 
         image_link = a(image_tag, href=href)
         return template.format(
             image=image_link,
             name=piece.name,
-            edition=f'-{piece.edition}' if piece.edition > 1 else '',
+            version=f'-{piece.version}' if piece.version > 1 else '',
             year=piece.created_year,
             materials=piece.material or '',
             dimensions=piece.dimensions,

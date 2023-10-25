@@ -26,9 +26,9 @@ class PieceImages():
         self.file_basedir = \
             f'{self.conf.data_dir}/images/pieces/{self.piece.code}'
         self.url_basepath = f'images/pieces/{self.piece.code}'
-        if piece.edition > 1:
-            self.file_basedir += f'/{piece.edition}'
-            self.url_basepath += f'/{piece.edition}'
+        if piece.version > 1:
+            self.file_basedir += f'/{piece.version}'
+            self.url_basepath += f'/{piece.version}'
         self.getImages()
         self.warnings = []
         self.env = env.getInstance()

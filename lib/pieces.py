@@ -52,27 +52,27 @@ class Piece(DataRecord):
     def __init__(self, id):
         '''Preside over a piece database record
            Id can be the pieces.id,
-                         pieces.code, (edition=1 implied)
-                         pieces.code '-' pieces.edition
+                         pieces.code, (version=1 implied)
+                         pieces.code '-' pieces.version
                          <field>="<value>" pair
         '''
         self.db = db.getInstance()
         if not is_int(id) and '=' not in id:
             code = id
-            edition = 1
+            version = 1
             if '-' in code:
-                code, edition = code.split('-')[0:2 ]
-            id=f"code='{code}' and edition = {edition}"
+                code, version = code.split('-')[0:2 ]
+            id=f"code='{code}' and version = {version}"
 
         DataRecord.__init__(self, self.db, 'pieces', id)
         self.data.status = self.status
         self.data.dimensions = self.dimensions
         self.data.description_html = self.description_html
         self.data.status_description = self.status_description
-        self.data.edition_info = self.edition_info
+        self.data.version_info = self.version_info
 
     def __repr__(self):
-        return f'Piece:({self.name}-{self.edition})'
+        return f'Piece:({self.name}-{self.version})'
 
     def initImageDirs(self):
         return self.images.initImageDirs()
@@ -103,9 +103,9 @@ class Piece(DataRecord):
         return dimensions
 
     @lazyproperty
-    def edition_info(self):
-        if self.edition > 1:
-            return f'(Edition {self.edition})'
+    def version_info(self):
+        if self.version > 1:
+            return f'(Version {self.version})'
         return ''
 
     @lazyproperty
@@ -159,14 +159,14 @@ class Piece(DataRecord):
         # Mark the current piece as visited
         visited.add(self.id)
 
-        # get editions based on the same code but different edition
+        # get versions based on the same code but different version
         self.setFilters(f'code="{self.code}"')
         for rec in self.getTable():
-            if rec['edition'] != self.edition:
-                other_edition = Piece(rec['id'])
-                if other_edition.id not in visited:
-                    _versions.append(other_edition)
-                _versions.extend(other_edition._getVersions(visited))
+            if rec['version'] != self.version:
+                other_version = Piece(rec['id'])
+                if other_version.id not in visited:
+                    _versions.append(other_version)
+                _versions.extend(other_version._getVersions(visited))
 
         # get orig_piece if it exists and its versions
         if self.orig_piece:
@@ -217,12 +217,12 @@ class PiecesCLI(object):
         '''
         from cli import CLI
         commands = [
-            'add_image <id|code[-edition]> <img_filepath>',
-            'update_images <id|code[-edition]>',
+            'add_image <id|code[-version]> <img_filepath>',
+            'update_images <id|code[-version]>',
             'list',
-            'images <id|code[-edition]>',
-            'show <id|code[-edition]>',
-            'shows <id|code[-edition]>',
+            'images <id|code[-version]>',
+            'show <id|code[-version]>',
+            'shows <id|code[-version]>',
         ]
         self.cli = CLI(self.process, commands)
         self.cli.process()
@@ -268,4 +268,4 @@ if __name__ == '__main__':
     PiecesCLI().run()
     # p = Piece(74)
     # for v in p.versions:
-    #     print(f'{v.name}-{v.edition}')
+    #     print(f'{v.name}-{v.version}')
