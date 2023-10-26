@@ -57,12 +57,20 @@ class ShowPage(BasePage):
     def getShowsInfo(self):
         html = ''
         template = self.getTemplate('show_item.html')
+        if self.show.contact:
+            company_name = self.show.contact.company_name
+            website = self.contact.website or ''
+            city = self.contact.city or ''
+            state = self.contact.city or ''
+        else:
+            company_name = website = city = state = ''
+
         data = {'show_code': self.show.code,
                 'name': self.show.name,
-                'gallery': self.show.contact.company_name,
-                'website': self.show.contact.website,
-                'city': self.show.contact.city or '',
-                'state': self.show.contact.state or '',
+                'gallery': company_name,
+                'website': website,
+                'city': city,
+                'state': state,
                 'start_date': format_date(self.show.start_date),
                 'end_date': format_date(self.show.end_date)}
         html += template.format(**data)

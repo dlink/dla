@@ -28,7 +28,8 @@ class ShowsPage(BasePage):
 
     def getShowInfo(self, show):
         href = f'/show/{show.code}'
+        company_name = show.contact.company_name if show.contact else ''
         return \
             f"{a(show.name, href=href)} - " \
-            f"{show.start_date.year} {show.contact.company_name}"
+            f"{show.start_date.year} {company_name}"
             

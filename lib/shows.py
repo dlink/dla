@@ -32,7 +32,9 @@ class Show(DataRecord):
 
     @lazyproperty
     def contact(self):
-        return Contact(self.contact_id)
+        if self.contact_id:
+            return Contact(self.contact_id)
+        return None
 
     @lazyproperty
     def info(self):
