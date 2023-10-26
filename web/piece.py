@@ -77,10 +77,11 @@ class PiecePage(BasePage):
     def getMainPic(self):
         o = ''
         for i, url in enumerate(self.piece.images.display_urls):
+            orig_url = f'/{self.piece.images.orig_urls[i]}'
             class_ = 'main-pic'
             if i == 0:
                 class_ += ' selected'
-            o += img(src=f'/{url}', class_=class_)
+            o += a(img(src=f'/{url}', class_=class_), href=orig_url)
         return div(o, id='main-pic-container')
 
     def getVersions(self):

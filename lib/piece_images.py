@@ -98,6 +98,7 @@ class PieceImages():
         for pi in self.pieceImagesDt.getTable():
             pi = odict(pi)
             pi.filepath = f'{self.file_basedir}/orig/{pi.filename}'
+            pi.orig_url = f'{self.url_basepath}/orig/{pi.filename}'
             pi.url = f'{self.url_basepath}/display/{pi.filename}'
             pi.tiny_url = f'{self.url_basepath}/tiny/{pi.filename}'
             pi.thumb_url = f'{self.url_basepath}/thumb/{pi.filename}'
@@ -106,6 +107,7 @@ class PieceImages():
         if not self.data:
             pi = odict()
             url_basepath = 'images/pieces/missing_image'
+            pi.orig_url = f'{url_basepath}/orig/missing_image.png'
             pi.url = f'{url_basepath}/display/missing_image.png'
             pi.tiny_url = f'{url_basepath}/tiny/missing_image.png'
             pi.thumb_url = f'{url_basepath}/thumb/missing_image.png'
@@ -119,6 +121,9 @@ class PieceImages():
     def filepaths(self):
         return [pi.filepath for pi in self.data]
 
+    @property
+    def orig_urls(self):
+        return [pi.orig_url for pi in self.data]
     @property
     def display_urls(self):
         return [pi.url for pi in self.data]
