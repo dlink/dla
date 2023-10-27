@@ -48,7 +48,8 @@ class ShowPage(BasePage):
             self.getHeader() + 
             self.getShowsInfo() +
             self.getDescription() +
-            self.getPieces(),
+            self.getPieces() +
+            self.getId(),
             id='main-container')
 
     def getHeader(self):
@@ -59,11 +60,18 @@ class ShowPage(BasePage):
         template = self.getTemplate('show_item.html')
         if self.show.contact:
             company_name = self.show.contact.company_name
-            website = self.contact.website or ''
-            city = self.contact.city or ''
-            state = self.contact.city or ''
+            website = self.show.contact.website or ''
+            city = self.show.contact.city or ''
+            state = self.show.contact.state or ''
         else:
             company_name = website = city = state = ''
+
+        if self.show.start_date:
+            start_date = format_date(self.show.start_date)
+            end_date = format_date(self.show.end_date)
+            dates = f'{start_date} - {end_date}'
+        else:
+            dates = self.show.year
 
         data = {'show_code': self.show.code,
                 'name': self.show.name,
@@ -71,8 +79,7 @@ class ShowPage(BasePage):
                 'website': website,
                 'city': city,
                 'state': state,
-                'start_date': format_date(self.show.start_date),
-                'end_date': format_date(self.show.end_date)}
+                'dates': dates}
         html += template.format(**data)
         return html
 
@@ -98,7 +105,10 @@ class ShowPage(BasePage):
             pieces_html,
             class_='show-pieces'
         )
-    
+
+    def getId(self):
+        return p(f'id: {self.show.id}', class_='show-id')
+
 def text2html(text):
     if not text:
         return ''

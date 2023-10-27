@@ -111,15 +111,21 @@ class PiecePage(BasePage):
     def getShowsInfo(self):
         html = ''
         template = self.getTemplate('show_item.html')
+
         for show in self.piece.shows:
+            if show.start_date:
+                start_date = format_date(show.start_date)
+                end_date = format_date(show.end_date)
+                dates = f'{start_date} - {end_date}'
+            else:
+                dates = show.year
             data = {'show_code': show.code,
                     'name': show.name,
                     'gallery': show.contact.company_name,
                     'website': show.contact.website,
                     'city': show.contact.city,
                     'state': show.contact.state,
-                    'start_date': show.start_date,
-                    'end_date': show.end_date}
+                    'dates': dates}
             html += template.format(**data)
         if html:
             html = '<p>In Shows:</p>' + html
