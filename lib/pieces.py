@@ -77,7 +77,7 @@ class Piece(DataRecord):
         self.data.version_info = self.version_info
 
     def __repr__(self):
-        return f'Piece:({self.name}-{self.version})'
+        return f'Piece:{self.id}:{self.name}-{self.version}'
 
     def initImageDirs(self):
         return self.images.initImageDirs()

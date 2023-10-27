@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // set slide interval update dots
     function startSlideShow() {
 	if(play) {
-	    intervalId = setInterval(nextSlide, 5000);
+	    intervalId = setInterval(nextSlide, 3000);
 	    updateDots();
 	}
     }

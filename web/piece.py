@@ -1,7 +1,7 @@
 from flask import request
 
 from vlib.datarecord import DataRecordNotFound
-from vlib.utils import is_int
+from vlib.utils import is_int, format_date
 
 from vweb.htmltable import HtmlTable
 from vweb.html import a, div, img, input, li, p, span, ul

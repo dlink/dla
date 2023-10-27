@@ -13,6 +13,9 @@ class Medium(DataRecord):
             id=f'code="{code}"'
         DataRecord.__init__(self, self.db, 'mediums', id)
 
+    def __repr__(self):
+        return f'Medium:{self.id}:{self.code}'
+
     @property
     def sort_order(self):
         if self.code == 'painting':
