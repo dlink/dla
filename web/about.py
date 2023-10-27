@@ -1,5 +1,6 @@
 
 from basepage import BasePage
+from shows_page import ShowsPage
 
 class AboutPage(BasePage):
 
@@ -7,7 +8,10 @@ class AboutPage(BasePage):
         BasePage.__init__(self, 'David Link About Page')
         self.style_sheets.extend([
             self.versionize('css/about.css'),
+            self.versionize('css/shows.css'),
         ])
 
     def getPageContent(self):
-        return self.getTemplate('about.html')
+        o = self.getTemplate('about.html')
+        o += ShowsPage().getPageContent()
+        return o
