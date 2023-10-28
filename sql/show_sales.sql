@@ -6,6 +6,9 @@ select
    concat_ws('-', p.name, p.version) as piece,
    sale_price,
    commision,
+   concat(
+      round(((sale_price-total)/total) * 100, 2),
+      '%') as commision_perc,
    total
    
 from
