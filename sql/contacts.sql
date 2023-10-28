@@ -5,6 +5,7 @@ create table contacts (
    last_name    varchar(255),
    fullname     varchar(255),
    company_name varchar(255),
+   name         varchar(255),
    email        varchar(255),
    website      varchar(255),
    address1     varchar(190),
@@ -34,7 +35,7 @@ create trigger contacts_insert_fullname before insert on contacts
          concat_ws(' ',
 	    new.first_name,
             nullif(new.middle_name, ''),
-            new.last_name);
+            new.last_name)
 ;
 
 create trigger contacts_update_fullname before update on contacts
@@ -43,5 +44,26 @@ create trigger contacts_update_fullname before update on contacts
          concat_ws(' ',
 	    new.first_name,
             nullif(new.middle_name, ''),
-            new.last_name);
+            new.last_name)
+;
+
+create trigger contacts_insert_name before insert on contacts
+   for each row
+      set new.name = if(new.company_name is not null,
+                        new.company_name,
+                        concat_ws(' ',
+	                   new.first_name,
+                           nullif(new.middle_name, ''),
+                           new.last_name)
+			);
+;
+create trigger contacts_update_name before update on contacts
+   for each row
+      set new.name = if(new.company_name is not null,
+                        new.company_name,
+                        concat_ws(' ',
+	                   new.first_name,
+                           nullif(new.middle_name, ''),
+                           new.last_name)
+			);
 ;
