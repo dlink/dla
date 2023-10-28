@@ -29,8 +29,8 @@ def display_dimensions(dec_length, dec_width, dec_height, uom=None):
                 only_ints = False
     if max_d <= 24:
         uom = 'in'
-    elif only_ints:
-        uom = 'ft'
+    #elif only_ints:
+    #    uom = 'ft'
     else:
         uom = 'mix'
 
@@ -107,9 +107,10 @@ def dec_to_std(dec_number, uom='in'):
         return str(dec_number // 12)
 
     elif uom == 'mix':
-        dec_int= int(dec_number)
-        inches = round((dec_number-dec_int) * 12, 0)
+        dec_int= round(dec_number, 0)
+        #inches = round((dec_number-dec_int) * 12, 0)
         feet = dec_int//12
+        inches = dec_int-(feet*12)
         if inches:
             return f'{feet}\'{inches}"'
         else:
@@ -118,5 +119,7 @@ def dec_to_std(dec_number, uom='in'):
         raise DimensionsError(
             f"Unrecognized uom: dec_to_std('{round(dec_number, 4)}', '{uom}')")
 
-#print(storage_dimensions('6\'2" x 3\'1" x 1\'9"', 'mix'))
-#print(display_dimensions(None,13,10))
+#if __name__ == '__main__':
+    #print(storage_dimensions('6\'2" x 3\'1" x 1\'9"', 'mix'))
+    #print(display_dimensions(20.0,20.00, 72.00))
+    #print(display_dimensions(72.17,36.08, 12.75))
