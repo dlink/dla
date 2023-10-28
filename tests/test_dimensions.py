@@ -47,7 +47,6 @@ class TestUsers(unittest.TestCase):
             self.assertEqual(std, display_dimensions(l, w, h, uom))
     def test_display_dimensions_default_uom(self):
         for std, l, w, h, uom in self.dimensions:
-            print(l, w, h, ':', display_dimensions(l,w,h))
             self.assertEqual(std, display_dimensions(l, w, h)) #, uom))
     def test_storage_dimensions(self):
         for std, l, w, h, uom in self.dimensions:
