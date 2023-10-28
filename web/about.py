@@ -1,6 +1,9 @@
 
+from vweb.html import div, p
+
 from basepage import BasePage
 from shows_page import ShowsPage
+from collections_page import CollectionsPage
 
 class AboutPage(BasePage):
 
@@ -13,5 +16,10 @@ class AboutPage(BasePage):
 
     def getPageContent(self):
         o = self.getTemplate('about.html')
-        o += ShowsPage().getPageContent()
+        show_info = div(ShowsPage().getPageContent(), class_='left-side')
+        collection_info = div(CollectionsPage().getPageContent(),
+                              class_='right-side')
+        o += div(show_info + \
+                 collection_info,
+                 class_='container')
         return o

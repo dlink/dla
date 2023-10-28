@@ -4,4 +4,17 @@
 .top-images img {
     margin: 0 20px 0 0;
 }
+.container {
+  display: flex;
+}
 
+.left-side {
+  width: 50%;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+.right-side {
+  width: 50%;
+  border: 1px solid #ccc;
+  padding: 10px;
+}

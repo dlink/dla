@@ -35,6 +35,11 @@ def show(id):
     from show import ShowPage
     return ShowPage(id).go()
 
+@app.route('/collections')
+def collections():
+    from collections_page import CollectionsPage
+    return CollectionsPage().go()
+
 @app.route('/about')
 def about():
     from about import AboutPage
