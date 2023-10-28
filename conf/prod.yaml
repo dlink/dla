@@ -1,8 +1,8 @@
-# development dla config file
+# production dla  config file
 
 system: dev
-base_url: dev-dla.com
-base_dir: /home/dlink/dla
+base_url: dla.com
+base_dir: /apps/dla
 data_dir: /data/dla
 backup_dir: /data/backups/db
 admin_emails: dvlink@gmail.com
@@ -16,5 +16,5 @@ database:
    passwd: $DDB_PASS
 
 logging:
-   filename: /var/log/dla/dev_dla.log
+   filename: /var/log/dla/dla.log
    level: DEBUG
