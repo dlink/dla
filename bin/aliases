@@ -1,6 +1,6 @@
 # dla alias file
 
-# source tree
+# dev source tree
 export d="$HOME/dla" ; alias d='cd $d'
 export db="$d/bin"   ; alias db='cd $db'
 export dc="$d/conf"  ; alias dc='cd $dc'
@@ -13,15 +13,30 @@ export dwh="$dw/html" ; alias dwh='cd $dwh'
 export dwi="$dw/images"; alias dwi='cd $dwi'
 export dwj="$dw/js"  ; alias dwj='cd $dwj'
 
-# data dir
+# prod source tree
+export ad="/apps/dla" ; alias ad='cd $ad'
+export adb="$ad/bin"   ; alias adb='cd $adb'
+export adc="$ad/conf"  ; alias adc='cd $adc'
+export adl="$ad/lib"   ; alias adl='cd $adl'
+export ads="$ad/sql"   ; alias ads='cd $ads'
+export adt="$ad/tests" ; alias adt='cd $adt'
+export adw="$ad/web"   ; alias adw='cd $adw'
+export adwc="$adw/css" ; alias adwc='cd $adwc'
+export adwh="$adw/html" ; alias adwh='cd $adwh'
+export adwi="$adw/images"; alias adwi='cd $adwi'
+export adwj="$adw/js"  ; alias adwj='cd $adwj'
+
+# dev and prod data dir
 export dd="/data/dla"     ; alias dd="cd $dd"
 export ddi="$dd/images"   ; alias ddi="cd $ddi"
 export ddip="$ddi/pieces" ; alias ddip="cd $ddip"
 
+
 # logs
 
 export vld="/var/log/dla" ; alias vld="cd $vld"
-export vldd="$vld/dev_dla.log"
+export vldd="$vld/dla.log"
+export vlddd="$vld/dev_dla.log"
 
 # dev_dla database
 alias ddb="mysql --login-path=dla dla"
