@@ -3,6 +3,7 @@
 # dev source tree
 export d="$HOME/dla" ; alias d='cd $d'
 export db="$d/bin"   ; alias db='cd $db'
+export dbg="$db/gunicorn"; alias dbg='cd $dbg'
 export dc="$d/conf"  ; alias dc='cd $dc'
 export dl="$d/lib"   ; alias dl='cd $dl'
 export ds="$d/sql"   ; alias ds='cd $ds'
@@ -16,6 +17,7 @@ export dwj="$dw/js"  ; alias dwj='cd $dwj'
 # prod source tree
 export ad="/apps/dla" ; alias ad='cd $ad'
 export adb="$ad/bin"   ; alias adb='cd $adb'
+export adbg="$adb/gunicorn"; alias adbg='cd $adbg'
 export adc="$ad/conf"  ; alias adc='cd $adc'
 export adl="$ad/lib"   ; alias adl='cd $adl'
 export ads="$ad/sql"   ; alias ads='cd $ads'
