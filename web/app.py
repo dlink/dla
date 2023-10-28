@@ -50,7 +50,38 @@ def favicon():
     '''TO DO: Set up favicon'''
     return send_from_directory(app.root_path, 'favicon.ico',
                                mimetype='image/vnd.microsoft.icon')
+# Not for production
+#@app.route("/showenv")
+def showenv():
+    o = '<h1>Environment</h1>'
 
+    # python
+    o += '<h2>python</h2>'
+    o += '<table>'
+    o += '<tr><td>executable</td><td>%s</td></tr>' % sys.executable
+    o += '<tr><td>version</td><td>%s</td></tr>' % sys.version
+    o += '</table>'
+
+    # headers
+    o += '<h2>request.headers</h2>'
+    o += '<table>'
+    for k,v in request.headers:
+        o += '<tr><td>%s</td><td>%s</td></tr>' % (k, v)
+    o += '</table>'
+
+    # env
+    o += '<h2>os.environ</h2>'
+    o += '<table>'
+    for k in sorted(os.environ.keys()):
+        if k in (['DDB_PASS']):
+            continue
+        v = os.environ[k]
+        o += '<tr><td>%s</td><td>%s</td></tr>' % (k, v)
+    o += '</table>'
+
+    return f'<div style="padding: 10px">{o}</div>'
+
+# One method to handle them all using eval()
 # def page(id=None):
 #     if request.url_rule.rule == '/':
 #         page = 'gallery'
