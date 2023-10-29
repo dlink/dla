@@ -1,7 +1,7 @@
 # production dla  config file
 
-system: dev
-base_url: dla.com
+system: prod
+base_url: davidlinkart.com
 base_dir: /apps/dla
 data_dir: /data/dla
 backup_dir: /data/backups/db

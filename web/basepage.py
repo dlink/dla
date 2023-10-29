@@ -27,6 +27,7 @@ class BasePage(HtmlPage):
         self.javascript_src.extend(['/js/header.js'])
         self.logPageLoad(title)
         self.metadata = {'description': self.meta_description}
+        self.ga_tag = self.getGATag()
 
     @property
     def meta_description(self):
@@ -53,3 +54,9 @@ class BasePage(HtmlPage):
     def versionize(self, file):
         timestamp=os.path.getmtime('%s/web/%s' % (self.conf.base_dir, file))
         return '/%s?v=%s' % (file, timestamp)
+
+    def getGATag(self):
+        if self.conf.system != 'prod':
+            return ''
+
+        return self.getTemplate('ga_tag.html')
