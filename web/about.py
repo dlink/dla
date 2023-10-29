@@ -19,7 +19,8 @@ class AboutPage(BasePage):
         show_info = div(ShowsPage().getPageContent(), class_='left-side')
         collection_info = div(CollectionsPage().getPageContent(),
                               class_='right-side')
-        o += div(show_info + \
-                 collection_info,
-                 class_='container')
+        o += div(
+            collection_info + \
+            show_info,
+            class_='container')
         return o
