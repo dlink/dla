@@ -2,7 +2,7 @@
 from vlib.datarecord import DataRecordNotFound
 
 from vlib.utils import format_date, is_int
-from vweb.html import a, div, li, p, ul
+from vweb.html import a, div, h1, li, p, ul
 
 from basepage import BasePage
 from shows import Show
@@ -43,9 +43,10 @@ class ShowPage(BasePage):
             return p('No art show selected.  Use show_id=nn')
 
         template = self.getTemplate('show_item.html')
-        
+
         return div(
-            self.getHeader() + 
+            self.getNav() +
+            self.getHeader() +
             self.getShowsInfo() +
             self.getDescription() +
             self.getPieces() +
@@ -53,7 +54,10 @@ class ShowPage(BasePage):
             id='main-container')
 
     def getHeader(self):
-        return div(p(a('All Shows', href='/shows')), class_='show-header')
+        return h1(self.show.code.title().replace('_', ' '))
+
+    def getNav(self):
+        return div(p(a('< All Shows', href='/shows')), class_='show-header')
 
     def getShowsInfo(self):
         html = ''
@@ -99,7 +103,7 @@ class ShowPage(BasePage):
         for piece in pieces:
             lis += li(Thumbnail(piece).html)
         pieces_html =  div(ul(lis, class_='gallery__list'), class_='gallery')
-        
+
         return div(
             div('Pieces:', class_='pieces-header') +
             pieces_html,

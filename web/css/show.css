@@ -3,16 +3,18 @@
     margin: auto;
 }
 .show-header p {
-    font-size: 1.2em;
+    font-size: 18px;
 }
 .show-item {
     padding: 10px 0 20px;
+    line-height: 1.6em;
 }
-.show-name {
-    font-size: 1.8em;
+.show-title {
+    display: None
 }
+
 .show-gallery {
-    font-size: 1.4em;
+    font-size: 18px;
 }
 .show-description {
     line-height: 1.5em;
@@ -25,3 +27,9 @@
 .show-id {
     font-size: 0.5em;
 }
+@media (max-width: 767px) {
+    #main-container {
+	padding: 0 20px;
+    }
+}
+

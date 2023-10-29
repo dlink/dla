@@ -4,7 +4,7 @@ from vlib.datarecord import DataRecordNotFound
 from vlib.utils import is_int, format_date
 
 from vweb.htmltable import HtmlTable
-from vweb.html import a, div, img, input, li, p, span, ul
+from vweb.html import a, div, h1, img, input, li, p, span, ul
 
 from basepage import BasePage
 from pieces import Piece
@@ -46,12 +46,14 @@ class PiecePage(BasePage):
                        class_='error-msg')
 
         output = \
+            h1(self.piece.name_and_version) + \
             self.getBreadCrumbs() + \
             self.getMainPic() + \
             self.getPicMenu() + \
             self.getPieceInfo() + \
             self.getVersions() + \
             self.getPieceDescription()
+
         return div(output, id='main-container')
 
     def getBreadCrumbs(self):
@@ -95,7 +97,7 @@ class PiecePage(BasePage):
                        gallery,
                        id='other-versions')
         return ''
-    
+
     def getPieceInfo(self):
         template = self.getTemplate('piece_info.html')
         data = self.piece.data

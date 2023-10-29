@@ -68,12 +68,18 @@ img.main-pic.selected {
 .piece-id {
     font-size: 0.5em;
 }
+.show-item {
+    line-height: 1.6em;
+}
 .error-msg {
     padding: 50px;
     color: #b48585; /* brown */
     font-size: 1.3em;
 }
 @media (max-width: 767px) {
+    h1 {
+	padding-left: 10px;
+    }
     img.main-pic {
 	width: 300px;
 	margin: auto;

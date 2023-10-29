@@ -6,3 +6,8 @@
 ul {
     padding: 20px;
 }
+@media (max-width: 767px) {
+    #main {
+	padding-left: 20px;
+    }
+}

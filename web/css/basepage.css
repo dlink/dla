@@ -10,6 +10,9 @@ body {
 #main {
     padding-top: 51px;
 }
+h1 {
+    font-size: 18px;
+}
 a {
     text-decoration: none;
     color: #348caa;

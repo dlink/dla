@@ -1,6 +1,6 @@
 
 from vweb.htmltable import HtmlTable
-from vweb.html import div, li, p, ul
+from vweb.html import div, h1, li, p, ul
 from vlib.utils import is_int
 
 from basepage import BasePage
@@ -42,7 +42,10 @@ class GalleryPage(BasePage):
             output = p(f'No pieces found for gallery "{self.id}".')
         else:
             output = ul(lis, class_='gallery__list')
-        return div(output, class_='gallery')
+        page_title = h1(medium.name)
+        return div(
+            h1(medium.name_plural) + \
+            output, class_='gallery')
 
 if __name__ == '__main__':
     HomePage().go()

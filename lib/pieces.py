@@ -84,6 +84,13 @@ class Piece(DataRecord):
     def updateImages(self):
         return self.images.updateImages()
 
+    @property
+    def name_and_version(self):
+        if self.version == 1:
+            return self.name
+        else:
+            return f'{self.name}-{self.version}'
+
     @lazyproperty
     def images(self):
         return PieceImages(self)

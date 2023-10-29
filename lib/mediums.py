@@ -17,6 +17,10 @@ class Medium(DataRecord):
         return f'Medium:{self.id}:{self.code}'
 
     @property
+    def name_plural(self):
+        return self.name + 's'
+
+    @property
     def sort_order(self):
         if self.code == 'painting':
             return ['sort_order']

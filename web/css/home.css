@@ -121,7 +121,7 @@
 .artist-info {
     max-width: 900px;
     line-height: 1.8em;
-    font-size: 1.2em;
+    font-size: 18px;
     margin: auto;
 }
 @media (max-width: 767px) {
