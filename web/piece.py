@@ -99,6 +99,7 @@ class PiecePage(BasePage):
     def getPieceInfo(self):
         template = self.getTemplate('piece_info.html')
         data = self.piece.data
+        data.status_info = self.piece.status_info
         return template.format(**data)
 
     def getPieceDescription(self):

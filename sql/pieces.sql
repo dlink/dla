@@ -6,8 +6,6 @@ create table pieces (
   version      integer unsigned not null default 1,
   orig_piece_id integer unsigned,
   sort_order   integer unsigned not null default 1,
-  status_id    integer unsigned not null default 0,
-  owner_id     integer unsigned,
   material     varchar(100),
   created      datetime,
   created_year integer unsigned,
@@ -26,8 +24,6 @@ create table pieces (
     default current_timestamp on update current_timestamp,
  
   unique key (code, version),
-  constraint p_status_id foreign key (status_id) references piece_statuses(id),
-  constraint p_owner_id foreign key (owner_id) references contacts(id)
   constraint p_orig_piece_id foreign key (orig_piece_id) references pieces(id)
 )
 engine InnoDB default charset=utf8;

@@ -1,18 +1,25 @@
 select
    t.id,
-   t.created,
-   tt.name as type,
-   coalesce(c.company_name, c.fullname) as contact,
-   coalesce(o.company_name, o.fullname) as owner,
+   date_format(t.trans_date, '%m/%d/%Y') as trans_date,
+   t.type,
+   c.name as contact,
+   o.name as owner,
+   concat_ws(', ', o.city, o.state) as location,
+   p.id as piece_id,
    concat_ws('-', p.name, p.version) as piece,
-   coalesce(t.sale_price, '') as sale_price,
-   coalesce(t.credit, '') as credit,
-   coalesce(t.debit, '') as debit
-
+   price,
+   commision,
+   concat(
+      round(((price-total)/total) * 100, 2),
+      '%') as commision_perc,
+   total
+   
 from
-   transactions t
-   join transaction_types tt on t.type_id = tt.id
+   trans t
+   join pieces p on t.piece_id = p.id
    join contacts c on t.contact_id = c.id
    join contacts o on t.owner_id = o.id
-   join pieces p on t.piece_id = p.id
+
+order by
+   t.trans_date desc
 ;

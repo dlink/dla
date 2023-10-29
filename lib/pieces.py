@@ -6,13 +6,10 @@ from vlib.datarecord import DataRecord, DataRecordNotFound
 from vlib.odict import odict
 from vlib.utils import format_date, is_int, lazyproperty, validate_num_args
 
-from piece_statuses import PieceStatuses
 from piece_descriptions import PieceDescription
 from piece_images import PieceImages
 from piece_shows import PieceShows
 from mediums import Medium
-from contacts import Contact
-from transactions import Transactions
 
 from dimensions import display_dimensions
 import env
@@ -43,13 +40,13 @@ class Pieces(DataTable):
         return self.get({'medium_id': medium.id}, sort_order)
 
     def list(self):
-        header = ['id', 'name', 'medium', 'year', 'status_description']
+        header = ['id', 'name', 'medium', 'year', 'status_info']
         print(','.join(header))
         rows = []
         for piece in self.get():
             rows.append([piece.id, f'{piece.name}-{piece.version}',
                          piece.medium.name, piece.created_year,
-                         piece.status_description])
+                         piece.status_info])
         return [[f for f in r] for r in rows]
 
 class Piece(DataRecord):
@@ -73,7 +70,6 @@ class Piece(DataRecord):
         self.data.status = self.status
         self.data.dimensions = self.dimensions
         self.data.description_html = self.description_html
-        self.data.status_description = self.status_description
         self.data.version_info = self.version_info
 
     def __repr__(self):
@@ -87,10 +83,6 @@ class Piece(DataRecord):
 
     def updateImages(self):
         return self.images.updateImages()
-
-    @lazyproperty
-    def status(self):
-        return PieceStatuses().getName(self.status_id)
 
     @lazyproperty
     def images(self):
@@ -118,31 +110,34 @@ class Piece(DataRecord):
         return PieceDescription(self).description_html
 
     @lazyproperty
-    def owner(self):
-        return Contact(self.owner_id) if self.owner_id else None
+    def transactions(self):
+        from transactions import Transactions
+        return Transactions()
 
     @lazyproperty
-    def trans_date(self):
-        created = Transactions().getFinalTransactionDate(self.id)
-        return format_date(created) if created else ''
+    def transaction(self):
+        return self.transactions.getByPieceId(self.id)
 
     @lazyproperty
-    def status_description(self):
-        if not self.owner_id:
-            status = self.status
-        else:
-            data = {
-                'status': self.status,
-                'trans_date': self.trans_date,
-                'owner_name': self.owner.fullname,
-                'city': self.owner.city,
-                'state': self.owner.state,
-                }
-            status= '{status} {trans_date}: {owner_name}, {city}, {state}'.\
-                format(**data)
-        if self.status not in ('Available', 'In Show'):
-            status += ' (Can be remade)'
-        return status
+    def status(self):
+        _status = 'Available'
+        if self.transaction:
+            _status = self.transaction.piece_status
+        return _status
+
+    @lazyproperty
+    def status_info(self):
+        _info = 'Available'
+        if self.transaction:
+            owner = self.transaction.owner
+            owner_name = 'Private'
+            if owner.authorized:
+                owner_name = owner.name
+            _info = \
+                f'{self.status} - {owner_name}, {owner.city}, {owner.state}'
+            if self.medium.code == 'sculpture':
+                _info += ' (Can be remade)'
+        return _info
 
     @lazyproperty
     def shows(self):
