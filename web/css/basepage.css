@@ -11,6 +11,9 @@ body {
     padding-top: 51px;
 }
 h1 {
+    font-size: 19px;
+}
+h2 {
     font-size: 18px;
 }
 a {

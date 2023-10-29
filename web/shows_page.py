@@ -1,5 +1,5 @@
 
-from vweb.html import a, div, h1, li, ul
+from vweb.html import a, div, h2, li, ul
 
 from basepage import BasePage
 from shows import Shows
@@ -20,7 +20,7 @@ class ShowsPage(BasePage):
     def getPageContent(self):
 
         o = ''
-        o += h1('Shows')
+        o += h2('Shows')
         items = ''
         for show in self.shows.getAll():
             items += li(self.getShowInfo(show))

@@ -1,5 +1,5 @@
 
-from vweb.html import a, div, h1, li, ul
+from vweb.html import a, div, h2, li, ul
 
 from basepage import BasePage
 from transactions import Transactions
@@ -21,7 +21,7 @@ class CollectionsPage(BasePage):
     def getPageContent(self):
 
         o = ''
-        o += h1('Private Collections')
+        o += h2('Private Collections')
         items = ''
         for transaction in self.transactions.getAll():
             items += li(self.getCollectionInfo(transaction))
