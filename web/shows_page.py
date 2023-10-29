@@ -7,7 +7,8 @@ from shows import Shows
 class ShowsPage(BasePage):
 
     def __init__(self):
-        BasePage.__init__(self, 'David Link Shows')
+        self.title = 'David Link Shows'
+        BasePage.__init__(self, self.title)
         self.style_sheets.extend([
             self.versionize('css/shows.css'),
         ])        

@@ -14,7 +14,7 @@ class BasePage(HtmlPage):
        Subclass this class and provide the getPageContent() method
     '''
 
-    def __init__(self, title=None):
+    def __init__(self, title='David Link Art'):
         HtmlPage.__init__(self, title or 'Base Report')
         self.conf = conf.getInstance()
         self.logger = logger.getLogger(__class__.__name__)
@@ -26,6 +26,12 @@ class BasePage(HtmlPage):
         ])
         self.javascript_src.extend(['/js/header.js'])
         self.logPageLoad(title)
+        self.metadata = {'description': self.meta_description}
+
+    @property
+    def meta_description(self):
+        return \
+            f'{self.title} - Bold, modern, and minimal geometric works of art'
 
     def logPageLoad(self, title):
         user_ip = request.headers.get('X-Forwarded-For', request.remote_addr)

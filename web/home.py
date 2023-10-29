@@ -8,13 +8,20 @@ class HomePage(BasePage):
     '''
 
     def __init__(self):
-       BasePage.__init__(self, 'David Link Art')
-       self.style_sheets.extend([
-           self.versionize('css/home.css'),
-       ])
-       self.javascript_src.extend([
-           self.versionize('js/home.js')
-       ])
+        self.title = 'David Link Art'
+        BasePage.__init__(self, self.title)
+        self.style_sheets.extend([
+            self.versionize('css/home.css'),
+        ])
+        self.javascript_src.extend([
+            self.versionize('js/home.js')
+        ])
+
+    @property
+    def meta_description(self):
+        return \
+            'David Link is an artists who creates bold, modern, and minimal ' \
+            'geometric works of art'
 
     def getPageContent(self):
         template = self.getTemplate('home.html')

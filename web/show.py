@@ -12,12 +12,12 @@ from thumbnails import Thumbnail
 class ShowPage(BasePage):
 
     def __init__(self, id):
-        title = 'David Link '
+        self.title = 'David Link '
         if is_int(id):
-            title += f'Show {id}'
+            self.title += f'Show {id}'
         else:
-            title += f'Show: {id.title()}'
-        BasePage.__init__(self, title)
+            self.title += f"Show: {id.title().replace('_', ' ')}"
+        BasePage.__init__(self, self.title)
         self.id = id
         self.show = None
         self.show_not_found = 0

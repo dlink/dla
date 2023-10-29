@@ -8,7 +8,8 @@ from pieces import Piece
 class CollectionsPage(BasePage):
 
     def __init__(self):
-        BasePage.__init__(self, 'David Link in Private Collections')
+        self.title = 'David Link in Private Collections'
+        BasePage.__init__(self, self.title)
         self.style_sheets.extend([
             self.versionize('css/collections.css'),
         ])

@@ -13,12 +13,12 @@ class GalleryPage(BasePage):
     panel_max_cols = 4
 
     def __init__(self, id):
-        title = 'David Link '
+        self.title = 'David Link '
         if is_int(id):
-            title += f'Gallery {id}'
+            self.title += f'Gallery {id}'
         else:
-            title += id.title()
-        BasePage.__init__(self, title)
+            self.title += f'{id}s'.title()
+        BasePage.__init__(self, self.title)
         self.id = id
         self.pieces = Pieces()
         self.style_sheets.extend([
@@ -27,7 +27,6 @@ class GalleryPage(BasePage):
         ])
 
     def getPageContent(self):
-
         medium = Medium(self.id)
         pieces = self.pieces.get({'medium_id': medium.id},
                                  medium.sort_order)
