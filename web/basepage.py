@@ -27,6 +27,7 @@ class BasePage(HtmlPage):
         self.javascript_src.extend(['/js/header.js'])
         self.logPageLoad(title)
         self.metadata = {'description': self.meta_description}
+        self.favicon_path = '/images/favicon/favicon.ico'
         self.ga_tag = self.getGATag()
 
     @property
