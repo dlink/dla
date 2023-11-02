@@ -46,7 +46,7 @@ class PiecePage(BasePage):
                        class_='error-msg')
 
         output = \
-            h1(self.piece.name_and_version) + \
+            h1(self.piece.name) + \
             self.getBreadCrumbs() + \
             self.getMainPic() + \
             self.getPicMenu() + \
