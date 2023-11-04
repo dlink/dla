@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    
     /* pic-menu display-pic chooser */
     const picMenuItems = document.querySelectorAll('.pic-menu-item');
     picMenuItems.forEach(item => {
@@ -15,6 +14,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		    pic.classList.remove('selected');
 		}
 	    });
+	    picMenuItems.forEach(function (pic, index) {
+		pic.classList.remove('pic-menu-selected');
+	    });
+	    item.classList.add('pic-menu-selected');
 	});
     });
 
