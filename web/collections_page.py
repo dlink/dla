@@ -1,9 +1,16 @@
 
+from vlib.odict import odict
 from vweb.html import a, b, div, h2, i, li, p, span, ul
 
 from basepage import BasePage
 from transactions import Transactions
 from pieces import Piece
+
+TRANSTYPES = {
+    'sale': 'Sales',
+    'donation': 'Donations',
+    'gift': 'Gifted',
+    }
 
 class CollectionsPage(BasePage):
 
@@ -19,42 +26,53 @@ class CollectionsPage(BasePage):
         BasePage.process(self)
 
     def getPageContent(self):
-
         o = ''
         o += h2('Private Collections')
 
-        # sales
-        items = ''
-        o += p(b('Sales'))
+        # consolidate by transaction_type, owner
+        data = {}
         for transaction in self.transactions.getAll():
-            if transaction.type == 'sale':
-                items += li(self.getCollectionInfo(transaction))
-        o += ul(items)
+            type = transaction.type
+            owner = transaction.owner
+            if type not in data:
+                data[type] = {}
+            if owner.id not in data[type]:
+                data[type][owner.id] = odict(
+                    {'transaction': transaction,
+                     'owner': owner,
+                     'pieces': []})
+            piece = Piece(transaction.piece_id)
+            data[type][owner.id].pieces.append(piece)
 
-        # donations
-        items = ''
-        o += p(b('Donations'))
-        for transaction in self.transactions.getAll():
-            if transaction.type == 'donation':
-                items += li(self.getCollectionInfo(transaction))
-        o += ul(items)
+        # report
+        for type, type_rec in data.items():
+            if type != 'sale':
+                o += p(b(TRANSTYPES[type]), class_='trans-type')
 
-        # gifts
-        items = ''
-        o += p(b('Gifted'))
-        for transaction in self.transactions.getAll():
-            if transaction.type == 'gift':
-                items += li(self.getCollectionInfo(transaction))
-        o += ul(items)
+            for owner_id, owner_rec in type_rec.items():
+                transaction = owner_rec.transaction
+                owner = owner_rec.owner
+                pieces = owner_rec.pieces
+                o += p(self.getOwnerInfo(owner))
+                items = ''
+                for piece in pieces:
+                    items += li(self.getPieceInfo(transaction, piece))
+                o += ul(items)
         return o
 
-    def getCollectionInfo(self, transaction):
-        owner = transaction.owner
-        piece = Piece(transaction.piece_id)
-        href = f'/piece/{piece.code}-{piece.version}'
+    def getOwnerInfo(self, owner):
+        if owner.authorized:
+            owner_name = owner.name
+        else:
+            owner_name = 'Private'
+        return f'{owner_name}, {owner.city}, {owner.state}'
+
+    def getPieceInfo(self, transaction, piece):
         if piece.version > 1:
+            href = f'/piece/{piece.code}-{piece.version}'
             piece_name = f'{piece.name}-{piece.version}'
         else:
+            href = f'/piece/{piece.code}'
             piece_name = piece.name
         piece_link = a(piece_name, href=href)
         if piece.editions > 1:
@@ -62,12 +80,4 @@ class CollectionsPage(BasePage):
                            class_='edition')
         else:
             edition = ''
-
-        if owner.authorized:
-            owner_name = owner.name
-        else:
-            owner_name = 'Private'
-        info = \
-            f'{owner_name}, {owner.city}, {owner.state}<br>{piece_link} ' \
-            f'{edition}'
-        return info
+        return f'{piece_link} {edition}'

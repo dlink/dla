@@ -1,5 +1,5 @@
 
-from vweb.html import div, p
+from vweb.html import div, hr, p
 
 from basepage import BasePage
 from shows_page import ShowsPage
@@ -23,6 +23,7 @@ class AboutPage(BasePage):
                               class_='right-side')
         o += div(
             collection_info + \
+            hr(class_='divider') + \
             show_info,
             class_='container')
         return o

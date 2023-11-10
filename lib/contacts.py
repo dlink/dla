@@ -11,3 +11,6 @@ class Contact(DataRecord):
         # protect collectors privacy
         if not self.authorized:
             self.fullname = self.data.fullname = 'Private Collection'
+
+    def __repr__(self):
+        return f'Contact:{self.name}'

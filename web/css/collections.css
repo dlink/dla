@@ -3,6 +3,16 @@
     margin: auto;
     line-height: 1.8em;
 }
+.right-side p.trans-type {
+    margin: 30px 0;
+}
+.right-side p {
+    margin: 10px 0 0;
+}
+.right-side ul {
+    margin: 0;
+    padding: 0 20px;
+}
 .edition {
     color: #b0adad; /* lightgrey */
     font-size: 0.8em;
