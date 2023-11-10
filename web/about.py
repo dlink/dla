@@ -12,6 +12,7 @@ class AboutPage(BasePage):
         BasePage.__init__(self, self.title)
         self.style_sheets.extend([
             self.versionize('css/about.css'),
+            self.versionize('css/collections.css'),
             self.versionize('css/shows.css'),
         ])
 

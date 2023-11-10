@@ -3,3 +3,7 @@
     margin: auto;
     line-height: 1.8em;
 }
+.edition {
+    color: #b0adad; /* lightgrey */
+    font-size: 0.8em;
+}

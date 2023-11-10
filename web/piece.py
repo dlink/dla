@@ -102,6 +102,10 @@ class PiecePage(BasePage):
         template = self.getTemplate('piece_info.html')
         data = self.piece.data
         data.status_info = self.piece.status_info
+        if self.piece.editions > 1:
+            data.editions = f'Editions {self.piece.editions}'
+        else:
+            data.editions = ''
         return template.format(**data)
 
     def getPieceDescription(self):

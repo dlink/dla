@@ -24,6 +24,10 @@ img.main-pic.selected {
 .piece-version-info {
     font-size: 0.8em;
 }
+.piece-editions-info {
+    color: #b0adad; /* lightgrey */
+    font-size: 0.8em;
+}
 .piece-dimensions {
     font-style: italic;
 }
