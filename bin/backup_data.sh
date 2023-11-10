@@ -11,5 +11,5 @@ tar czvf $backup_filepath \
     --exclude='.git' --exclude='tmp' \
     dla
 cd -
-
+echo $backup_filepath created
 

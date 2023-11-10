@@ -1,2 +1,4 @@
 today=`date +"%Y-%m-%d"`
-mysqldump --login-path=dla dla | gzip > /data/backups/db/dla_${today}.dump.gz
+dump_filepath=/data/backups/db/dla_${today}.dump.gz
+mysqldump --login-path=dla dla | gzip > $dump_filepath
+echo $dump_filepath created
