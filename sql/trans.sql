@@ -5,6 +5,7 @@ create table trans (
   contact_id   integer unsigned not null,
   owner_id     integer unsigned,
   piece_id     integer unsigned not null,
+  edition      integer unsigned not null default 1,
   price        decimal(9,2),
   commision    decimal(9,2),
   total        decimal(9,2),
@@ -13,7 +14,7 @@ create table trans (
   r_updated    timestamp    not null
     default current_timestamp on update current_timestamp,
 
-  unique key(piece_id),
+  unique key(piece_id, edition),
 
   constraint t_contact_id foreign key (owner_id) references contacts(id),
   constraint t_owner_id foreign key (owner_id) references contacts(id),

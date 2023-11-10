@@ -4,6 +4,7 @@ create table pieces (
   code         varchar(100) not null,
   name         varchar(100) not null,
   version      integer unsigned not null default 1,
+  editions     integer unsigned not null default 1,
   orig_piece_id integer unsigned,
   sort_order   integer unsigned not null default 1,
   material     varchar(100),
