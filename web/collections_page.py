@@ -70,7 +70,8 @@ class CollectionsPage(BasePage):
     def getPieceInfo(self, transaction, piece):
         if piece.version > 1:
             href = f'/piece/{piece.code}-{piece.version}'
-            piece_name = f'{piece.name}-{piece.version}'
+            piece_name = f'{piece.name}' + \
+                span(f'-{piece.version}', class_='version')
         else:
             href = f'/piece/{piece.code}'
             piece_name = piece.name
