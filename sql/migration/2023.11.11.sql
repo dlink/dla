@@ -7,3 +7,7 @@ alter table pieces
    add constraint p_duplicate_id foreign key (duplicate_id)
       references pieces(id)
 ;
+
+alter table trans
+    add column notes varchar(255) after total
+;

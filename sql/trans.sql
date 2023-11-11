@@ -9,6 +9,7 @@ create table trans (
   price        decimal(9,2),
   commision    decimal(9,2),
   total        decimal(9,2),
+  notes        varchar(255),
 
   r_created    datetime     null,
   r_updated    timestamp    not null
