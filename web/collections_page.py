@@ -33,6 +33,8 @@ class CollectionsPage(BasePage):
         data = {}
         for transaction in self.transactions.getAll():
             type = transaction.type
+            if type == 'no longer exists':
+                continue
             owner = transaction.owner
             if type not in data:
                 data[type] = {}
@@ -45,9 +47,10 @@ class CollectionsPage(BasePage):
             data[type][owner.id].pieces.append(piece)
 
         # report
-        for type, type_rec in data.items():
-            if type != 'sale':
-                o += p(b(TRANSTYPES[type]), class_='trans-type')
+        for type in ['sale', 'gift', 'donation']:
+            type_rec = data[type]
+            #if type != 'sale':
+            o += p(b(TRANSTYPES[type]), class_='trans-type')
 
             for owner_id, owner_rec in type_rec.items():
                 transaction = owner_rec.transaction

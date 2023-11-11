@@ -19,3 +19,8 @@ alter table contacts
 alter table pieces
     add column notes varchar(255) after show_in_gallery
 ;
+
+alter table trans
+    change column type
+       type enum('sale', 'gift', 'donation', 'no longer exists') not null
+;

@@ -142,13 +142,15 @@ class Piece(DataRecord):
         if self.piece_transactions:
             _info = []
             for transaction in self.piece_transactions:
-                owner = transaction.owner
-                owner_name = 'Private'
-                if owner.authorized:
-                    owner_name = owner.name
-                _info.append(
-                    f'{transaction.piece_status} - '
-                    f'{owner_name}, {owner.city}, {owner.state}')
+                if transaction.type == 'no longer exists':
+                    owner_info = ''
+                else:
+                    owner = transaction.owner
+                    owner_name = 'Private'
+                    if owner.authorized:
+                        owner_name = owner.name
+                    owner_info =f' - {owner_name}, {owner.city}, {owner.state}'
+                _info.append(f'{transaction.piece_status}{owner_info}')
             _info = '; '.join(sorted(_info, reverse=1))
             if self.medium.code == 'sculpture':
                 _info += '; (Can be remade)'
