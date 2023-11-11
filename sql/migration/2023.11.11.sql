@@ -22,10 +22,6 @@ alter table pieces
 
 alter table trans
     change column type
-       type enum('sale', 'gift', 'donation', 'no longer exists') not null
-;
-alter table trans
-    change column type
-    type enum('sale', 'gift', 'donation', 'not for sale',
-              'no longer exists') not null
+       type enum('sale', 'gift', 'donation', 'not for sale',
+                  'no longer exists', 'lost') not null
 ;

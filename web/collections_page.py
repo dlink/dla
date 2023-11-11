@@ -33,7 +33,7 @@ class CollectionsPage(BasePage):
         data = {}
         for transaction in self.transactions.getAll():
             type = transaction.type
-            if type in ('not for sale', 'no longer exists'):
+            if type in ('not for sale', 'no longer exists', 'lost'):
                 continue
             owner = transaction.owner
             if type not in data:

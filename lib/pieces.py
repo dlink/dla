@@ -142,7 +142,8 @@ class Piece(DataRecord):
         if self.piece_transactions:
             _info = []
             for transaction in self.piece_transactions:
-                if transaction.type in ('not for sale', 'no longer exists'):
+                if transaction.type in ('not for sale', 'no longer exists',
+                                        'lost'):
                     owner_info = ''
                 else:
                     owner = transaction.owner
