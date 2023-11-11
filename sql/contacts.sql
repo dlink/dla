@@ -8,6 +8,7 @@ create table contacts (
    name         varchar(255),
    email        varchar(255),
    website      varchar(255),
+   notes        varchar(255),
    address1     varchar(190),
    address2     varchar(50),
    city         varchar(35),

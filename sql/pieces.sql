@@ -33,6 +33,7 @@ create table pieces (
   weight       decimal(6,2),
   weight_uom   varchar(5),
   show_in_gallery  integer unsigned not null default 1,
+  notes        varchar(255),
   location     varchar(250),
   short_description varchar(250),
 

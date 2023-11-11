@@ -11,3 +11,11 @@ alter table pieces
 alter table trans
     add column notes varchar(255) after total
 ;
+
+alter table contacts
+    add column notes varchar(255) after website
+;
+
+alter table pieces
+    add column notes varchar(255) after show_in_gallery
+;
