@@ -123,7 +123,10 @@ class Piece(DataRecord):
 
     @lazyproperty
     def piece_transactions(self):
-        return self.transactions.getByPieceId(self.id)
+        if self.duplicate_id:
+            return self.transactions.getByPieceId(self.duplicate_id)
+        else:
+            return self.transactions.getByPieceId(self.id)
 
     @lazyproperty
     def status(self):
