@@ -132,15 +132,17 @@ class Piece(DataRecord):
     def status(self):
         _status = 'Available'
         if self.piece_transactions:
-            _status = ', '.join(sorted(
-                [t.piece_status for t in self.piece_transactions], reverse=1))
+            _status_list = [t.piece_status for t in self.piece_transactions]
+            if len(_status_list) < self.editions:
+                _status_list.append('Available')
+            _status = ', '.join(sorted(_status_list, reverse=1))
         return _status
 
     @lazyproperty
     def status_info(self):
-        _info = 'Available'
+        info = 'Available'
         if self.piece_transactions:
-            _info = []
+            info_list = []
             for transaction in self.piece_transactions:
                 if transaction.type in ('not for sale', 'no longer exists',
                                         'lost'):
@@ -151,11 +153,18 @@ class Piece(DataRecord):
                     if owner.authorized:
                         owner_name = owner.name
                     owner_info =f' - {owner_name}, {owner.city}, {owner.state}'
-                _info.append(f'{transaction.piece_status}{owner_info}')
-            _info = '; '.join(sorted(_info, reverse=1))
-            if self.medium.code == 'sculpture':
-                _info += '; (Can be remade)'
-        return _info
+                info_list.append(f'{transaction.piece_status}{owner_info}')
+            for i in range(len(info_list), self.editions):
+                info_list.append('Available')
+            if len(info_list) > 1:
+                info_list2 = sorted(info_list, reverse=1)
+                info_list3 = [f'{n}. {i}' for n, i in enumerate(info_list2, 1)]
+                info_list = info_list3
+            info = '; '.join(sorted(info_list))
+            if self.medium.code == 'sculpture' and \
+               'Available' not in info:
+                info += '; (Can be remade)'
+        return info
 
     @lazyproperty
     def shows(self):
