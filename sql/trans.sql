@@ -1,7 +1,8 @@
 create table trans (
   id           integer unsigned not null auto_increment primary key,
   trans_date   date not null,
-  type         enum('sale', 'gift', 'donation', 'no longer exists') not null,
+  type         enum('sale', 'gift', 'donation', 'not for sale',
+                    'no longer exists') not null,
   contact_id   integer unsigned not null,
   owner_id     integer unsigned,
   piece_id     integer unsigned not null,

@@ -7,11 +7,11 @@ select
    concat_ws(', ', o.city, o.state) as location,
    p.id as piece_id,
    concat_ws('-', p.name, p.version) as piece,
-   price,
-   commision,
-   concat(
-      round(((price-total)/total) * 100, 2),
-      '%') as commision_perc,
+   -- price,
+   -- commision,
+   -- concat(
+   --   round(((price-total)/total) * 100, 2),
+   --    '%') as commision_perc,
    total
    
 from

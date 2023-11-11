@@ -1,6 +1,6 @@
 
 from vlib.odict import odict
-from vweb.html import a, b, div, h2, i, li, p, span, ul
+from vweb.html import a, b, div, h2, h3, i, li, p, span, ul
 
 from basepage import BasePage
 from transactions import Transactions
@@ -33,7 +33,7 @@ class CollectionsPage(BasePage):
         data = {}
         for transaction in self.transactions.getAll():
             type = transaction.type
-            if type == 'no longer exists':
+            if type in ('not for sale', 'no longer exists'):
                 continue
             owner = transaction.owner
             if type not in data:
@@ -49,8 +49,8 @@ class CollectionsPage(BasePage):
         # report
         for type in ['sale', 'gift', 'donation']:
             type_rec = data[type]
-            #if type != 'sale':
-            o += p(b(TRANSTYPES[type]), class_='trans-type')
+            if type != 'sale':
+                o += h3(TRANSTYPES[type], class_='trans-type')
 
             for owner_id, owner_rec in type_rec.items():
                 transaction = owner_rec.transaction
