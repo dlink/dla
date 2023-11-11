@@ -122,28 +122,33 @@ class Piece(DataRecord):
         return Transactions()
 
     @lazyproperty
-    def transaction(self):
+    def piece_transactions(self):
         return self.transactions.getByPieceId(self.id)
 
     @lazyproperty
     def status(self):
         _status = 'Available'
-        if self.transaction:
-            _status = self.transaction.piece_status
+        if self.piece_transactions:
+            _status = ', '.join(sorted(
+                [t.piece_status for t in self.piece_transactions], reverse=1))
         return _status
 
     @lazyproperty
     def status_info(self):
         _info = 'Available'
-        if self.transaction:
-            owner = self.transaction.owner
-            owner_name = 'Private'
-            if owner.authorized:
-                owner_name = owner.name
-            _info = \
-                f'{self.status} - {owner_name}, {owner.city}, {owner.state}'
+        if self.piece_transactions:
+            _info = []
+            for transaction in self.piece_transactions:
+                owner = transaction.owner
+                owner_name = 'Private'
+                if owner.authorized:
+                    owner_name = owner.name
+                _info.append(
+                    f'{transaction.piece_status} - '
+                    f'{owner_name}, {owner.city}, {owner.state}')
+            _info = '; '.join(sorted(_info, reverse=1))
             if self.medium.code == 'sculpture':
-                _info += ' (Can be remade)'
+                _info += '; (Can be remade)'
         return _info
 
     @lazyproperty

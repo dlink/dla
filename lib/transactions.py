@@ -25,7 +25,7 @@ class Transactions(DataTable):
         results = self.getTable()
         if not results:
             return None
-        return Transaction(results[0]['id'])
+        return [Transaction(r['id']) for r in results]
 
 class Transaction(DataRecord):
     '''Provide over an art transaction'''

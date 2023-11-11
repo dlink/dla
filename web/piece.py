@@ -4,7 +4,7 @@ from vlib.datarecord import DataRecordNotFound
 from vlib.utils import is_int, format_date
 
 from vweb.htmltable import HtmlTable
-from vweb.html import a, div, h1, img, input, li, p, span, ul
+from vweb.html import a, br, div, h1, img, input, li, p, span, ul
 
 from basepage import BasePage
 from pieces import Piece
@@ -101,7 +101,7 @@ class PiecePage(BasePage):
     def getPieceInfo(self):
         template = self.getTemplate('piece_info.html')
         data = self.piece.data
-        data.status_info = self.piece.status_info
+        data.status_info = self.piece.status_info.replace('; ', br())
         if self.piece.editions > 1:
             data.editions = f'Editions {self.piece.editions}'
         else:
