@@ -6,6 +6,13 @@ from decimal import Decimal
    Three units of measure (uom) are supported for converting
    from and two display format: in, ft, and mix
 '''
+
+SIZE_RANGE_MINS = {
+    'Small': 0,
+    'Medium': 1800,
+    'Large': 8000,
+}
+
 class DimensionsError(Exception): pass
 
 def display_dimensions(dec_length, dec_width, dec_height, uom=None):
@@ -118,6 +125,16 @@ def dec_to_std(dec_number, uom='in'):
     else:
         raise DimensionsError(
             f"Unrecognized uom: dec_to_std('{round(dec_number, 4)}', '{uom}')")
+
+def getSizeRange(area):
+    if not area:
+        return None
+    if area >= SIZE_RANGE_MINS['Large']:
+        return 'Large'
+    elif area >= SIZE_RANGE_MINS['Medium']:
+        return 'Medium'
+    else:
+        return 'Small'
 
 #if __name__ == '__main__':
     #print(storage_dimensions('6\'2" x 3\'1" x 1\'9"', 'mix'))

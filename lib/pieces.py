@@ -11,7 +11,7 @@ from piece_images import PieceImages
 from piece_shows import PieceShows
 from mediums import Medium
 
-from dimensions import display_dimensions
+from dimensions import display_dimensions, getSizeRange
 import env
 
 class Pieces(DataTable):
@@ -39,14 +39,19 @@ class Pieces(DataTable):
             return []
         return self.get({'medium_id': medium.id}, sort_order)
 
-    def list(self):
-        header = ['id', 'name', 'medium', 'year', 'status_info']
+    def list(self, medium_code=None):
+        header = ['id', 'name', 'editions', 'medium', 'size_range', 'area', 'year',
+                  'status_info']
         print(','.join(header))
         rows = []
-        for piece in self.get():
+        if medium_code:
+            pieces_list = self.getByMediumCode(medium_code)
+        else:
+            pieces_list = self.get()
+        for piece in pieces_list:
             rows.append([piece.id, f'{piece.name}-{piece.version}',
-                         piece.medium.name, piece.created_year,
-                         piece.status_info])
+                         piece.medium.name, piece.editions, piece.size_range, piece.area,
+                         piece.created_year, piece.status])
         return [[f for f in r] for r in rows]
 
 class Piece(DataRecord):
@@ -220,6 +225,16 @@ class Piece(DataRecord):
             return Piece(self.orig_piece_id)
         return None
 
+    @lazyproperty
+    def area(self):
+        if self.length and self.width and self.height:
+            return round(self.length * self.width * self.height, 2)
+        return None
+
+    @lazyproperty
+    def size_range(self):
+        return getSizeRange(self.area)
+
     def show(self):
         from copy import copy
         data2 = copy(self.data)
@@ -246,7 +261,7 @@ class PiecesCLI(object):
         commands = [
             'add_image <id|code[-version]> <img_filepath>',
             'update_images <id|code[-version]>',
-            'list',
+            'list [<medium_code>]',
             'images <id|code[-version]>',
             'show <id|code[-version]>',
             'shows <id|code[-version]>',
@@ -276,7 +291,8 @@ class PiecesCLI(object):
             return Piece(filter).updateImages()
 
         elif cmd == 'list':
-            return Pieces().list()
+            medium_code = args.pop(0) if args else None
+            return Pieces().list(medium_code)
 
         elif cmd == 'images':
             validate_num_args('images', 1, args)
