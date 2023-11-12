@@ -50,6 +50,11 @@ def contact():
     from contact import ContactPage
     return ContactPage().go()
 
+@app.errorhandler(404)
+def page_not_found(e):
+    from page_not_found import PageNotFoundPage
+    return PageNotFoundPage().go()
+
 @app.route('/favicon.ico')
 def favicon():
     '''TO DO: Set up favicon'''

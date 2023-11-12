@@ -1,0 +1,28 @@
+.image-box {
+  position: relative;
+  width: calc(33.33% - 20px); /* Adjust the width and margin as needed */
+  margin: 60px auto;
+}
+
+.image-box img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 2.5em;
+  font-weight: bold;
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+    .overlay-text {
+	font-size: 1.2em;
+    }
+}
