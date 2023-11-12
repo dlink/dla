@@ -27,7 +27,10 @@ class GalleryPage(BasePage):
         ])
 
     def getPageContent(self):
-        medium = Medium(self.id)
+        try:
+            medium = Medium(self.id)
+        except:
+            return self.notFound()
         pieces = self.pieces.get({'medium_id': medium.id},
                                  medium.sort_order)
 
@@ -46,6 +49,9 @@ class GalleryPage(BasePage):
         return div(
             h1(medium.name_plural) + \
             output, class_='gallery')
+
+    def notFound(self):
+        return p(f'Gallery: "{self.id}" not found', class_='error-msg')
 
 if __name__ == '__main__':
     HomePage().go()
