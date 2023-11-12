@@ -20,6 +20,13 @@ def gallery(id=None):
     from gallery import GalleryPage
     return GalleryPage(id).go()
 
+@app.route('/available_gallery/<id>')
+def available_gallery(id=None):
+    if not id:
+        id = 1
+    from available_gallery import AvailableGalleryPage
+    return AvailableGalleryPage(id).go()
+
 @app.route('/piece/<id>')
 def piece(id):
     from piece import PiecePage
