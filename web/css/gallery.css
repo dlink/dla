@@ -59,6 +59,21 @@
     transform: translate(-50%, -50%);
     width: 300px;
 }
+#gallery_search_close {
+    display: inline-block;
+    position: absolute;
+    right: 14px;
+    top: 16px;
+    font-size: 30px;
+    z-index: 102;
+    padding: 11px 11px 9px;
+    line-height: 15px;
+    font-size: 18px;
+    cursor: pointer;
+}
+#gallery_search_close:hover {
+    color: grey;
+}
 .gallery_search .element {
     color: grey;
     padding: 10px;
