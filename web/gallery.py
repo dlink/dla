@@ -56,7 +56,7 @@ class GalleryPage(BasePage):
         if self.medium.code == 'sculpture':
             o += span(f'{(self.status or "All").title()}',
                       class_='filter_desc')
-            o += span(f'Size Range: {self.size_range or "All"}',
+            o += span(f'Size: {self.size_range or "All"}',
                       class_='filter_desc')
         return div(o, class_='header_container')
 
