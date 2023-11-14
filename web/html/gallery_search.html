@@ -1,0 +1,26 @@
+<div class='gallery_search'>
+  <h2>Gallery Search</h2>
+
+  <div class='element status_element'>
+    <label for='status'>Status</label>
+    <select id='status' name='status'>
+      <option value {status.all} >All</option>
+      <option value='available' {status.available} >Available</option>
+    </select>
+  </div>
+
+  <div class='element size_range_element'>
+    <label for='size_range'>Size Range</label>
+    <select id='size_range' name='size_range'>
+      <option value {size_range.all}>All</option>
+      <option value='small' {size_range.small}>Small</option>
+      <option value='medium' {size_range.medium}>Medium</option>
+      <option value='large' {size_range.large}>Large</option>
+    </select>
+  </div>
+
+  <div class='element submit_element'>
+    <input id='submit' type='submit' name='accept' value='Accept'>
+    <input id='clear' type='button' name='clear' value='Clear'>
+  </div>
+</div>

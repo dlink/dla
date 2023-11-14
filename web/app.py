@@ -13,7 +13,7 @@ def home():
     from home import HomePage
     return HomePage().go()
 
-@app.route('/gallery/<id>')
+@app.route('/gallery/<id>', methods=['GET', 'POST'])
 def gallery(id=None):
     if not id:
         id = 1

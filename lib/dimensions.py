@@ -8,9 +8,9 @@ from decimal import Decimal
 '''
 
 SIZE_RANGE_MINS = {
-    'Small': 0,
-    'Medium': 1800,
-    'Large': 8000,
+    'small': 0,
+    'medium': 1800,
+    'large': 8000,
 }
 
 class DimensionsError(Exception): pass
@@ -129,12 +129,12 @@ def dec_to_std(dec_number, uom='in'):
 def getSizeRange(area):
     if not area:
         return None
-    if area >= SIZE_RANGE_MINS['Large']:
-        return 'Large'
-    elif area >= SIZE_RANGE_MINS['Medium']:
-        return 'Medium'
+    if area >= SIZE_RANGE_MINS['large']:
+        return 'large'
+    elif area >= SIZE_RANGE_MINS['medium']:
+        return 'medium'
     else:
-        return 'Small'
+        return 'small'
 
 #if __name__ == '__main__':
     #print(storage_dimensions('6\'2" x 3\'1" x 1\'9"', 'mix'))
