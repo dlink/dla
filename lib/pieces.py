@@ -140,7 +140,7 @@ class Piece(DataRecord):
             _status_list = [t.piece_status for t in self.piece_transactions]
             if len(_status_list) < self.editions:
                 _status_list.append('Available')
-            _status = ', '.join(sorted(_status_list, reverse=1))
+            _status = ', '.join(_status_list)
         return _status
 
     @lazyproperty
@@ -162,9 +162,8 @@ class Piece(DataRecord):
             for i in range(len(info_list), self.editions):
                 info_list.append('Available')
             if len(info_list) > 1:
-                info_list2 = sorted(info_list, reverse=1)
-                info_list3 = [f'{n}. {i}' for n, i in enumerate(info_list2, 1)]
-                info_list = info_list3
+                info_list2 = [f'{n}. {i}' for n, i in enumerate(info_list, 1)]
+                info_list = info_list2
             info = '; '.join(sorted(info_list))
             if self.medium.code == 'sculpture' and \
                'Available' not in info:
@@ -263,7 +262,7 @@ class PiecesCLI(object):
             'update_images <id|code[-version]>',
             'list [<medium_code>]',
             'images <id|code[-version]>',
-            'show <id|code[-version]>',
+            'show <id|code[-version]> [status | status_info]',
             'shows <id|code[-version]>',
         ]
         self.cli = CLI(self.process, commands)
@@ -302,7 +301,17 @@ class PiecesCLI(object):
         elif cmd == 'show':
             validate_num_args('shows', 1, args)
             filter = args.pop(0)
-            return Piece(filter).show()
+            piece = Piece(filter)
+            if args:
+                sub_element = args.pop(0)
+                if sub_element == 'status':
+                    return piece.status
+                elif sub_element == 'status_info':
+                    return piece.status_info
+                else:
+                    raise PiecesCLIError(
+                        f'Unrecognized sub_element: {sub_element}')
+            return piece.show()
 
         else:
             raise PiecesCLIError('Unrecognized command: %s' % cmd)

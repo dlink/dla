@@ -22,6 +22,7 @@ class Transactions(DataTable):
 
     def getByPieceId(self, piece_id):
         self.setFilters(f'piece_id={piece_id}')
+        self.setOrderBy('edition')
         results = self.getTable()
         if not results:
             return None
