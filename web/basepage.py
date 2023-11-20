@@ -26,14 +26,25 @@ class BasePage(HtmlPage):
         ])
         self.javascript_src.extend(['/js/header.js'])
         self.logPageLoad(title)
-        self.metadata = {'description': self.meta_description}
+        self.metadata = {
+            'description': self.meta_description,
+            'keywords': self.meta_keywords,
+        }
         self.favicon_path = '/images/favicon/favicon.ico'
         self.ga_tag = self.getGATag()
 
     @property
     def meta_description(self):
         return \
-            f'{self.title} - Bold, modern, and minimal geometric works of art'
+            f'{self.title} - Bold, modern, mathematical and minimal '\
+            f'geometric works of art'
+
+    @property
+    def meta_keywords(self):
+        page_name = self.title.replace(' | David Link Art', '')
+        return \
+            f'{page_name}, David Link, art, bold, minimal, mathematical, ' \
+            f'geometric, works of art'
 
     def logPageLoad(self, title):
         user_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
