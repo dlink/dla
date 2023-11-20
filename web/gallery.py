@@ -14,11 +14,11 @@ class GalleryPage(BasePage):
     panel_max_cols = 4
 
     def __init__(self, id):
-        self.title = 'David Link '
         if is_int(id):
-            self.title += f'Gallery {id}'
+            self.title = f'Gallery {id}'
         else:
-            self.title += f'{id}s'.title()
+            self.title = f'{id}s'.title()
+        self.title += ' | David Link Art'
         BasePage.__init__(self, self.title)
         self.id = id
         self.pieces = Pieces()

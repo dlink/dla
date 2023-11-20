@@ -13,11 +13,11 @@ from thumbnails import Thumbnail
 class PiecePage(BasePage):
 
     def __init__(self, id):
-        self.title = 'David Link '
         if is_int(id):
-            self.title += f'Piece {id}'
+            self.title = f'Piece {id}'
         else:
-            self.title += id.title().replace('_', ' ')
+            self.title = id.title().replace('_', ' ')
+        self.title += ' | David Link Art'
         BasePage.__init__(self, self.title)
         self.id = id
         self.piece = None

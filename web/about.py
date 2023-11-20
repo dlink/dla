@@ -8,7 +8,7 @@ from collections_page import CollectionsPage
 class AboutPage(BasePage):
 
     def __init__(self):
-        self.title = 'David Link Art About Page'
+        self.title = 'About Page | David Link Art'
         BasePage.__init__(self, self.title)
         self.style_sheets.extend([
             self.versionize('css/about.css'),
