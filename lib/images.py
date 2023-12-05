@@ -198,8 +198,8 @@ class Image():
         dpi_str = ''
         if 'dpi' in self.img.info:
             dpi = list(self.img.info['dpi'])
-            #dpi_str = f'({dpi[0]},{dpi[1]}) dpi'
-            dpi_str = f'({dpi[0]:.0f},{dpi[1]:.0f}) dpi'
+            dpi_str = f'({dpi[0]},{dpi[1]}) dpi'
+            #dpi_str = f'({dpi[0]:.0f},{dpi[1]:.0f}) dpi'
         return \
             f'{self.filepath}: {self.file_size}kb, {self.img.size}, '\
             f'{dpi_str}, ' \
