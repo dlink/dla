@@ -31,9 +31,9 @@ tmp_upload_dir = None
 
 # Logging
 
-errorlog = '/var/log/gunicorn/dev-dla/error.log'
+errorlog = '/var/log/gunicorn/dev_dla/error.log'
 loglevel = 'debug'
-accesslog = '/var/log/gunicorn/dev-dla/access.log'
+accesslog = '/var/log/gunicorn/dev_dla/access.log'
 access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
 
 # Process naming
