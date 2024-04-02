@@ -1,7 +1,7 @@
 #!/bin/bash
 
 today=`date +"%Y-%m-%d"`
-backup_filepath=/data/backups/dla-${today}.tgz
+backup_filepath=/data/backups/dla/dla-${today}.tgz
 
 cd /data
 revver $backup_filepath
