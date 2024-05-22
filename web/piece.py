@@ -130,8 +130,9 @@ class PiecePage(BasePage):
                     'name': show.name,
                     'gallery': show.contact.company_name,
                     'website': show.contact.website,
-                    'city': show.contact.city,
-                    'state': show.contact.state,
+                    'location': show.location,
+                    #'city': show.contact.city,
+                    #'state': show.contact.state,
                     'dates': dates}
             html += template.format(**data)
         if html:
