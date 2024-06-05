@@ -62,3 +62,9 @@
 	display: None;
     }
 }
+.video {
+    display: flex;
+    justify-content: center;  /* Center horizontally */
+    align-items: center;      /* Center vertically */
+    padding: 20px;
+}
