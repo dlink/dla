@@ -18,3 +18,4 @@ source .venv/bin/activate
 source $HOME/dla/bin/aliases
 export PYTHONPATH=$HOME/dla/lib:$HOME/vlib/src:$HOME/vweb/src
 export VCONF=$HOME/dla/conf/dev.yaml
+PATH=$PATH:$HOME/dla/bin:$HOME/dla/lib
