@@ -1,6 +1,6 @@
 # dla - DavidLinkArt Website
 
-This site is an artist's website driven of of a database.
+This site is an artist's website driven off of a database.
 Site: davidlinkart.com website.
 
 * 10/27/2023 - version 1.0.0 (Live)
