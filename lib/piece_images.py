@@ -92,7 +92,8 @@ class PieceImages():
            Read database records
            Add filepath, and url
         '''
-        self.pieceImagesDt.setFilters({'piece_id': self.piece.id})
+        self.pieceImagesDt.setFilters({'piece_id': self.piece.id,
+                                       'active': 1})
         self.pieceImagesDt.setOrderBy('sort_order')
         self.data = []
         for pi in self.pieceImagesDt.getTable():
