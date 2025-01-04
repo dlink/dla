@@ -40,8 +40,8 @@ class Pieces(DataTable):
         return self.get({'medium_id': medium.id}, sort_order)
 
     def list(self, medium_code=None):
-        header = ['id', 'name', 'editions', 'medium', 'size_range', 'area', 'year',
-                  'status_info']
+        header = ['id', 'name-version', 'medium', 'edition', 'size_range',
+                  'area', 'year', 'status_info']
         print(','.join(header))
         rows = []
         if medium_code:
