@@ -62,11 +62,14 @@ class ShowPage(BasePage):
     def getShowsInfo(self):
         html = ''
         template = self.getTemplate('show_item.html')
+        address = ''
         if self.show.contact:
             company_name = self.show.contact.company_name
             website = self.show.contact.website or ''
             city = self.show.contact.city or ''
             state = self.show.contact.state or ''
+            if city or state:
+                address = f', {city}, {state}'
         else:
             company_name = website = city = state = ''
 
@@ -82,8 +85,8 @@ class ShowPage(BasePage):
                 'gallery': company_name,
                 'website': website,
                 'city': city,
-                'state': state,
-                'dates': dates}
+                'dates': dates,
+                'address': address}
         html += template.format(**data)
         return html
 
