@@ -6,7 +6,6 @@ img.main-pic {
     display: none;
     max-width: 100%;
     max-height: 550px;
-    padding: 10px;
     margin: auto;
 }
 img.main-pic.selected {
