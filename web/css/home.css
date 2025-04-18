@@ -72,6 +72,20 @@
     }
 }
 
+/* instagram-link */
+
+.instagram-link {
+    max-width: 900px;
+    padding: 0 20px 10px;
+    margin: auto;
+}
+.instagram-link span {
+    margin: 0;
+    padding: 5px 10px;
+    border: 1px solid black;
+    border-radius: 6px;
+}
+
 /* Triads */
 
 .triad-container {
