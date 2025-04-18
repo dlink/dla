@@ -55,6 +55,7 @@ class Transaction(DataRecord):
         elif self.type == 'not for sale': return 'Not for Sale'
         elif self.type == 'no longer exists': return 'No longer exists'
         elif self.type == 'lost'    : return 'Lost'
+        elif self.type == 'loan'    : return 'On Loan'
         else                        : return self.type
 
     # Can not use due to circular reference

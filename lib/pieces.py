@@ -166,7 +166,7 @@ class Piece(DataRecord):
                 info_list = info_list2
             info = '; '.join(sorted(info_list))
             if self.medium.code == 'sculpture' and \
-               'Available' not in info:
+               'Available' not in info and 'On Loan' not in info:
                 info += '; (Can be remade)'
         return info
 
