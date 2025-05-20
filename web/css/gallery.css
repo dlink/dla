@@ -103,3 +103,8 @@
 .gallery_search input[name=accept] {
     color: green;
 }
+@media (max-width: 767px) {
+  .gallery > .gallery__list {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
